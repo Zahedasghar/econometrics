@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Zahid Asghar   School of Economics, QAU, Islamabad">
+
+<title>Linear Regression with Multiple Regressors</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+<script src="index_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="index_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#outline" id="toc-outline" class="nav-link active" data-scroll-target="#outline">Outline</a></li>
+  <li><a href="#omitted-variable-bias" id="toc-omitted-variable-bias" class="nav-link" data-scroll-target="#omitted-variable-bias">Omitted Variable Bias</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"></a></li>
+  <li><a href="#table-6.1" id="toc-table-6.1" class="nav-link" data-scroll-target="#table-6.1">Table 6.1</a></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"></a></li>
+  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3"></a></li>
+  <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4"></a></li>
+  <li><a href="#section-5" id="toc-section-5" class="nav-link" data-scroll-target="#section-5"></a></li>
+  <li><a href="#section-6" id="toc-section-6" class="nav-link" data-scroll-target="#section-6"></a></li>
+  <li><a href="#section-7" id="toc-section-7" class="nav-link" data-scroll-target="#section-7"></a></li>
+  <li><a href="#what-precisely-is-a-causal-effect" id="toc-what-precisely-is-a-causal-effect" class="nav-link" data-scroll-target="#what-precisely-is-a-causal-effect">What, precisely, is a causal effect?</a></li>
+  <li><a href="#ideal-randomized-controlled-experiment" id="toc-ideal-randomized-controlled-experiment" class="nav-link" data-scroll-target="#ideal-randomized-controlled-experiment">Ideal Randomized Controlled Experiment</a></li>
+  <li><a href="#back-to-class-size" id="toc-back-to-class-size" class="nav-link" data-scroll-target="#back-to-class-size">Back to class size:</a></li>
+  <li><a href="#section-8" id="toc-section-8" class="nav-link" data-scroll-target="#section-8"></a></li>
+  <li><a href="#section-9" id="toc-section-9" class="nav-link" data-scroll-target="#section-9"></a></li>
+  <li><a href="#return-to-omitted-variable-bias" id="toc-return-to-omitted-variable-bias" class="nav-link" data-scroll-target="#return-to-omitted-variable-bias">Return to omitted variable bias</a></li>
+  <li><a href="#section-10" id="toc-section-10" class="nav-link" data-scroll-target="#section-10"></a></li>
+  <li><a href="#the-population-regression-function" id="toc-the-population-regression-function" class="nav-link" data-scroll-target="#the-population-regression-function">The Population Regression Function</a></li>
+  <li><a href="#interpretation-of-coefficients-in-multiple-regression" id="toc-interpretation-of-coefficients-in-multiple-regression" class="nav-link" data-scroll-target="#interpretation-of-coefficients-in-multiple-regression">Interpretation of coefficients in multiple regression</a></li>
+  <li><a href="#the-ols-estimator-in-multiple-regression" id="toc-the-ols-estimator-in-multiple-regression" class="nav-link" data-scroll-target="#the-ols-estimator-in-multiple-regression">The OLS Estimator in Multiple Regression</a></li>
+  <li><a href="#example-the-california-test-score-data" id="toc-example-the-california-test-score-data" class="nav-link" data-scroll-target="#example-the-california-test-score-data">Example: the California test score data</a></li>
+  <li><a href="#section-11" id="toc-section-11" class="nav-link" data-scroll-target="#section-11"></a></li>
+  <li><a href="#section-12" id="toc-section-12" class="nav-link" data-scroll-target="#section-12"></a></li>
+  <li><a href="#section-13" id="toc-section-13" class="nav-link" data-scroll-target="#section-13"></a></li>
+  <li><a href="#measures-of-fit-for-multiple-regression" id="toc-measures-of-fit-for-multiple-regression" class="nav-link" data-scroll-target="#measures-of-fit-for-multiple-regression">Measures of Fit for Multiple Regression</a></li>
+  <li><a href="#ser-and-rmse" id="toc-ser-and-rmse" class="nav-link" data-scroll-target="#ser-and-rmse">SER and RMSE</a></li>
+  <li><a href="#r2-and-barr2-adjusted-r2" id="toc-r2-and-barr2-adjusted-r2" class="nav-link" data-scroll-target="#r2-and-barr2-adjusted-r2"><span class="math inline">\(R^2\)</span> and <span class="math inline">\(\bar{R^2}\)</span> (adjusted R2)</a></li>
+  <li><a href="#the-least-squares-assumptions-in-the-multiple-regression-model" id="toc-the-least-squares-assumptions-in-the-multiple-regression-model" class="nav-link" data-scroll-target="#the-least-squares-assumptions-in-the-multiple-regression-model">The Least Squares Assumptions in the Multiple Regression Model</a></li>
+  <li><a href="#section-14" id="toc-section-14" class="nav-link" data-scroll-target="#section-14"></a></li>
+  <li><a href="#assumption-1-the-conditional-mean-of-u-given-the" id="toc-assumption-1-the-conditional-mean-of-u-given-the" class="nav-link" data-scroll-target="#assumption-1-the-conditional-mean-of-u-given-the">Assumption #1: the conditional mean of u given the</a></li>
+  <li><a href="#assumption-2" id="toc-assumption-2" class="nav-link" data-scroll-target="#assumption-2">Assumption #2</a></li>
+  <li><a href="#assumption-4-there-is-no-perfect-multicollinearity" id="toc-assumption-4-there-is-no-perfect-multicollinearity" class="nav-link" data-scroll-target="#assumption-4-there-is-no-perfect-multicollinearity">Assumption #4 : There is no perfect multicollinearity</a></li>
+  <li><a href="#perfect-multicollinearity" id="toc-perfect-multicollinearity" class="nav-link" data-scroll-target="#perfect-multicollinearity">Perfect multicollinearity</a></li>
+  <li><a href="#the-sampling-distribution-of-the-ols-estimator" id="toc-the-sampling-distribution-of-the-ols-estimator" class="nav-link" data-scroll-target="#the-sampling-distribution-of-the-ols-estimator">The Sampling Distribution of the OLS Estimator</a></li>
+  <li><a href="#multicollinearity-perfect-and-imperfect" id="toc-multicollinearity-perfect-and-imperfect" class="nav-link" data-scroll-target="#multicollinearity-perfect-and-imperfect">Multicollinearity, Perfect and Imperfect</a></li>
+  <li><a href="#the-dummy-variable-trap" id="toc-the-dummy-variable-trap" class="nav-link" data-scroll-target="#the-dummy-variable-trap">The dummy variable trap</a></li>
+  <li><a href="#section-15" id="toc-section-15" class="nav-link" data-scroll-target="#section-15"></a></li>
+  <li><a href="#imperfect-multicollinearity" id="toc-imperfect-multicollinearity" class="nav-link" data-scroll-target="#imperfect-multicollinearity">Imperfect multicollinearity</a></li>
+  <li><a href="#imperfect-multicollinearity-ctd." id="toc-imperfect-multicollinearity-ctd." class="nav-link" data-scroll-target="#imperfect-multicollinearity-ctd.">Imperfect multicollinearity, ctd.</a></li>
+  <li><a href="#hypothesis-testing-and-confidence-intervals-in-multiple-regressions" id="toc-hypothesis-testing-and-confidence-intervals-in-multiple-regressions" class="nav-link" data-scroll-target="#hypothesis-testing-and-confidence-intervals-in-multiple-regressions">Hypothesis Testing and Confidence Intervals in Multiple Regressions</a></li>
+  <li><a href="#joint-hypothesis-testing-using-the-f-statistic" id="toc-joint-hypothesis-testing-using-the-f-statistic" class="nav-link" data-scroll-target="#joint-hypothesis-testing-using-the-f-statistic">Joint Hypothesis Testing Using the F-Statistic</a>
+  <ul class="collapse">
+  <li><a href="#correlations" id="toc-correlations" class="nav-link" data-scroll-target="#correlations">Correlations</a></li>
+  <li><a href="#fig-7.2" id="toc-fig-7.2" class="nav-link" data-scroll-target="#fig-7.2">Fig 7.2</a></li>
+  </ul></li>
+  <li><a href="#table-7.1-results-of-regressions-of-test-scores-on-student-teacher-ratio" id="toc-table-7.1-results-of-regressions-of-test-scores-on-student-teacher-ratio" class="nav-link" data-scroll-target="#table-7.1-results-of-regressions-of-test-scores-on-student-teacher-ratio">Table 7.1 Results of Regressions of Test Scores on Student-Teacher Ratio</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Linear Regression with Multiple Regressors</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Zahid Asghar<br><br> School of Economics, QAU, Islamabad </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="outline" class="level2">
+<h2 class="anchored" data-anchor-id="outline">Outline</h2>
+<ol type="1">
+<li><p>Omitted variable bias</p></li>
+<li><p>Causality and regression analysis</p></li>
+<li><p>Multiple regression and OLS</p></li>
+<li><p>Measures of fit<br>
+</p></li>
+<li><p>Sampling distribution of the OLS estimator</p></li>
+</ol>
+</section>
+<section id="omitted-variable-bias" class="level2">
+<h2 class="anchored" data-anchor-id="omitted-variable-bias">Omitted Variable Bias</h2>
+<p>The error <span class="math inline">\(u\)</span> arises because of factors, or variables, that influence Y but are not included in the regression function. There are always omitted variables. Sometimes, the omission of those variables can lead to bias in the OLS estimator.</p>
+<p>The bias in the OLS estimator that occurs as a result of an omitted factor, or variable, is called omitted variable bias. For omitted variable bias to occur, the omitted variable <span class="math inline">\(Z\)</span> must satisfy two conditions: The two conditions for omitted variable bias (1) <span class="math inline">\(Z\)</span> is a determinant of <span class="math inline">\(Y\)</span> (i.e.&nbsp;<span class="math inline">\(Z\)</span> is part of <span class="math inline">\(u\)</span>); and</p>
+<p>(2) <span class="math inline">\(Z\)</span> is correlated with the regressor <span class="math inline">\(X\)</span> i.e.&nbsp;<span class="math inline">\(corr(Z,X) \neq 0\)</span></p>
+<p><strong>Both</strong> conditions must hold for the omission of <span class="math inline">\(Z\)</span> to result in omitted variable bias.</p>
+</section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
+<ul>
+<li><p>In the test score example:</p>
+<ol type="1">
+<li>English language ability (whether the student has English as a second language) plausibly affects standardized test scores: <span class="math inline">\(Z\)</span> is a determinant of <span class="math inline">\(Y\)</span>.</li>
+<li>Immigrant communities tend to be less affluent and thus have smaller school budgets and higher STR: <span class="math inline">\(Z\)</span> is correlated with $X$. Accordingly, <span class="math inline">\(\hat\beta_1\)</span> is biased. What is the direction of this bias?</li>
+</ol></li>
+<li><p>What does common sense suggest?</p></li>
+<li><p>If common sense fails you, there is a formula…<span class="math inline">\(\sum^n_{i = 1} (Y_i - b_0 - b_1 X_i)^2\)</span>.</p></li>
+</ul>
+<p><span class="math display">\[\begin{align}
+{\hat\beta_1}-\beta_1 = \frac{1}{n} \frac{\sum^n_{i = 1}  \left(X_i - \bar{X} \right) u_i  }  {\sum^n_{i = 1}(X_i - \bar{X})^2}. \tag{6.1}
+\end{align}\]</span></p>
+</section>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1"></h2>
+<p>From <span class="math inline">\(E(u_i\vert X_i) = 0\)</span> implies <span class="math inline">\(corr(X_i,u_i)=0\)</span></p>
+<p><span class="math display">\[\hat\beta_1 \xrightarrow[]{p} \beta_1 + \rho_{Xu} \frac{\sigma_u}{\sigma_X}. \tag{6.1}\]</span></p>
+<ul>
+<li><p>If If an omitted variable <span class="math inline">\(Z\)</span> is both: (1) a determinant of <span class="math inline">\(Y\)</span> (that is, it is contained in <span class="math inline">\(u\)</span>); and (2) correlated with <span class="math inline">\(X\)</span>, then <span class="math inline">\(\rho_{Xu} \neq0\)</span>, and the OLS estimator <span class="math inline">\(\hat{\beta_1}\)</span> is biased and is not consistent.</p></li>
+<li><p>For example, districts with few ESL students (1) do better on standardized tests and (2) have smaller classes (bigger budgets), so ignoring the effect of having many ESL students factor would result in overstating the class size effect. Is this is actually going on in the CA data?</p></li>
+</ul>
+</section>
+<section id="table-6.1" class="level2">
+<h2 class="anchored" data-anchor-id="table-6.1">Table 6.1</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+✔ ggplot2 3.3.6     ✔ purrr   0.3.4
+✔ tibble  3.1.7     ✔ dplyr   1.0.9
+✔ tidyr   1.2.0     ✔ stringr 1.4.0
+✔ readr   2.1.2     ✔ forcats 0.5.1
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter()     masks stats::filter()
+✖ dplyr::group_rows() masks kableExtra::group_rows()
+✖ dplyr::lag()        masks stats::lag()</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>caschool <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"caschool.dta"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'rstatix'
+
+The following object is masked from 'package:stats':
+
+    filter</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>caschool<span class="ot">&lt;-</span>caschool <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">elq1=</span><span class="fu">ifelse</span>(el_pct<span class="sc">&lt;=</span><span class="fl">1.9</span>,<span class="dv">1</span>,<span class="dv">0</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>caschool<span class="ot">&lt;-</span>caschool <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">elq2=</span><span class="fu">ifelse</span>(el_pct<span class="sc">&gt;=</span><span class="fl">1.9</span> <span class="sc">&amp;</span> el_pct<span class="sc">&lt;</span><span class="fl">8.8</span>,<span class="dv">1</span>,<span class="dv">0</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>caschool<span class="ot">&lt;-</span>caschool <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">elq3=</span><span class="fu">ifelse</span>(el_pct<span class="sc">&gt;=</span><span class="fl">8.8</span> <span class="sc">&amp;</span> el_pct<span class="sc">&lt;</span><span class="dv">23</span>,<span class="dv">1</span>,<span class="dv">0</span>))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>caschool<span class="ot">&lt;-</span>caschool <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">elq4=</span><span class="fu">ifelse</span>(el_pct<span class="sc">&gt;=</span><span class="dv">23</span>,<span class="dv">1</span>,<span class="dv">0</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>caschool<span class="ot">&lt;-</span>caschool <span class="sc">%&gt;%</span>   <span class="fu">mutate</span>(<span class="at">str_20 =</span> <span class="fu">ifelse</span>(str<span class="sc">&lt;</span><span class="dv">20</span>, <span class="dv">1</span>,<span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="section-2" class="level2">
+<h2 class="anchored" data-anchor-id="section-2"></h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>overall<span class="ot">&lt;-</span>caschool <span class="sc">%&gt;%</span> <span class="fu">t_test</span>(testscr<span class="sc">~</span>str_20,<span class="at">var.equal=</span>T)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>el_1<span class="fl">.9</span><span class="ot">&lt;-</span>caschool <span class="sc">%&gt;%</span> <span class="fu">filter</span>(elq1<span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">t_test</span>(testscr<span class="sc">~</span>str_20,<span class="at">var.equal=</span>T)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>el_8<span class="fl">.8</span><span class="ot">&lt;-</span>caschool <span class="sc">%&gt;%</span> <span class="fu">filter</span>(elq2<span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">t_test</span>(testscr<span class="sc">~</span>str_20,<span class="at">var.equal=</span>T)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>el_23<span class="ot">&lt;-</span>caschool <span class="sc">%&gt;%</span> <span class="fu">filter</span>(elq3<span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">t_test</span>(testscr<span class="sc">~</span>str_20,<span class="at">var.equal=</span>T)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>el_gr23<span class="ot">&lt;-</span>caschool <span class="sc">%&gt;%</span> <span class="fu">filter</span>(elq4<span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">t_test</span>(testscr<span class="sc">~</span>str_20,<span class="at">var.equal=</span>T)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>table_6<span class="fl">.1</span><span class="ot">&lt;-</span><span class="fu">bind_rows</span>(overall,el_1<span class="fl">.9</span>,el_8<span class="fl">.8</span>,el_23,el_gr23)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>df_tbl<span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(table_6<span class="fl">.1</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>df_tbl<span class="ot">&lt;-</span>df_tbl <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span><span class="st">".y."</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>df_tbl<span class="sc">$</span>statistic<span class="ot">&lt;-</span><span class="fu">round</span>(df_tbl<span class="sc">$</span>statistic,<span class="dv">2</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>df_tbl<span class="sc">$</span>p<span class="ot">&lt;-</span><span class="fu">round</span>(df_tbl<span class="sc">$</span>p,<span class="dv">3</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>df_tbl </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 7
+  group1 group2    n1    n2 statistic    df     p
+  &lt;chr&gt;  &lt;chr&gt;  &lt;int&gt; &lt;int&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 0      1        182   238     -4      418 0    
+2 0      1         27    76      0.27   101 0.789
+3 0      1         44    64     -1.05   106 0.296
+4 0      1         50    54     -1.73   102 0.087
+5 0      1         61    44     -0.7    103 0.483</code></pre>
+</div>
+</div>
+</section>
+<section id="section-3" class="level2">
+<h2 class="anchored" data-anchor-id="section-3"></h2>
+<p><img src="table6.1.png" class="img-fluid" width="542"></p>
+<ul>
+<li><p>Districts with fewer English Learners have higher test scores</p></li>
+<li><p>Districts with lower percent EL (PctEL) have smaller classes</p></li>
+<li><p>Among districts with comparable PctEL, the effect of class size</p></li>
+</ul>
+<p>is small (recall overall “test score gap” = 7.4)</p>
+</section>
+<section id="section-4" class="level2">
+<h2 class="anchored" data-anchor-id="section-4"></h2>
+<p>Causality and regression analysis</p>
+<p>The test score/STR/fraction English Learners example shows that, if an omitted variable satisfies the two conditions for omitted variable bias, then the OLS estimator in the regression omitting that variable is biased and inconsistent. So, even if n is large, <span class="math inline">\(\hat{\beta_1}\)</span> will not be close to <span class="math inline">\(\beta_1\)</span> . This raises a deeper question: how do we define <span class="math inline">\(\beta_1\)</span> ? That is, what precisely do we want to estimate when we run a regression?</p>
+</section>
+<section id="section-5" class="level2">
+<h2 class="anchored" data-anchor-id="section-5"></h2>
+<p>What precisely do we want to estimate when we run a regression? There are (at least) three possible answers to this question:</p>
+<ol type="1">
+<li>We want to estimate the slope of a line through a scatterplot as a simple summary of the data to which we attach no substantive meaning. This can be useful at times, but isn’t very interesting intellectually and isn’t what this course is about.</li>
+</ol>
+</section>
+<section id="section-6" class="level2">
+<h2 class="anchored" data-anchor-id="section-6"></h2>
+<ol start="2" type="1">
+<li>We want to make forecasts, or predictions, of the value of <span class="math inline">\(Y\)</span> for an entity not in the data set, for which we know the value of <span class="math inline">\(X\)</span>.</li>
+</ol>
+<p>Forecasting is an important job for economists, and excellent forecasts are possible using regression methods without needing to know causal effects. We will return to forecasting later in the course.</p>
+</section>
+<section id="section-7" class="level2">
+<h2 class="anchored" data-anchor-id="section-7"></h2>
+<ol start="3" type="1">
+<li><p>We want to estimate the causal effect on Y of a change in <span class="math inline">\(X\)</span>.</p>
+<p><em>This is why we are interested in the class size effect. Suppose the school board decided to cut class size by 2 students per class. What would be the effect on test scores? This is a causal question (what is the causal effect on test scores of STR?) so we need to estimate this causal effect. Except when we discuss forecasting, the aim of this course is the estimation of causal effects using regression methods.</em></p></li>
+</ol>
+</section>
+<section id="what-precisely-is-a-causal-effect" class="level2">
+<h2 class="anchored" data-anchor-id="what-precisely-is-a-causal-effect">What, precisely, is a causal effect?</h2>
+<ul>
+<li>“Causality” is a complex concept!</li>
+<li>In this course, we take a practical approach to defining causality:
+<ul>
+<li><em>A causal effect is defined to be the effect measure in an ideal randomized controlled experiment</em> <em>in an ideal randomized controlled experiment.</em></li>
+</ul></li>
+</ul>
+</section>
+<section id="ideal-randomized-controlled-experiment" class="level2">
+<h2 class="anchored" data-anchor-id="ideal-randomized-controlled-experiment">Ideal Randomized Controlled Experiment</h2>
+<ul>
+<li>Ideal: subjects all follow the treatment protocol – perfect compliance, no errors in reporting, etc.!</li>
+<li>Randomized: subjects from the population of interest are randomly assigned to a treatment or control group (so there are no confounding factors)</li>
+<li>Controlled: having a control group permits measuring the differential effect of the treatment</li>
+<li>Experiment: the treatment is assigned as part of the experiment: the subjects have no choice, so there is no “reverse causality” in which subjects choose the treatment they think will work best.</li>
+</ul>
+</section>
+<section id="back-to-class-size" class="level2">
+<h2 class="anchored" data-anchor-id="back-to-class-size">Back to class size:</h2>
+<p>Imagine an ideal randomized controlled experiment for measuring the effect on Test Score of reducing STR…</p>
+<ul>
+<li><p>In that experiment, students would be randomly assigned to classes, which would have different sizes.</p></li>
+<li><p>Because they are randomly assigned, all student characteristics (and thus <span class="math inline">\(u_i\)</span>) would be distributed independently of STRi.</p></li>
+<li><p>Thus, <span class="math inline">\(E(u_i|STR_i)=0\)</span> – that is, LSA #1 holds in a randomized controlled experiment.</p></li>
+</ul>
+</section>
+<section id="section-8" class="level2">
+<h2 class="anchored" data-anchor-id="section-8"></h2>
+<p>How does our observational data differ from this ideal?</p>
+<ul>
+<li><p>The treatment is not randomly assigned</p></li>
+<li><p>Consider PctEL – percent English learners – in the district.</p></li>
+</ul>
+<p>It plausibly satisfies the two criteria for omitted variable bias: Z = PctEL is:</p>
+<ol type="1">
+<li><p>a determinant of Y; and</p></li>
+<li><p>correlated with the regressor X.</p></li>
+</ol>
+<ul>
+<li>Thus, the “control” and “treatment” groups differ in a systematic way, so <span class="math inline">\(corr(STR,PctEL)\neq0\)</span></li>
+</ul>
+</section>
+<section id="section-9" class="level2">
+<h2 class="anchored" data-anchor-id="section-9"></h2>
+<p>Randomization + control group means that any differences between the treatment and control groups are random – not systematically related to the treatment</p>
+<ul>
+<li><p>We can eliminate the difference in PctEL between the large (control) and small (treatment) groups by examining the effect of class size among districts with the same PctEL.</p>
+<ul>
+<li><p>If the only systematic difference between the large and small class size groups is in PctEL, then we are back to the randomized controlled experiment – within each PctEL group.</p></li>
+<li><p>This is one way to “control” for the effect of PctEL when estimating the effect of STR.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="return-to-omitted-variable-bias" class="level2">
+<h2 class="anchored" data-anchor-id="return-to-omitted-variable-bias">Return to omitted variable bias</h2>
+<p>Three ways to overcome omitted variable bias</p>
+<ol type="1">
+<li><p>Run a randomized controlled experiment in which treatment (STR) is randomly assigned: then PctEL is still a determinant of TestScore, but PctEL is uncorrelated with STR. (This solution to OV bias is rarely feasible.)</p></li>
+<li><p>Adopt the “cross tabulation” approach, with finer gradations of STR and PctEL – within each group, all classes have the same PctEL, so we control for PctEL (But soon you will run out of data, and what about other determinants like family income and parental education?)</p></li>
+</ol>
+</section>
+<section id="section-10" class="level2">
+<h2 class="anchored" data-anchor-id="section-10"></h2>
+<ol start="3" type="1">
+<li>Use a regression in which the omitted variable (PctEL) is no longer omitted: include PctEL as an additional regressor in a multiple regression.</li>
+</ol>
+</section>
+<section id="the-population-regression-function" class="level2">
+<h2 class="anchored" data-anchor-id="the-population-regression-function">The Population Regression Function</h2>
+<p>Consider the two regressors:</p>
+<p><span class="math inline">\(Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + u_i, \ i=1,\dots,n.\)</span></p>
+<ul>
+<li><p><span class="math inline">\(Y_i\)</span> is dependent variable</p></li>
+<li><p><span class="math inline">\(X1\)</span>, <span class="math inline">\(X2\)</span> are the two independent variables (regressors)</p></li>
+<li><p>(<span class="math inline">\(Y_i\)</span>, <span class="math inline">\(X_{1i}\)</span>, <span class="math inline">\(X_{2i}\)</span>) denote the ith observation on <span class="math inline">\(Y\)</span>, <span class="math inline">\(X1\)</span>, and <span class="math inline">\(X2\)</span>.</p></li>
+<li><p><span class="math inline">\(\beta_0\)</span> = unknown population intercept</p></li>
+<li><p><span class="math inline">\(\beta_1\)</span> = effect on Y of a change in X1, holding X2 constant</p></li>
+<li><p><span class="math inline">\(\beta_2\)</span> = effect on Y of a change in X2, holding X1 constant</p></li>
+<li><p><span class="math inline">\(u_i\)</span> = the regression error (omitted factors)</p></li>
+</ul>
+</section>
+<section id="interpretation-of-coefficients-in-multiple-regression" class="level2">
+<h2 class="anchored" data-anchor-id="interpretation-of-coefficients-in-multiple-regression">Interpretation of coefficients in multiple regression</h2>
+<p><span class="math inline">\(Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + u_i, \ i=1,\dots,n.\)</span><br>
+Consider changing <span class="math inline">\(X_1\)</span> by <span class="math inline">\(X_1\)</span> while holding <span class="math inline">\(X_2\)</span> constant: Population regression line <strong>before</strong> the change: <span class="math inline">\(Y_i = \beta_0 + \beta_1 X_1 + \beta_2 X_2\)</span><br>
+Population regression line, after the change: <span class="math inline">\(Y_i+{\Delta Y} = \beta_0 + \beta_1 (X_1+{\Delta X_1}) + \beta_2 X_2\)</span><br>
+Difference <strong>After minus Before</strong> <span class="math inline">\({\Delta Y} = \beta_1 {\Delta X_1}\)</span></p>
+<p><span class="math inline">\(\beta_1=\frac{\Delta Y}{\Delta X_1}\)</span> <strong>holding</strong> <span class="math inline">\(X_2\)</span> constant</p>
+<p><span class="math inline">\(\beta_2=\frac{\Delta Y}{\Delta X_2}\)</span> <strong>holding</strong> <span class="math inline">\(X_1\)</span> constant</p>
+<p><span class="math inline">\(\beta_0 = predicted value of Y when X1 = X2 = 0\)</span>. (Theoretically speaking)</p>
+</section>
+<section id="the-ols-estimator-in-multiple-regression" class="level2">
+<h2 class="anchored" data-anchor-id="the-ols-estimator-in-multiple-regression">The OLS Estimator in Multiple Regression</h2>
+<p>(SW Section 6.3) With two regressors, the OLS estimator solves: <span class="math inline">\(min_{b_1,b_2}\sum^n_{i = 1} (Y_i - b_0 - b_1 X_{1i}-b_2 X_{2i})^2.\)</span></p>
+<ul>
+<li><p>The OLS estimator minimizes the average squared difference between the actual values of Yi and the prediction (predicted value) based on the estimated line.</p></li>
+<li><p>This minimization problem is solved using calculus</p></li>
+<li><p>This yields the OLS estimators of <span class="math inline">\(\beta_0\)</span> , <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\beta_2\)</span></p></li>
+</ul>
+</section>
+<section id="example-the-california-test-score-data" class="level2">
+<h2 class="anchored" data-anchor-id="example-the-california-test-score-data">Example: the California test score data</h2>
+<p>Regression of TestScore against STR:</p>
+<p><span class="math inline">\(\widehat{TestScore}= 698.9 – 2.28STR\)</span></p>
+<p>Now include percent English Learners in the district (PctEL):</p>
+</section>
+<section id="section-11" class="level2">
+<h2 class="anchored" data-anchor-id="section-11"></h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>models<span class="ot">&lt;-</span><span class="fu">list</span>(mod1<span class="ot">&lt;-</span><span class="fu">lm</span>(testscr<span class="sc">~</span>str,<span class="at">data =</span> caschool),</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>mod2<span class="ot">&lt;-</span><span class="fu">lm</span>(testscr<span class="sc">~</span>str<span class="sc">+</span>el_pct,<span class="at">data =</span> caschool))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>mod1<span class="ot">&lt;-</span><span class="fu">lm</span>(testscr<span class="sc">~</span>str,<span class="at">data =</span> caschool)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>mod2<span class="ot">&lt;-</span><span class="fu">lm</span>(testscr<span class="sc">~</span>str<span class="sc">+</span>el_pct,<span class="at">data =</span> caschool)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  models,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">fmt =</span> <span class="dv">2</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimate  =</span> <span class="fu">c</span>(</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                <span class="st">"{estimate} ({std.error}){stars}"</span>),</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">statistic =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;"> Model 1 </th>
+   <th style="text-align:center;"> Model 2 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:center;"> 698.93 (9.47)*** </td>
+   <td style="text-align:center;"> 686.03 (7.41)*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> str </td>
+   <td style="text-align:center;"> −2.28 (0.48)*** </td>
+   <td style="text-align:center;"> −1.10 (0.38)** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1px"> el_pct </td>
+   <td style="text-align:center;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> −0.65 (0.04)*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 420 </td>
+   <td style="text-align:center;"> 420 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 </td>
+   <td style="text-align:center;"> 0.051 </td>
+   <td style="text-align:center;"> 0.426 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Adj. </td>
+   <td style="text-align:center;"> 0.049 </td>
+   <td style="text-align:center;"> 0.424 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AIC </td>
+   <td style="text-align:center;"> 3650.5 </td>
+   <td style="text-align:center;"> 3441.1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BIC </td>
+   <td style="text-align:center;"> 3662.6 </td>
+   <td style="text-align:center;"> 3457.3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Log.Lik. </td>
+   <td style="text-align:center;"> −1822.250 </td>
+   <td style="text-align:center;"> −1716.561 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> F </td>
+   <td style="text-align:center;"> 22.575 </td>
+   <td style="text-align:center;"> 155.014 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RMSE </td>
+   <td style="text-align:center;"> 18.54 </td>
+   <td style="text-align:center;"> 14.41 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="section-12" class="level2">
+<h2 class="anchored" data-anchor-id="section-12"></h2>
+<p><span class="math inline">\(\widehat{TestScore} = 686.0 – 1.10STR – 0.65PctEL\)</span></p>
+<p>What happens to the coefficient on STR? - Why? (Note: <span class="math inline">\(corr(STR, PctEL) = 0.19\)</span>)</p>
+<p>Regression of TestScore against STR: TestScore</p>
+</section>
+<section id="section-13" class="level2">
+<h2 class="anchored" data-anchor-id="section-13"></h2>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Frisch Waugh Theorem</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Frisch Waugh Theorem (demonstration)</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<ol type="1">
+<li>Regress <span class="math inline">\(X_1\)</span> on <span class="math inline">\(X_2\)</span> , <span class="math inline">\(X_3\)</span>,…, <span class="math inline">\(X_k\)</span>, and let <span class="math inline">\(\tilde{X_1}\)</span> denote the residuals from this regression;</li>
+<li>Regress <span class="math inline">\(Y\)</span> on <span class="math inline">\(X_2\)</span> , <span class="math inline">\(X_3\)</span>,…, <span class="math inline">\(X_k\)</span>, and let <span class="math inline">\(\tilde{Y}\)</span> denote the residuals from this regression; and</li>
+<li>Regress <span class="math inline">\(\tilde{Y}\)</span> on <span class="math inline">\(\tilde{X_1}\)</span></li>
+</ol>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>y_x2<span class="ot">&lt;-</span><span class="fu">lm</span>(testscr<span class="sc">~</span>el_pct, <span class="at">data=</span>caschool)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>x1_x2<span class="ot">&lt;-</span><span class="fu">lm</span>(str<span class="sc">~</span>el_pct,<span class="at">data=</span>caschool)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>resid1<span class="ot">&lt;-</span>y_x2<span class="sc">$</span>residuals</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>resid2<span class="ot">&lt;-</span>x1_x2<span class="sc">$</span>residuals</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>resid_mod<span class="ot">&lt;-</span><span class="fu">lm</span>(resid1<span class="sc">~</span>resid2)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>models<span class="ot">&lt;-</span><span class="fu">list</span>(mod1, mod2,resid_mod)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;"> Model 1 </th>
+   <th style="text-align:center;"> Model 2 </th>
+   <th style="text-align:center;"> Model 3 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:center;"> 698.933 </td>
+   <td style="text-align:center;"> 686.032 </td>
+   <td style="text-align:center;"> 0.000 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (9.467) </td>
+   <td style="text-align:center;"> (7.411) </td>
+   <td style="text-align:center;"> (0.705) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> str </td>
+   <td style="text-align:center;"> −2.280 </td>
+   <td style="text-align:center;"> −1.101 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.480) </td>
+   <td style="text-align:center;"> (0.380) </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> el_pct </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> −0.650 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (0.039) </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> resid2 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> −1.101 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.380) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 420 </td>
+   <td style="text-align:center;"> 420 </td>
+   <td style="text-align:center;"> 420 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 </td>
+   <td style="text-align:center;"> 0.051 </td>
+   <td style="text-align:center;"> 0.426 </td>
+   <td style="text-align:center;"> 0.020 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Adj. </td>
+   <td style="text-align:center;"> 0.049 </td>
+   <td style="text-align:center;"> 0.424 </td>
+   <td style="text-align:center;"> 0.017 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AIC </td>
+   <td style="text-align:center;"> 3650.5 </td>
+   <td style="text-align:center;"> 3441.1 </td>
+   <td style="text-align:center;"> 3439.1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BIC </td>
+   <td style="text-align:center;"> 3662.6 </td>
+   <td style="text-align:center;"> 3457.3 </td>
+   <td style="text-align:center;"> 3451.2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Log.Lik. </td>
+   <td style="text-align:center;"> −1822.250 </td>
+   <td style="text-align:center;"> −1716.561 </td>
+   <td style="text-align:center;"> −1716.561 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> F </td>
+   <td style="text-align:center;"> 22.575 </td>
+   <td style="text-align:center;"> 155.014 </td>
+   <td style="text-align:center;"> 8.407 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RMSE </td>
+   <td style="text-align:center;"> 18.54 </td>
+   <td style="text-align:center;"> 14.41 </td>
+   <td style="text-align:center;"> 14.41 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="measures-of-fit-for-multiple-regression" class="level2">
+<h2 class="anchored" data-anchor-id="measures-of-fit-for-multiple-regression">Measures of Fit for Multiple Regression</h2>
+<p>(SW Section 6.4) <span class="math inline">\(Actual = predicted + residual\)</span> <span class="math inline">\(Y_i = \hat{Y_i} + \hat{u_i}\)</span></p>
+<p>SER = std. deviation of <span class="math inline">\(\hat{u_i}\)</span> (with d.f. correction) RMSE = std. deviation of <span class="math inline">\(\hat{u_i}\)</span> (without d.f. correction) <span class="math inline">\(R^2\)</span> = fraction of variance of Y explained by X <span class="math inline">\(\bar{R^2}\)</span> = “adjusted <span class="math inline">\(R^2\)</span>” = <span class="math inline">\(R^2\)</span> with a degrees-of-freedom correction that adjusts for estimation uncertainty; <span class="math inline">\(\bar{R^2} &lt;R^2\)</span></p>
+</section>
+<section id="ser-and-rmse" class="level2">
+<h2 class="anchored" data-anchor-id="ser-and-rmse">SER and RMSE</h2>
+<p>As in regression with a single regressor, the SER and the RMSE are measures of the spread of the Ys around the regression line:</p>
+<p><span class="math inline">\(SER = \sqrt {\frac{1}{n-k-1} \sum_{i = 1}^n \hat{u}^2_i}\)</span></p>
+<p><span class="math inline">\(RMSE = \sqrt {\frac{1}{n} \sum_{i = 1}^n \hat{u}^2_i}\)</span></p>
+</section>
+<section id="r2-and-barr2-adjusted-r2" class="level2">
+<h2 class="anchored" data-anchor-id="r2-and-barr2-adjusted-r2"><span class="math inline">\(R^2\)</span> and <span class="math inline">\(\bar{R^2}\)</span> (adjusted R2)</h2>
+<p>The <span class="math inline">\(R^2\)</span> is the fraction of the variance explained – same definition as in regression with a single regressor: <span class="math inline">\(R^2 = {ESS/TSS}=1-{SSR/TSS}\)</span></p>
+<p><span class="math inline">\(\bar{R}^2 = 1-\frac{n-1}{n-k-1} \, \frac{SSR}{TSS}.\)</span></p>
+<p>Measures of fit, ctd. Test score example: (1) <span class="math inline">\(\widehat{TestScore}= 698.9 – 2.28STR\)</span><br>
+(2) <span class="math inline">\(\widehat{TestScore} = 686.0 – 1.10STR – 0.65PctEL,\\R^2=0.426, \bar{R^2}=0.424, SER=14.5\)</span></p>
+<ul>
+<li>What – precisely – does this tell you about the fit of regression (2) compared with regression (1)?</li>
+<li>Why are the <span class="math inline">\(R^2\)</span> and <span class="math inline">\(\bar{R^2}\)</span> so close in (2)?</li>
+</ul>
+</section>
+<section id="the-least-squares-assumptions-in-the-multiple-regression-model" class="level2">
+<h2 class="anchored" data-anchor-id="the-least-squares-assumptions-in-the-multiple-regression-model">The Least Squares Assumptions in the Multiple Regression Model</h2>
+<p>The multiple regression model is given by <span class="math inline">\(Y_i = \beta_0 + \beta_1 X_{1i} + \beta_1 X_{2i} + \dots + \beta_k X_{ki} + u_i \ , \ i=1,\dots,n.\)</span></p>
+<p>The OLS assumptions in the multiple regression model are an extension of the ones made for the simple regression model:</p>
+<ol type="1">
+<li><span class="math inline">\(u_i\)</span> is an error term with conditional mean zero given the regressors, i.e., <span class="math inline">\(E(u_i\vert X_{1i}, X_{2i}, \dots, X_{ki}) = 0.\)</span></li>
+</ol>
+</section>
+<section id="section-14" class="level2">
+<h2 class="anchored" data-anchor-id="section-14"></h2>
+<p>2.Regressors <span class="math inline">\((X_{1i}, X_{2i}, \dots, X_{ki}, Y_i) \ , \ i=1,\dots,n\)</span> are drawn such that the i.i.d. assumption holds.</p>
+<ol start="3" type="1">
+<li>Large outliers are unlikely, formally <span class="math inline">\(X_{1i},\dots,X_{ki}\)</span> and <span class="math inline">\(Y_i\)</span> have finite fourth moments.</li>
+<li>No perfect multicollinearity.</li>
+</ol>
+</section>
+<section id="assumption-1-the-conditional-mean-of-u-given-the" class="level2">
+<h2 class="anchored" data-anchor-id="assumption-1-the-conditional-mean-of-u-given-the">Assumption #1: the conditional mean of u given the</h2>
+<p>included Xs is zero. <span class="math inline">\(E(u_i\vert X_{1i}, X_{2i}, \dots, X_{ki}) = 0.\)</span> - This has the same interpretation as in regression with a single regressor. - Failure of this condition leads to omitted variable bias, specifically, if an omitted variable (1) belongs in the equation (so is in <span class="math inline">\(u\)</span>) and (2) is correlated with an included <span class="math inline">\(X\)</span> then this condition fails and there is OV bias. - The best solution, if possible, is to include the omitted variable in the regression. - A second, related solution is to include a variable that controls for the omitted variable (discussed in Ch. 7)</p>
+</section>
+<section id="assumption-2" class="level2">
+<h2 class="anchored" data-anchor-id="assumption-2">Assumption #2</h2>
+<p><span class="math inline">\((X_{1i}, X_{2i}, \dots, X_{ki}, Y_i) \ , \ i=1,\dots,n\)</span> This is satisfied automatically if the data are collected by simple random sampling.</p>
+<p><strong><em>Assumption #3: large outliers are rare (finite fourth moments)</em></strong> This is the same assumption as we had before for a single regressor. As in the case of a single regressor, OLS can be sensitive to large outliers, so you need to check your data (scatterplots!) to make sure there are no crazy values (typos or coding errors).</p>
+</section>
+<section id="assumption-4-there-is-no-perfect-multicollinearity" class="level2">
+<h2 class="anchored" data-anchor-id="assumption-4-there-is-no-perfect-multicollinearity">Assumption #4 : There is no perfect multicollinearity</h2>
+<p>Perfect multicollinearity is when one of the regressors is an exact linear function of the other regressors. Example: Suppose you accidentally include <strong>STR</strong> twice</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;"> Model 1 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:center;"> 698.933 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (9.467) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> str </td>
+   <td style="text-align:center;"> −2.280 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.480) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 420 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 </td>
+   <td style="text-align:center;"> 0.051 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Adj. </td>
+   <td style="text-align:center;"> 0.049 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AIC </td>
+   <td style="text-align:center;"> 3650.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BIC </td>
+   <td style="text-align:center;"> 3662.6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Log.Lik. </td>
+   <td style="text-align:center;"> −1822.250 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> F </td>
+   <td style="text-align:center;"> 22.575 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RMSE </td>
+   <td style="text-align:center;"> 18.54 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="perfect-multicollinearity" class="level2">
+<h2 class="anchored" data-anchor-id="perfect-multicollinearity">Perfect multicollinearity</h2>
+<p>It occurs when one of the regressors is an exact linear function of the other regressors. - In the previous regression, <span class="math inline">\(\beta_1\)</span> is the effect on TestScore of a unit change in STR, holding STR constant (???) - We will return to perfect (and imperfect) multicollinearity shortly, with more examples… With these least squares assumptions in hand, we now can derive the sampling distribution of <span class="math inline">\(\hat{\beta_1}, \dots,\hat{\beta_k}\)</span></p>
+</section>
+<section id="the-sampling-distribution-of-the-ols-estimator" class="level2">
+<h2 class="anchored" data-anchor-id="the-sampling-distribution-of-the-ols-estimator">The Sampling Distribution of the OLS Estimator</h2>
+<p>Under the four Least Squares Assumptions</p>
+<p>- The sampling distribution of <span class="math inline">\(\hat{\beta_1}\)</span> has mean <span class="math inline">\(\beta_1\)</span> -<span class="math inline">\(var(\hat{\beta_1}\)</span> is inversely proportional to n.</p>
+<p>- Other than its mean and variance, the exact (finite-n) distribution of <span class="math inline">\(\hat{\beta_1}\)</span> is very complicated; but for large n…</p>
+<ul>
+<li><p><span class="math inline">\(\hat{\beta_1}\)</span> is consistent <span class="math inline">\(\hat\beta_1 \xrightarrow[]{p} \beta_1\)</span> (law of large numbers) is approximately distributed N(0,1) (CLT) oThese statements hold for 1 <span class="math inline">\(\frac{\hat{\beta_1} - \beta_1}{SE(\hat{\beta_1})}\)</span> is approximately N(0,1) (CLT)</p></li>
+<li><p>These statements hold for <span class="math inline">\(\hat{\beta_1},\dots,\hat{\beta_k}\)</span> Conceptually, there is nothing new here</p></li>
+</ul>
+</section>
+<section id="multicollinearity-perfect-and-imperfect" class="level2">
+<h2 class="anchored" data-anchor-id="multicollinearity-perfect-and-imperfect">Multicollinearity, Perfect and Imperfect</h2>
+<p>Perfect multicollinearity is when one of the regressors is an exact linear function of the other regressors.</p>
+<p>Some more examples of perfect multicollinearity</p>
+<ol type="1">
+<li>The example from before: you include STR twice,</li>
+<li>Regress TestScore on a constant, D, and B, where: <span class="math inline">\(D_i = 1\)</span> if <span class="math inline">\(STR ≤ 20\)</span>, <span class="math inline">\(= 0\)</span> otherwise; <span class="math inline">\(B_i = 1\)</span> if <span class="math inline">\(STR &gt;20, = 0\)</span> otherwise, so <span class="math inline">\(B_i = 1 – D_i\)</span> and there is perfect multicollinearity.</li>
+<li>Would there be perfect multicollinearity if the intercept (constant) were excluded from this regression? This example is a special case of…</li>
+</ol>
+</section>
+<section id="the-dummy-variable-trap" class="level2">
+<h2 class="anchored" data-anchor-id="the-dummy-variable-trap">The dummy variable trap</h2>
+<p>Suppose you have a set of multiple binary (dummy) variables, which are mutually exclusive and exhaustive – that is, there are multiple categories and every observation falls in one and only one category (Freshmen, Sophomores, Juniors, Seniors, Other). If you include all these dummy variables and a constant, you will have perfect multicollinearity – this is sometimes called the <strong><em>dummy variable trap</em></strong>.<br>
+- Why is there perfect multicollinearity here? - Solutions to the dummy variable trap: 1. Omit one of the groups (e.g.&nbsp;Senior), or 2. Omit the intercept - What are the implications of (1) or (2) for the interpretation of the coefficients?</p>
+</section>
+<section id="section-15" class="level2">
+<h2 class="anchored" data-anchor-id="section-15"></h2>
+<p><strong><em>Perfect multicollinearity, ctd.</em></strong> Perfect multicollinearity usually reflects a mistake in the definitions of the regressors, or an oddity in the data<br>
+- If you have perfect multicollinearity, your statistical software will let you know – either by crashing or giving an error message or by “dropping” one of the variables arbitrarily - The solution to perfect multicollinearity is to modify your list of regressors so that you no longer have perfect multicollinearity.</p>
+</section>
+<section id="imperfect-multicollinearity" class="level2">
+<h2 class="anchored" data-anchor-id="imperfect-multicollinearity">Imperfect multicollinearity</h2>
+<p>Imperfect and perfect multicollinearity are quite different despite the similarity of the names. Imperfect multicollinearity occurs when two or more regressors are very highly correlated. - Why the term “multicollinearity”? If two regressors are very highly correlated, then their scatterplot will pretty much look like a straight line – they are “co-linear” – but unless the correlation is exactly <span class="math inline">\(\pm1\)</span>, that collinearity is imperfect.</p>
+</section>
+<section id="imperfect-multicollinearity-ctd." class="level2">
+<h2 class="anchored" data-anchor-id="imperfect-multicollinearity-ctd.">Imperfect multicollinearity, ctd.</h2>
+<p>Imperfect multicollinearity implies that one or more of the regression coefficients will be imprecisely estimated. - The idea: the coefficient on <span class="math inline">\(X_1\)</span> is the effect of <span class="math inline">\(X_1\)</span> holding <span class="math inline">\(X_2\)</span> constant; but if <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are highly correlated, there is very little variation in <span class="math inline">\(X_1\)</span> once <span class="math inline">\(X_2\)</span> is held constant – so the data don’t contain much information about what happens when <span class="math inline">\(X_1\)</span> changes but <span class="math inline">\(X_2\)</span> doesn’t. If so, the variance of the OLS estimator of the coefficient on <span class="math inline">\(X_1\)</span> will be large. - Imperfect multicollinearity (correctly) results in large standard errors for one or more of the OLS coefficients. - The math? See SW, App. 6.2</p>
+</section>
+<section id="hypothesis-testing-and-confidence-intervals-in-multiple-regressions" class="level2">
+<h2 class="anchored" data-anchor-id="hypothesis-testing-and-confidence-intervals-in-multiple-regressions">Hypothesis Testing and Confidence Intervals in Multiple Regressions</h2>
+</section>
+<section id="joint-hypothesis-testing-using-the-f-statistic" class="level2">
+<h2 class="anchored" data-anchor-id="joint-hypothesis-testing-using-the-f-statistic">Joint Hypothesis Testing Using the F-Statistic</h2>
+<p><span class="math inline">\(\widehat{TestScore} = \underset{(15.21)}{649.58} -\underset{(0.48)}{0.29} \times size - \underset{(0.04)}{0.66} \times english + \underset{(1.41)}{3.87} \times expenditure.\)</span></p>
+<p><span class="math inline">\(F-Statistics\)</span> is given as below <span class="math inline">\(F = \frac{(SSR_{\text{restricted}} - SSR_{\text{unrestricted}})/q}{SSR_{\text{unrestricted}} / (n-k-1)}\)</span> with<br>
+S S R r e s t r i c t e d being the sum of squared residuals from the restricted regression, i.e., the regression where we impose the restriction. <span class="math inline">\(SSR_{unrestricted}\)</span> is the sum of squared residuals from the full model, <span class="math inline">\(q\)</span> is the number of restrictions under the null and <span class="math inline">\(k\)</span> is the number of regressors in the unrestricted regression. It is fairly easy to conduct <span class="math inline">\(F-tests\)</span> in <span class="math inline">\(R\)</span>. We can use the function linearHypothesis()contained in the Hypothesis Testing and Confidence Intervals in Multiple Regressions.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: carData</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'car'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    recode</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:purrr':
+
+    some</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate the multiple regression model</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(testscr <span class="sc">~</span> str <span class="sc">+</span> el_pct <span class="sc">+</span> meal_pct, <span class="at">data =</span> caschool)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># execute the function on the model object and provide both linear restrictions </span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># to be tested as strings</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">linearHypothesis</span>(model, <span class="fu">c</span>(<span class="st">"str=0"</span>, <span class="st">"el_pct=0"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear hypothesis test
+
+Hypothesis:
+str = 0
+el_pct = 0
+
+Model 1: restricted model
+Model 2: testscr ~ str + el_pct + meal_pct
+
+  Res.Df   RSS Df Sum of Sq     F  Pr(&gt;F)    
+1    418 37303                               
+2    416 34298  2    3004.3 18.22 2.6e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>To test <span class="math inline">\(\beta_2+\beta_3=1\)</span> we can proceed as follows:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">linearHypothesis</span>(model,<span class="fu">c</span>(<span class="st">'el_pct+meal_pct=1'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear hypothesis test
+
+Hypothesis:
+el_pct  + meal_pct = 1
+
+Model 1: restricted model
+Model 2: testscr ~ str + el_pct + meal_pct
+
+  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)    
+1    417 410435                                  
+2    416  34298  1    376136 4562.1 &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<section id="correlations" class="level3">
+<h3 class="anchored" data-anchor-id="correlations">Correlations</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrr)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>caschool<span class="sc">|&gt;</span> <span class="fu">select</span>(testscr, str, el_pct, meal_pct, calw_pct)<span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">correlate</span>()<span class="sc">|&gt;</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()<span class="sc">+</span><span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span><span class="fu">round</span>(r,<span class="at">digits =</span> <span class="dv">2</span>)),<span class="at">size=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="fig-7.2" class="level3">
+<h3 class="anchored" data-anchor-id="fig-7.2">Fig 7.2</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>p1<span class="ot">&lt;-</span> <span class="fu">ggplot</span>(caschool)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span>el_pct,<span class="at">y=</span>testscr)<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"percent"</span>,<span class="at">y=</span><span class="st">"Test Score"</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>p2<span class="ot">&lt;-</span> <span class="fu">ggplot</span>(caschool)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span>meal_pct,<span class="at">y=</span>testscr)<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"percent"</span>,<span class="at">y=</span><span class="st">"Test Score"</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>p3<span class="ot">&lt;-</span> <span class="fu">ggplot</span>(caschool)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span>calw_pct,<span class="at">y=</span>testscr)<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"percent"</span>,<span class="at">y=</span><span class="st">"Test Score"</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'gridExtra'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    combine</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#grid.arrange(p1,p2,p3, nrow=3)</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>p1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>p2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-9-2.png" class="img-fluid" width="672"></p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>p3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-9-3.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="table-7.1-results-of-regressions-of-test-scores-on-student-teacher-ratio" class="level2">
+<h2 class="anchored" data-anchor-id="table-7.1-results-of-regressions-of-test-scores-on-student-teacher-ratio">Table 7.1 Results of Regressions of Test Scores on Student-Teacher Ratio</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#vtable(caschool)</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>m1<span class="ot">&lt;-</span><span class="fu">lm</span>(testscr<span class="sc">~</span>str,<span class="at">data =</span> caschool)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>m2<span class="ot">&lt;-</span><span class="fu">lm</span>(testscr<span class="sc">~</span>str<span class="sc">+</span>el_pct,<span class="at">data =</span> caschool)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>m3<span class="ot">&lt;-</span><span class="fu">lm</span>(testscr<span class="sc">~</span>str<span class="sc">+</span>el_pct<span class="sc">+</span>meal_pct,<span class="at">data =</span> caschool)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>m4<span class="ot">&lt;-</span><span class="fu">lm</span>(testscr<span class="sc">~</span>str<span class="sc">+</span>el_pct<span class="sc">+</span>calw_pct,<span class="at">data =</span> caschool)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fixest)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>models<span class="ot">&lt;-</span><span class="fu">list</span>(m1,m2,m3,m4)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(huxtable)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="co">#etable(m1,m2,m3,m4)</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models,<span class="at">estimate =</span> <span class="st">"{estimate}{stars}"</span>, <span class="at">output=</span><span class="st">"huxtable"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<table class="huxtable" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; ; margin-left: auto; margin-right: auto;  " id="tab:unnamed-chunk-10">
+<colgroup><col><col><col><col><col></colgroup><tbody><tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"> </th><th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Model 1</th><th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Model 2</th><th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Model 3</th><th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Model 4</th></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(Intercept)</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">698.933***</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">686.032***</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">700.150***</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">697.999***</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(9.467)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(7.411)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(4.686)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(6.024)</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">str</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-2.280***</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-1.101**</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-0.998***</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-1.308***</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.480)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.380)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.239)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.307)</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">el_pct</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-0.650***</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-0.122***</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-0.488***</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.039)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.032)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.033)</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">meal_pct</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-0.547***</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.022)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">calw_pct</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-0.790***</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.053)</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Num.Obs.</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">420</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">420</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">420</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">420</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">R2</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.051</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.426</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.775</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.629</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">R2 Adj.</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.049</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.424</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.773</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.626</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">AIC</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">3650.5</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">3441.1</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">3051.0</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">3260.7</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">BIC</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">3662.6</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">3457.3</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">3071.2</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">3280.9</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Log.Lik.</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-1822.250</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-1716.561</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-1520.499</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-1625.328</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">F</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">22.575</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">155.014</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">476.306</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">234.638</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">RMSE</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">18.54</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">14.41</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">9.04</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">11.60</td></tr>
+</tbody></table>
+
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#modelsummary(models, fmt=4)</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co">#modelsummary(models,</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a> <span class="co">#            statistic = "{std.error} ({p.value})")</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">#modelsummary(models,</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a> <span class="co">#            estimate = "{estimate}{stars}",</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#           gof_omit = ".*")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,32 @@
+{
+    "id": "5C82DB12",
+    "path": "D:/RepTemplates/econometrics/index.rmd",
+    "project_path": "index.rmd",
+    "type": "r_markdown",
+    "hash": "2478461739",
+    "contents": "",
+    "dirty": false,
+    "created": 1660755633077.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "rmdVisualMode": "false",
+        "rmdVisualWrapConfigured": "true",
+        "tempName": "Untitled2",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "447,17",
+        "scrollLine": "439",
+        "docOutlineVisible": "0",
+        "rmdVisualCollapsedChunks": "",
+        "rmdVisualModeLocation": "20828:10794.6669921875"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1660787663,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1660787663580,
+    "read_only": false,
+    "read_only_alternatives": []
+}
