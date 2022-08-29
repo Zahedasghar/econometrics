@@ -88,10 +88,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="index_files/libs/quarto-html/anchor.min.js"></script>
 <link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
 
 <script src="index_files/libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="index_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
@@ -1184,8 +1184,8 @@ If <span class="math inline">\(D_{1i}\)</span> switches from <span class="math i
 <h2 class="smallest anchored" data-anchor-id="nonlinear-effect-of-the-str-on-testscr">Nonlinear Effect of the str on testscr</h2>
 <p><span class="math inline">\(\begin{align} TestScore_i =&amp; \beta_0 + \beta_1 size_i + \beta_4 english_i + \beta_9 lunch_i + u_i \\ TestScore_i =&amp; \beta_0 + \beta_1 size_i + \beta_4 english_i + \beta_9 lunch_i + \beta_{10} \ln(income_i) + u_i \\ TestScore_i =&amp; \beta_0 + \beta_1 size_i + \beta_5 HiEL_i + \beta_6 (HiEL_i\times size_i) + u_i \\ TestScore_i =&amp; \beta_0 + \beta_1 size_i + \beta_5 HiEL_i + \beta_6 (HiEL_i\times size_i) + \beta_9 lunch_i + \beta_{10} \ln(income_i) + u_i \\ TestScore_i =&amp; \beta_0 + \beta_1 size_i + \beta_2 size_i^2 + \beta_5 HiEL_i + \beta_9 lunch_i + \beta_{10} \ln(income_i) + u_i \\ TestScore_i =&amp; \beta_0 + \beta_1 size_i + \beta_2 size_i^2 + \beta_3 size_i^3 + \beta_5 HiEL_i + \beta_6 (HiEL\times size) \\ &amp;+ \beta_7 (HiEL_i\times size_i^2) + \beta_8 (HiEL_i\times size_i^3) + \beta_9 lunch_i + \beta_{10} \ln(income_i) + u_i \\ TestScore_i =&amp; \beta_0 + \beta_1 size_i + \beta_2 size_i^2 + \beta_3 size_i^3 + \beta_4 english + \beta_9 lunch_i + \beta_{10} \ln(income_i) + u_i \end{align}\)</span></p>
 </section>
-<section id="estimate-models" class="level2 scrollable">
-<h2 class="scrollable anchored" data-anchor-id="estimate-models">Estimate models</h2>
+<section id="estimate-models" class="level2 smallest">
+<h2 class="smallest anchored" data-anchor-id="estimate-models">Estimate models</h2>
 <div class="cell">
 <details>
 <summary>Code</summary>
@@ -1213,16 +1213,22 @@ If <span class="math inline">\(D_{1i}\)</span> switches from <span class="math i
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sandwich)</span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># gather robust standard errors in a list</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="co"># generate a LaTeX table of regression outputs</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>rob_se <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">vcovHC</span>(testscr_mod1, <span class="at">type =</span> <span class="st">"HC1"</span>))),</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>               <span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">vcovHC</span>(testscr_mod2, <span class="at">type =</span> <span class="st">"HC1"</span>))),</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>               <span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">vcovHC</span>(testscr_mod3, <span class="at">type =</span> <span class="st">"HC1"</span>))),</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>               <span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">vcovHC</span>(testscr_mod4, <span class="at">type =</span> <span class="st">"HC1"</span>))),</span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>               <span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">vcovHC</span>(testscr_mod5, <span class="at">type =</span> <span class="st">"HC1"</span>))),</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>               <span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">vcovHC</span>(testscr_mod6, <span class="at">type =</span> <span class="st">"HC1"</span>))),</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>               <span class="fu">sqrt</span>(<span class="fu">diag</span>(<span class="fu">vcovHC</span>(testscr_mod7, <span class="at">type =</span> <span class="st">"HC1"</span>))))</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a><span class="co"># generate a LaTeX table of regression outputs</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>models<span class="ot">&lt;-</span><span class="fu">list</span>(testscr_mod1,testscr_mod2,testscr_mod3,testscr_mod4,testscr_mod5,testscr_mod6,testscr_mod7)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 

@@ -536,7 +536,7 @@ $\widehat{TestScore} = \underset{(11.76)}{686.3} - \underset{(0.59)}{1.12} \time
 
 $\begin{align} TestScore_i =& \beta_0 + \beta_1 size_i + \beta_4 english_i + \beta_9 lunch_i + u_i \\ TestScore_i =& \beta_0 + \beta_1 size_i + \beta_4 english_i + \beta_9 lunch_i + \beta_{10} \ln(income_i) + u_i \\ TestScore_i =& \beta_0 + \beta_1 size_i + \beta_5 HiEL_i + \beta_6 (HiEL_i\times size_i) + u_i \\ TestScore_i =& \beta_0 + \beta_1 size_i + \beta_5 HiEL_i + \beta_6 (HiEL_i\times size_i) + \beta_9 lunch_i + \beta_{10} \ln(income_i) + u_i \\ TestScore_i =& \beta_0 + \beta_1 size_i + \beta_2 size_i^2 + \beta_5 HiEL_i + \beta_9 lunch_i + \beta_{10} \ln(income_i) + u_i \\ TestScore_i =& \beta_0 + \beta_1 size_i + \beta_2 size_i^2 + \beta_3 size_i^3 + \beta_5 HiEL_i + \beta_6 (HiEL\times size) \\ &+ \beta_7 (HiEL_i\times size_i^2) + \beta_8 (HiEL_i\times size_i^3) + \beta_9 lunch_i + \beta_{10} \ln(income_i) + u_i \\ TestScore_i =& \beta_0 + \beta_1 size_i + \beta_2 size_i^2 + \beta_3 size_i^3 + \beta_4 english + \beta_9 lunch_i + \beta_{10} \ln(income_i) + u_i \end{align}$
 
-## Estimate models {.scrollable}
+## Estimate models {.smallest}
 
 ```{r}
 # estimate all models
@@ -562,12 +562,18 @@ library(stargazer)
 library(lmtest)
 library(sandwich)
 # gather robust standard errors in a list
+rob_se <- list(sqrt(diag(vcovHC(testscr_mod1, type = "HC1"))),
+               sqrt(diag(vcovHC(testscr_mod2, type = "HC1"))),
+               sqrt(diag(vcovHC(testscr_mod3, type = "HC1"))),
+               sqrt(diag(vcovHC(testscr_mod4, type = "HC1"))),
+               sqrt(diag(vcovHC(testscr_mod5, type = "HC1"))),
+               sqrt(diag(vcovHC(testscr_mod6, type = "HC1"))),
+               sqrt(diag(vcovHC(testscr_mod7, type = "HC1"))))
 
 # generate a LaTeX table of regression outputs
 ```
 
 ```{r}
 models<-list(testscr_mod1,testscr_mod2,testscr_mod3,testscr_mod4,testscr_mod5,testscr_mod6,testscr_mod7)
-library(modelsummary)
 modelsummary(models)
 ```
