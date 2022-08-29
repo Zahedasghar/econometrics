@@ -1,0 +1,92 @@
+---
+title: "Growth and Tradeshare"
+author: "Zahid Asghar<br><br> School of Economics, QAU, Islamabad"
+logo: "QAU-Logo.jpg"
+format: 
+  html:
+    toc: true
+    code-fold: true
+editor: visual
+---
+
+## Growth and Trade Openess
+
+Exclude `Malta` and carry out the following exercises. a. Run a regression of Growth on TradeShare, YearsSchool, Rev_Coups, Assassinations, and RGDP60. Construct a 95% confidence interval for the coefficient on TradeShare. Is the coefficient statistically significant at the 5% level? b. Test whether, taken as a group, YearsSchool, Rev_Coups, Assassinations, and RGDP60 can be omitted from the regression. What is the p-value of the F-statistic?
+
+### 
+
+Simple Linear Regression
+
+```{r}
+#| warning: false
+#| message: false
+library(tidyverse)
+library(haven)
+library(kableExtra)
+growth <- read_dta("Growth.dta")
+library(modelsummary)
+library(rstatix)
+library(vtable)
+vtable(growth)
+```
+
+Get an over of data as follows:
+
+```{r}
+glimpse(growth)
+ggplot(growth)+aes(x=tradeshare,y=growth)+geom_point()
+```
+
+There seems an outlier and lets find out which value it is. Secondly what happens if we exclude this value as we have discussed OLS is sensitive to outliers.
+
+```{r}
+ggplot(growth)+aes(x=tradeshare,y=growth,color="red",label=country_name)+geom_point()+
+geom_text(aes(label=ifelse(tradeshare>1.5,as.character(country_name),'')),hjust=0,vjust=0)+theme_minimal()
+```
+
+We observe that **Malta** is an outlier. Does this outlier affects **OLS** results it is very sensitive to outliers. We run both models : one with having Malta included and other by excluding Malta to analyze impact of tradeshare on growth rate.
+
+```{r}
+ggplot(growth)+aes(x=tradeshare,y=growth,color="red",label=country_name)+geom_point()+
+geom_text(aes(label=ifelse(tradeshare>1.5,as.character(country_name),'')),hjust=0,vjust=0)+theme_minimal()+geom_smooth(method = "lm",se=FALSE)
+
+```
+
+```{r}
+#| warning: false
+#| message: false
+library(huxtable)
+Growth<-growth %>% filter(country_name!="Malta")
+mod_malta<-lm(growth~tradeshare,data=growth)
+mod_womalta<-lm(growth~tradeshare,data=Growth)
+models<-list(mod_malta,mod_womalta)
+tab<-modelsummary(models,estimate = "{estimate}{stars}", output="huxtable")
+# customize table with `huxtable`
+tab %>%
+   
+    # text color
+    set_text_color(row = 4, col = 1:ncol(.), value = 'red')
+```
+
+#### Exclude `Malta` and carry out the following exercises.
+
+a.  Run a regression of Growth on TradeShare, YearsSchool, Rev_Coups, Assassinations, and RGDP60. Construct a 95% confidence interval for the coefficient on TradeShare. Is the coefficient statistically significant at the 5% level?
+
+```{r}
+glimpse(Growth)
+gr_model<- lm(growth~tradeshare+yearsschool+rev_coups+assasinations+rgdp60,data=Growth)
+modelsummary(gr_model)
+```
+
+95% confidence interval can be calculated as follows:
+
+**`r confint(gr_model, 'tradeshare', level=0.95)`**
+
+#### b. Test whether, taken as a group, YearsSchool, Rev_Coups, Assassinations, and RGDP60 can be omitted from the regression. What is the p-value of the F-statistic?
+
+```{r}
+#| warning: false
+#| message: false
+library(car)
+linearHypothesis(gr_model,c("yearsschool=0","rev_coups=0","assasinations=0","rgdp60=0"))
+```

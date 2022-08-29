@@ -6,6 +6,7 @@ format:
   html:
     toc: true
     code-fold: true
+
 editor: visual
 ---
 
@@ -451,9 +452,10 @@ m1<-lm(testscr~str,data = caschool)
 m2<-lm(testscr~str+el_pct,data = caschool)
 m3<-lm(testscr~str+el_pct+meal_pct,data = caschool)
 m4<-lm(testscr~str+el_pct+calw_pct,data = caschool)
+m5<-lm(testscr~str+el_pct+meal_pct+calw_pct,data = caschool)
 library(fixest)
 library(modelsummary)
-models<-list(m1,m2,m3,m4)
+models<-list(m1,m2,m3,m4,m5)
 library(huxtable)
 #etable(m1,m2,m3,m4)
 modelsummary(models,estimate = "{estimate}{stars}", output="huxtable")

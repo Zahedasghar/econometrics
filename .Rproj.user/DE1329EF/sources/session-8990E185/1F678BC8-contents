@@ -1,5 +1,0 @@
-pkg_list <- c(
-  "tidyverse", "gt", "gtExtras", "reactable", "ggiraph", "here", "quarto",
-  "rmarkdown", "gtsummary", "palmerpenguins", "fs", "skimr"
-)
-install.packages(pkg_list)
