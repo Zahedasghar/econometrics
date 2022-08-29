@@ -2,10 +2,11 @@
 title: "Linear Regression with Multiple Regressors"
 author: "Zahid Asghar<br><br> School of Economics, QAU, Islamabad"
 logo: "QAU-Logo.jpg"
-format: 
-  html:
-    toc: true
-    code-fold: true
+format:
+  revealjs: 
+    theme: [default, custom.scss]
+    editor: visual
+
 editor: visual
 ---
 
@@ -21,7 +22,7 @@ editor: visual
 
 5.  Sampling distribution of the OLS estimator
 
-## Omitted Variable Bias
+## Omitted Variable Bias {.smaller}
 
 The error $u$ arises because of factors, or variables, that influence Y but are not included in the regression function. There are always omitted variables. Sometimes, the omission of those variables can lead to bias in the OLS estimator.
 
@@ -31,7 +32,7 @@ The bias in the OLS estimator that occurs as a result of an omitted factor, or v
 
 **Both** conditions must hold for the omission of $Z$ to result in omitted variable bias.
 
-## 
+##  {.smaller}
 
 -   In the test score example:
 
@@ -74,8 +75,6 @@ caschool<-caschool %>%   mutate(str_20 = ifelse(str<20, 1,0))
 
 ```
 
-## 
-
 ```{r}
 overall<-caschool %>% t_test(testscr~str_20,var.equal=T)
 el_1.9<-caschool %>% filter(elq1==1) %>% t_test(testscr~str_20,var.equal=T)
@@ -92,8 +91,6 @@ df_tbl
 ```
 
 ## 
-
-![](table6.1.png){width="542"}
 
 -   Districts with fewer English Learners have higher test scores
 
@@ -176,7 +173,7 @@ Randomization + control group means that any differences between the treatment a
 
     -   This is one way to "control" for the effect of PctEL when estimating the effect of STR.
 
-## Return to omitted variable bias
+## Return to omitted variable bias  {.smaller}
 
 Three ways to overcome omitted variable bias
 
@@ -184,11 +181,9 @@ Three ways to overcome omitted variable bias
 
 2.  Adopt the "cross tabulation" approach, with finer gradations of STR and PctEL -- within each group, all classes have the same PctEL, so we control for PctEL (But soon you will run out of data, and what about other determinants like family income and parental education?)
 
-## 
-
 3.  Use a regression in which the omitted variable (PctEL) is no longer omitted: include PctEL as an additional regressor in a multiple regression.
 
-## The Population Regression Function
+## The Population Regression Function  {.smaller}
 
 Consider the two regressors:
 
@@ -208,7 +203,7 @@ $Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + u_i, \ i=1,\dots,n.$
 
 -   $u_i$ = the regression error (omitted factors)
 
-## Interpretation of coefficients in multiple regression
+## Interpretation of coefficients in multiple regression  {.smaller}
 
 $Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + u_i, \ i=1,\dots,n.$\
 Consider changing $X_1$ by $X_1$ while holding $X_2$ constant: Population regression line **before** the change: $Y_i = \beta_0 + \beta_1 X_1 + \beta_2 X_2$\
@@ -311,15 +306,13 @@ Measures of fit, ctd. Test score example: (1) $\widehat{TestScore}= 698.9 – 2.
 -   What -- precisely -- does this tell you about the fit of regression (2) compared with regression (1)?
 -   Why are the $R^2$ and $\bar{R^2}$ so close in (2)?
 
-## The Least Squares Assumptions in the Multiple Regression Model
+## OLS Assumptions in the MLR Model  {.smallest}
 
 The multiple regression model is given by $Y_i = \beta_0 + \beta_1 X_{1i} + \beta_1 X_{2i} + \dots + \beta_k X_{ki} + u_i \ , \ i=1,\dots,n.$
 
 The OLS assumptions in the multiple regression model are an extension of the ones made for the simple regression model:
 
 1.  $u_i$ is an error term with conditional mean zero given the regressors, i.e., $E(u_i\vert X_{1i}, X_{2i}, \dots, X_{ki}) = 0.$
-
-## 
 
 2.Regressors $(X_{1i}, X_{2i}, \dots, X_{ki}, Y_i) \ , \ i=1,\dots,n$ are drawn such that the i.i.d. assumption holds.
 
@@ -336,7 +329,7 @@ $(X_{1i}, X_{2i}, \dots, X_{ki}, Y_i) \ , \ i=1,\dots,n$ This is satisfied autom
 
 ***Assumption #3: large outliers are rare (finite fourth moments)*** This is the same assumption as we had before for a single regressor. As in the case of a single regressor, OLS can be sensitive to large outliers, so you need to check your data (scatterplots!) to make sure there are no crazy values (typos or coding errors).
 
-## Assumption #4 : There is no perfect multicollinearity
+## Assumption #4 : There is no perfect multicollinearity  {.smallest}
 
 Perfect multicollinearity is when one of the regressors is an exact linear function of the other regressors. Example: Suppose you accidentally include **STR** twice
 
@@ -349,7 +342,7 @@ modelsummary(lm(testscr~str+str,data=caschool))
 
 It occurs when one of the regressors is an exact linear function of the other regressors. - In the previous regression, $\beta_1$ is the effect on TestScore of a unit change in STR, holding STR constant (???) - We will return to perfect (and imperfect) multicollinearity shortly, with more examples... With these least squares assumptions in hand, we now can derive the sampling distribution of $\hat{\beta_1}, \dots,\hat{\beta_k}$
 
-## The Sampling Distribution of the OLS Estimator
+## The Sampling Distribution of the OLS Estimator  {.smaller}
 
 Under the four Least Squares Assumptions
 
@@ -361,7 +354,7 @@ Under the four Least Squares Assumptions
 
 -   These statements hold for $\hat{\beta_1},\dots,\hat{\beta_k}$ Conceptually, there is nothing new here
 
-## Multicollinearity, Perfect and Imperfect
+## Multicollinearity, Perfect and Imperfect  {.smaller}
 
 Perfect multicollinearity is when one of the regressors is an exact linear function of the other regressors.
 
@@ -391,12 +384,14 @@ Imperfect multicollinearity implies that one or more of the regression coefficie
 
 ## Hypothesis Testing and Confidence Intervals in Multiple Regressions
 
-## Joint Hypothesis Testing Using the F-Statistic
+## Joint Hypothesis Testing Using the F-Statistic  {.smallest}
 
 $\widehat{TestScore} = \underset{(15.21)}{649.58} -\underset{(0.48)}{0.29} \times size - \underset{(0.04)}{0.66} \times english + \underset{(1.41)}{3.87} \times expenditure.$
 
 $F-Statistics$ is given as below $F = \frac{(SSR_{\text{restricted}} - SSR_{\text{unrestricted}})/q}{SSR_{\text{unrestricted}} / (n-k-1)}$ with\
 S S R r e s t r i c t e d being the sum of squared residuals from the restricted regression, i.e., the regression where we impose the restriction. $SSR_{unrestricted}$ is the sum of squared residuals from the full model, $q$ is the number of restrictions under the null and $k$ is the number of regressors in the unrestricted regression. It is fairly easy to conduct $F-tests$ in $R$. We can use the function linearHypothesis()contained in the Hypothesis Testing and Confidence Intervals in Multiple Regressions.
+
+## 
 
 ```{r}
 library(car)
@@ -408,13 +403,15 @@ model <- lm(testscr ~ str + el_pct + meal_pct, data = caschool)
 linearHypothesis(model, c("str=0", "el_pct=0"))
 ```
 
+##  
+
 To test $\beta_2+\beta_3=1$ we can proceed as follows:
 
 ```{r}
 linearHypothesis(model,c('el_pct+meal_pct=1'))
 ```
 
-### Correlations
+## Correlations
 
 ```{r}
 #| warning: false
@@ -425,7 +422,7 @@ caschool|> select(testscr, str, el_pct, meal_pct, calw_pct)|>
 
 ```
 
-### Fig 7.2
+## Fig 7.2
 
 ```{r}
 p1<- ggplot(caschool)+aes(x=el_pct,y=testscr)+geom_point()+
@@ -437,11 +434,22 @@ p3<- ggplot(caschool)+aes(x=calw_pct,y=testscr)+geom_point()+
 library(gridExtra)
 #grid.arrange(p1,p2,p3, nrow=3)
 p1
+
+```
+
+## 
+
+```{r}
 p2
+```
+
+## 
+
+```{r}
 p3
 ```
 
-## Table 7.1 Results of Regressions of Test Scores on Student-Teacher Ratio
+## Table 7.1 Regressions of Test Scores on Student-Teacher Ratio  {.scrollable}
 
 ```{r}
 #| warning: false
@@ -451,9 +459,10 @@ m1<-lm(testscr~str,data = caschool)
 m2<-lm(testscr~str+el_pct,data = caschool)
 m3<-lm(testscr~str+el_pct+meal_pct,data = caschool)
 m4<-lm(testscr~str+el_pct+calw_pct,data = caschool)
+m5<-lm(testscr~str+el_pct+meal_pct+calw_pct,data = caschool)
 library(fixest)
 library(modelsummary)
-models<-list(m1,m2,m3,m4)
+models<-list(m1,m2,m3,m4,m5)
 library(huxtable)
 #etable(m1,m2,m3,m4)
 modelsummary(models,estimate = "{estimate}{stars}", output="huxtable")
