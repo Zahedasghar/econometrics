@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Zahid Asghar   School of Economics, QAU, Islamabad">
+
+<title>Nonlinear Regression Functions</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+<script src="index_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="index_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Nonlinear Regression Functions</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Zahid Asghar<br><br> School of Economics, QAU, Islamabad </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="nonlinear-regression-function" class="level2">
+<h2 class="anchored" data-anchor-id="nonlinear-regression-function">Nonlinear Regression Function</h2>
+<ul>
+<li><p>Everything so far has been linear in the <span class="math inline">\(X'^s\)</span></p></li>
+<li><p>But the linear approximation is not always a good one</p></li>
+<li><p>The multiple regression framework can be extended to handle regression functions that nonlinear in one or more <span class="math inline">\(X\)</span>.</p>
+<h3 id="outline" class="anchored">Outline</h3>
+<ol type="1">
+<li>Nonlinear regression functions- general comments</li>
+<li>Nonlinear functions of one variable</li>
+<li>Nonlinear functions of two variables: interaction</li>
+</ol></li>
+</ul>
+</section>
+<section id="the-testscore--str-relation-looks-linear-maybe" class="level2">
+<h2 class="anchored" data-anchor-id="the-testscore--str-relation-looks-linear-maybe">The TestScore- STR relation looks linear (maybe)</h2>
+<div class="cell">
+
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(caschool)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span>str,<span class="at">y=</span>testscr)<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>,<span class="at">se=</span><span class="cn">FALSE</span>)<span class="sc">+</span><span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Student teacher ratio"</span>,<span class="at">y=</span><span class="st">"Test score"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="480"></p>
+</div>
+</div>
+</section>
+<section id="testscore-income-relationship-relationship-look-nonlinear" class="level2">
+<h2 class="anchored" data-anchor-id="testscore-income-relationship-relationship-look-nonlinear">Testscore income relationship relationship look nonlinear</h2>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Linear</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Quadratic</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Cubic</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Log&amp;cubic same plot</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(caschool)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span>avginc,<span class="at">y=</span>testscr)<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>,<span class="at">se=</span><span class="cn">FALSE</span>)<span class="sc">+</span><span class="fu">labs</span>(<span class="at">x=</span><span class="st">"District income"</span>,<span class="at">y=</span><span class="st">"Test score"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="576"></p>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(caschool)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span>avginc,<span class="at">y=</span>testscr)<span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"gam"</span>, <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">poly</span>(x,<span class="dv">2</span>), <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">x=</span><span class="st">"District Income (in thousands)"</span>, <span class="at">y=</span><span class="st">"Test Score"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="576"></p>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(caschool)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span>avginc,<span class="at">y=</span>testscr)<span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"gam"</span>, <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">poly</span>(x,<span class="dv">3</span>), <span class="at">se=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">x=</span><span class="st">"District Income (in thousands)"</span>, <span class="at">y=</span><span class="st">"Test Score"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="576"></p>
+</div>
+</div>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(caschool)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span>avginc,<span class="at">y=</span>testscr)<span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ylim</span>(<span class="dv">600</span>, <span class="dv">720</span>) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"gam"</span>, <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">poly</span>(x,<span class="dv">3</span>), <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"gam"</span>, <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">log</span>(x), <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">x=</span><span class="st">"District Income (in thousands)"</span>, <span class="at">y=</span><span class="st">"Test Score"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="576"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="nonlinear-regression-population-regression-functions" class="level2">
+<h2 class="anchored" data-anchor-id="nonlinear-regression-population-regression-functions">Nonlinear Regression Population Regression Functions</h2>
+<p>If a relation between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span> is nonlinear:</p>
+<p>• The effect on <span class="math inline">\(Y\)</span> of a change in <span class="math inline">\(X\)</span> depends on the value of <span class="math inline">\(X\)</span> – that is, the marginal effect of <span class="math inline">\(X\)</span> is not constant • A linear regression is mis-specified – the functional form is wrong • The estimator of the effect on <span class="math inline">\(Y\)</span> of <span class="math inline">\(X\)</span> is biased – it needn’t even be right on average. • The solution to this is to estimate a regression function that is nonlinear in <span class="math inline">\(X\)</span></p>
+</section>
+<section id="the-general-nonlinear-population-regression-function" class="level2">
+<h2 class="anchored" data-anchor-id="the-general-nonlinear-population-regression-function">The general nonlinear population regression function</h2>
+<p><span class="math inline">\(Y_i=f(X_{1i},X_{2i},\dots,X_{Ki})+u_i, i=1,\dots,n\)</span></p>
+<section id="assumptions" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
+<ol type="1">
+<li><span class="math inline">\(E(u_i\vert X_{1i}, X_{2i}, \dots, X_{ki}) = 0.\)</span> (same), implies that <span class="math inline">\(f\)</span> is the conditional expectation of <span class="math inline">\(Y\)</span> given the <span class="math inline">\(X's\)</span>.</li>
+<li><span class="math inline">\((X_{1i}, X_{2i}, \dots, X_{ki},Y_i)\)</span> are i.i.d (same).</li>
+<li>Large outliers are unlikely, formally <span class="math inline">\(X_{1i},\dots,X_{ki}\)</span> and <span class="math inline">\(Y_i\)</span> have finite fourth moments. (same)</li>
+<li>No perfect multicollinearity. (same)</li>
+</ol>
+</section>
+</section>
+<section id="the-expected-effect-on-y-of-a-change-in-x-in-a-nonlinear-regression-model" class="level2">
+<h2 class="anchored" data-anchor-id="the-expected-effect-on-y-of-a-change-in-x-in-a-nonlinear-regression-model">The Expected Effect on <span class="math inline">\(Y\)</span> of a Change in <span class="math inline">\(X\)</span> in a Nonlinear Regression Model</h2>
+<p>Consider the nonlinear regression function: <span class="math inline">\(Y_i = f(X_{1i}, X_{2i}, \dots, X_{ki}) + u_i \ , \ i=1,\dots,n,\)</span></p>
+<p>where where <span class="math inline">\(f(X_{1i}, X_{2i}, \dots, X_{ki})\)</span> is the population regression function and <span class="math inline">\(u_i\)</span> is the error term. Denoted by <span class="math inline">\(\Delta Y\)</span> the expected change in <span class="math inline">\(\Delta X_1\)</span>, the change is <span class="math inline">\(X_1\)</span> while holding <span class="math inline">\((X_1,X_2, ..., X_k)\)</span> constant. That is, the expected change in <span class="math inline">\(Y\)</span> is the difference <span class="math inline">\(\Delta Y = f(X_1 + \Delta X_1, X_2, \cdots, X_k) - f(X_1, X_2, \cdots, X_k).\)</span> The estimator of this unknown population difference is the difference between the predicted values for these two cases. Let <span class="math inline">\(\hat{f}(X_1, X_2, \cdots, X_k)\)</span> be the predicted value of of <span class="math inline">\(Y\)</span> based on the estimator of <span class="math inline">\(\hat{f}\)</span> the population regression function.</p>
+</section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
+<p>Then the predicted change in <span class="math inline">\(Y\)</span> is <span class="math inline">\(\Delta \widehat{Y} = \hat{f}(X_1 + \Delta X_1, X_2, \cdots, X_k) - \hat{f}(X_1, X_2, \cdots, X_k).\)</span></p>
+</section>
+<section id="nonlinear-functions-of-a-single-independent-variable" class="level2">
+<h2 class="anchored" data-anchor-id="nonlinear-functions-of-a-single-independent-variable">Nonlinear Functions of a Single Independent Variable</h2>
+<p>We’ll look at two complementary approaches:</p>
+<ol type="1">
+<li><p>Polynomials in X The population regression function is approximated by a quadratic, cubic, or higher-degree polynomial</p></li>
+<li><p>Logarithmic transformations • Y and/or X is transformed by taking its logarithm • this gives a “percentages” interpretation that makes sense in many applications</p></li>
+</ol>
+</section>
+<section id="polynomials-in-x" class="level2">
+<h2 class="anchored" data-anchor-id="polynomials-in-x">1. Polynomials in X</h2>
+<p>Approximate the population regression function by a polynomial: <span class="math inline">\(Y_i = \beta_0 + \beta_1 X_i + \beta_2 X_i^2 + \cdots + \beta_r X_i^r + u_i.\)</span></p>
+<p>• This is just the linear multiple regression model – except that the regressors are powers of <span class="math inline">\(X!\)</span> • Estimation, hypothesis testing, etc. proceeds as in the multiple regression model using OLS • The coefficients are difficult to interpret, but the regression function itself is interpretable</p>
+</section>
+<section id="example-the-testscore-income-relation" class="level2">
+<h2 class="anchored" data-anchor-id="example-the-testscore-income-relation">Example: the TestScore – Income relation</h2>
+<p><span class="math inline">\(Income_i\)</span> = average district income in the <span class="math inline">\(i^{th}\)</span> district (thousands of dollars per capita)</p>
+<p><strong>Quadratic specification:</strong></p>
+<p><span class="math inline">\(Income_i = \beta_0 + \beta_1 Income_i + \beta_2 (Income_i)^2 + u_i\)</span></p>
+<p><strong>Cubic specification:</strong></p>
+<p><span class="math inline">\(Income_i = \beta_0 + \beta_1 Income_i + \beta_2 (Income_i)^2 +\beta_3 (Income_i)^3+ u_i\)</span></p>
+</section>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1"></h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>caschool<span class="ot">&lt;-</span>caschool<span class="sc">|&gt;</span><span class="fu">mutate</span>(<span class="at">avginc2=</span>avginc<span class="sc">^</span><span class="dv">2</span>, <span class="at">avginc3=</span>avginc<span class="sc">^</span><span class="dv">3</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>mod_quad<span class="ot">&lt;-</span><span class="fu">lm</span>(testscr<span class="sc">~</span>avginc<span class="sc">+</span><span class="fu">I</span>(avginc<span class="sc">^</span><span class="dv">2</span>),<span class="at">data=</span>caschool)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(mod_quad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;"> Model 1 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:center;"> 607.302 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (3.046) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> avginc </td>
+   <td style="text-align:center;"> 3.851 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.304) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> I(avginc^2) </td>
+   <td style="text-align:center;"> −0.042 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.006) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 420 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 </td>
+   <td style="text-align:center;"> 0.556 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Adj. </td>
+   <td style="text-align:center;"> 0.554 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AIC </td>
+   <td style="text-align:center;"> 3333.4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BIC </td>
+   <td style="text-align:center;"> 3349.6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Log.Lik. </td>
+   <td style="text-align:center;"> −1662.708 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> F </td>
+   <td style="text-align:center;"> 261.278 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RMSE </td>
+   <td style="text-align:center;"> 12.68 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p><span class="math inline">\(\widehat{TestScore} = 607.3 + 3.85 \times income - 0.0423 \times income^2\ ?\)</span></p>
+</section>
+<section id="section-2" class="level2">
+<h2 class="anchored" data-anchor-id="section-2"></h2>
+<p>Because the regression function is quadratic, this effect depends on the initial district income. We therefore consider two cases:</p>
+<ol type="1">
+<li><p>An increase in district income form <span class="math inline">\(10\)</span> to <span class="math inline">\(11\)</span> (from per capita <span class="math inline">\(\$10,000\)</span> to <span class="math inline">\(\$11,000\)</span>)</p></li>
+<li><p>An increase in district income from <span class="math inline">\(40\)</span> to <span class="math inline">\(41\)</span> (from per capita <span class="math inline">\(\$40,000\)</span> to <span class="math inline">\(\$41,000\)</span>)</p></li>
+</ol>
+<p>In order to obtain <span class="math inline">\(\Delta \widehat{Y}\)</span> associated with a change in income form <span class="math inline">\(10\)</span> to <span class="math inline">\(11\)</span> , we use the following formula:</p>
+<p><span class="math inline">\(\Delta \widehat{Y} = \left(\hat{\beta}_0 + \hat{\beta}_1 \times 11 + \hat{\beta}_2 \times 11^2\right) - \left(\hat{\beta}_0 + \hat{\beta}_1 \times 10 + \hat{\beta}_2 \times 10^2\right)\)</span></p>
+<p>To compute <span class="math inline">\(\widehat Y\)</span> using R we may use predict().</p>
+</section>
+<section id="section-3" class="level2">
+<h2 class="anchored" data-anchor-id="section-3"></h2>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">10 to 11</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">40 to 41</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set up data for prediction</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">avginc =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">11</span>))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># do the prediction</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>Y_hat <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod_quad, <span class="at">newdata =</span> new_data)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the difference</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(Y_hat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       2 
+2.962517 </code></pre>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set up data for prediction</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">avginc =</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">41</span>))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># do the prediction</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>Y_hat <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod_quad, <span class="at">newdata =</span> new_data)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the difference</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(Y_hat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>        2 
+0.4240095 </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="logarithms" class="level2">
+<h2 class="anchored" data-anchor-id="logarithms">Logarithms</h2>
+<p>Another way to specify a nonlinear regression function is to use the natural logarithm of <span class="math inline">\(Y\)</span> and/or <span class="math inline">\(X\)</span>. Logarithms convert changes in variables into percentage changes. This is convenient as many relationships are naturally expressed in terms of percentages.</p>
+<p>There are three different cases in which logarithms might be used.</p>
+<ol type="1">
+<li>Transform <span class="math inline">\(X\)</span> with its logarithm, but <span class="math inline">\(Y\)</span> not</li>
+<li>Analogously we could transform <span class="math inline">\(Y\)</span> to its logarithm but leave <span class="math inline">\(X\)</span> at level.</li>
+<li>Both <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span> are transformed to their logarithms.</li>
+</ol>
+<p>The interpretation of the regression coefficients is different in each case.</p>
+</section>
+<section id="section-4" class="level2">
+<h2 class="anchored" data-anchor-id="section-4"></h2>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Linear Log model</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Plot of this function</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<p>The regression model then is <span class="math inline">\(Y_i = \beta_0 + \beta_1 \times \ln(X_i) + u_i \text{, } i=1,...,n.\)</span></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>lin_log<span class="ot">&lt;-</span><span class="fu">lm</span>(testscr<span class="sc">~</span><span class="fu">log</span>(avginc),<span class="at">data=</span>caschool)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(lin_log)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;"> Model 1 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:center;"> 557.832 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (4.200) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> log(avginc) </td>
+   <td style="text-align:center;"> 36.420 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (1.571) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 420 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 </td>
+   <td style="text-align:center;"> 0.563 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Adj. </td>
+   <td style="text-align:center;"> 0.561 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AIC </td>
+   <td style="text-align:center;"> 3325.4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BIC </td>
+   <td style="text-align:center;"> 3337.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Log.Lik. </td>
+   <td style="text-align:center;"> −1659.690 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> F </td>
+   <td style="text-align:center;"> 537.444 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RMSE </td>
+   <td style="text-align:center;"> 12.59 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p><span class="math inline">\(\widehat{TestScore} = 557.8 + 36.42 \times \ln(income).\)</span></p>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(caschool)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span>avginc,<span class="at">y=</span>testscr)<span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ylim</span>(<span class="dv">600</span>, <span class="dv">720</span>) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"gam"</span>, <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">log</span>(x), <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">x=</span><span class="st">"District Income (in thousands)"</span>, <span class="at">y=</span><span class="st">"Test Score"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We can interpret <span class="math inline">\(\beta_1\)</span> as follows: a <span class="math inline">\(1\%\)</span> increase in income is associated with an increase in test scores of <span class="math inline">\(0.01 \times 36.42 = 0.36\)</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="section-5" class="level2">
+<h2 class="anchored" data-anchor-id="section-5"></h2>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Change in income (<span class="math inline">\(\$1000\)</span>)</th>
+<th><span class="math inline">\(\Delta{Testscore}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>from 5 to 6</td>
+<td>3.4</td>
+</tr>
+<tr class="even">
+<td>from 25 to 26</td>
+<td>1.7</td>
+</tr>
+<tr class="odd">
+<td>from 45 to 46</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>The <strong>effect</strong> of a change in income is greater at low than high income levels (perhaps, a declining marginal benefit of an increase in school budgets?)</li>
+</ul>
+<p><span class="yellow"><em>Caution!</em> What is the effect of a change from 65 to 66? Don’t extrapolate outside the range of the data!</span></p>
+</section>
+<section id="estimating-a-cubic-function" class="level2">
+<h2 class="anchored" data-anchor-id="estimating-a-cubic-function">Estimating a cubic function</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(estimatr)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#library(help="estimatr")</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>mod_cubic<span class="ot">&lt;-</span><span class="fu">lm</span>(testscr<span class="sc">~</span>avginc<span class="sc">+</span>avginc2<span class="sc">+</span>avginc3,<span class="at">data=</span>caschool)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>mod_cub_r<span class="ot">&lt;-</span><span class="fu">lm_robust</span>(testscr<span class="sc">~</span>avginc<span class="sc">+</span>avginc2<span class="sc">+</span>avginc3,<span class="at">data=</span>caschool)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(mod_cub_r)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;"> Model 1 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:center;"> 600.079 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (5.212) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> avginc </td>
+   <td style="text-align:center;"> 5.019 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.733) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> avginc2 </td>
+   <td style="text-align:center;"> −0.096 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.031) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> avginc3 </td>
+   <td style="text-align:center;"> 0.001 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.000) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 420 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 </td>
+   <td style="text-align:center;"> 0.558 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AIC </td>
+   <td style="text-align:center;"> 3333.3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BIC </td>
+   <td style="text-align:center;"> 3353.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RMSE </td>
+   <td style="text-align:center;"> 12.65 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="section-6" class="level2">
+<h2 class="anchored" data-anchor-id="section-6"></h2>
+<p>Testing the null hypothesis of linearity, against the alternative that the population regression is quadratic and/or cubic, that is, it is a polynomial of degree up to 3:</p>
+<p><span class="math inline">\(H_0\)</span>: pop’n coefficients on Income2 and Income3 = 0 <span class="math inline">\(H_1\)</span>: at least one of these coefficients is nonzero.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">linearHypothesis</span>(mod_cub_r, <span class="fu">c</span>(<span class="st">"avginc2=0"</span>, <span class="st">"avginc3=0"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear hypothesis test
+
+Hypothesis:
+avginc2 = 0
+avginc3 = 0
+
+Model 1: restricted model
+Model 2: testscr ~ avginc + avginc2 + avginc3
+
+  Res.Df Df  Chisq Pr(&gt;Chisq)    
+1    418                         
+2    416  2 67.458  2.247e-15 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">linearHypothesis</span>(mod_cubic, <span class="fu">c</span>(<span class="st">"avginc2=0"</span>, <span class="st">"avginc3=0"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear hypothesis test
+
+Hypothesis:
+avginc2 = 0
+avginc3 = 0
+
+Model 1: restricted model
+Model 2: testscr ~ avginc + avginc2 + avginc3
+
+  Res.Df   RSS Df Sum of Sq      F    Pr(&gt;F)    
+1    418 74905                                  
+2    416 67170  2    7735.5 23.954 1.424e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>The hypothesis that the population regression is linear is rejected at the 1% significance level against the alternative that it is a polynomial of degree up to 3.</p>
+</section>
+<section id="summary-polynomial-regression-function" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="summary-polynomial-regression-function">Summary Polynomial Regression Function</h2>
+<p><span class="math inline">\(Y_i = \beta_0 + \beta_1 X_i + \beta_2 X_i^2 + \cdots + \beta_r X_i^r + u_i.\)</span></p>
+<ul>
+<li><p>Estimation: by OLS after defining new regressors</p></li>
+<li><p>Coefficients have complicated interpretations</p></li>
+<li><p>To interpret the estimated regression function:</p></li>
+<li><p>plot predicted values as a function of <span class="math inline">\(X\)</span></p></li>
+<li><p>compute predicted <span class="math inline">\(\frac{\Delta Y}{\Delta X}\)</span> at different values of <span class="math inline">\(X\)</span></p></li>
+<li><p>Hypotheses concerning degree r can be tested by t- and F-tests on the appropriate (blocks of) variable(s).</p></li>
+<li><p>Choice of degree <span class="math inline">\(r\)</span></p></li>
+<li><p>plot the data; t- and F-tests, check sensitivity of estimated effects; judgment. • Or use model selection criteria (later)</p></li>
+</ul>
+</section>
+<section id="the-three-log-regression-specifications" class="level2">
+<h2 class="anchored" data-anchor-id="the-three-log-regression-specifications">The three log regression specifications</h2>
+<p>Logarithms can be used to transform the dependent variable <span class="math inline">\(Y\)</span> or the independent variable <span class="math inline">\(X\)</span>, or both (the variable being transformed must be positive). The following table summarizes these three cases and the interpretation of the regression coefficient β1. In each case, β1, can be estimated by applying OLS after taking the logarithm(s) of the dependent and/or the independent variable.</p>
+</section>
+<section id="section-7" class="level2">
+<h2 class="anchored" data-anchor-id="section-7"></h2>
+<table class="table">
+<colgroup>
+<col style="width: 3%">
+<col style="width: 27%">
+<col style="width: 68%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Case</th>
+<th>Model Specification</th>
+<th>nterpretation of <span class="math inline">\(beta_1\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><span class="math inline">\(Y_i = \beta_0 + \beta_1 \ln(X_i) + u_i\)</span></td>
+<td>A <span class="math inline">\(1 \%\)</span> increase in <span class="math inline">\(X\)</span> is associated with a change in <span class="math inline">\(Y\)</span> of <span class="math inline">\(0.01 \times \beta_1\)</span></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><span class="math inline">\(\ln(Y_i) = \beta_0 + \beta_1 X_i + u_i\)</span></td>
+<td>A change in <span class="math inline">\(X\)</span> by one unit <span class="math inline">\(\Delta X=1\)</span> is associated with a 100×β1% change in <span class="math inline">\(Y\)</span></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><span class="math inline">\(\ln(Y_i) = \beta_0 + \beta_1 \ln(X_i) + u_i\)</span></td>
+<td>A <span class="math inline">\(1 \%\)</span> change in <span class="math inline">\(X\)</span> is associated with a β1% change in <span class="math inline">\(Y\)</span>, so β1 is the elasticity of <span class="math inline">\(Y\)</span> with respect to <span class="math inline">\(X\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<p>Interpretation of each of these different using <em>before</em> and <em>after</em> concept.</p>
+</section>
+<section id="section-8" class="level2">
+<h2 class="anchored" data-anchor-id="section-8"></h2>
+<p><span class="math inline">\(\widehat{TestScore} = 557.8 + 36.42 \times \ln(income).\)</span> A <span class="math inline">\(1\%\)</span> increase in incomes is associated with a 0.01*36.42=0.3642 increase in test test score.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 6</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(caschool)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span><span class="fu">log</span>(avginc),<span class="at">y=</span>testscr)<span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ylim</span>(<span class="dv">600</span>, <span class="dv">720</span>)  <span class="sc">+</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"gam"</span>, <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">log</span>(x), <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">x=</span><span class="st">"District Income (in thousands)"</span>, <span class="at">y=</span><span class="st">"Test Score"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="case-ii-y-is-in-logarithmx-is-not" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="case-ii-y-is-in-logarithmx-is-not">Case II: <span class="math inline">\(Y\)</span> is in Logarithm,<span class="math inline">\(X\)</span> is not</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>LogLinear_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">log</span>(testscr) <span class="sc">~</span> avginc, <span class="at">data =</span> caschool)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(LogLinear_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;"> Model 1 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:center;"> 6.439 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.002) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> avginc </td>
+   <td style="text-align:center;"> 0.003 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.000) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 420 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 </td>
+   <td style="text-align:center;"> 0.498 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Adj. </td>
+   <td style="text-align:center;"> 0.497 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AIC </td>
+   <td style="text-align:center;"> 3382.3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BIC </td>
+   <td style="text-align:center;"> 3394.4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Log.Lik. </td>
+   <td style="text-align:center;"> 1034.680 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> F </td>
+   <td style="text-align:center;"> 415.020 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RMSE </td>
+   <td style="text-align:center;"> 0.02 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p><span class="math inline">\(\widehat{\ln(TestScore)} = 6.439 + 0.00284 \times income.\)</span></p>
+<p>An increase in district income by <span class="math inline">\(\$1000\)</span> is expected to increase test scores by <span class="math inline">\(100\times 0.00284 \% = 0.284\%\)</span>.</p>
+</section>
+<section id="case-3-log-of-y-and-log-of-x" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="case-3-log-of-y-and-log-of-x">Case 3: log of <span class="math inline">\(Y\)</span> and log of <span class="math inline">\(X\)</span></h2>
+<p>The log-log regression model is <span class="math inline">\(\ln(Y_i) = \beta_0 + \beta_1 \times \ln(X_i) + u_i, \ \ i=1,\dots,n.\)</span></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>LogLog_model <span class="ot">&lt;-</span><span class="fu">lm</span>(<span class="fu">log</span>(testscr)<span class="sc">~</span><span class="fu">log</span>(avginc),<span class="at">data=</span>caschool)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(LogLog_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;"> Model 1 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:center;"> 6.336 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.006) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> log(avginc) </td>
+   <td style="text-align:center;"> 0.055 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.002) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 420 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 </td>
+   <td style="text-align:center;"> 0.558 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Adj. </td>
+   <td style="text-align:center;"> 0.557 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AIC </td>
+   <td style="text-align:center;"> 3329.2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BIC </td>
+   <td style="text-align:center;"> 3341.3 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Log.Lik. </td>
+   <td style="text-align:center;"> 1061.220 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> F </td>
+   <td style="text-align:center;"> 527.238 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RMSE </td>
+   <td style="text-align:center;"> 0.02 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p><span class="math inline">\(\widehat{\ln(TestScore)} = 6.336 + 0.0554 \times \ln(income).\)</span></p>
+<p>A <span class="math inline">\(1\%\)</span> increase in <span class="math inline">\(X\)</span> is associated with an estimated <span class="math inline">\(\hat\beta_1 \%\)</span> change in <span class="math inline">\(Y\)</span>.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(caschool)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span>avginc,<span class="at">y=</span><span class="fu">log</span>(testscr))<span class="sc">+</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"gam"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"gam"</span>, <span class="at">formula =</span> y <span class="sc">~</span> <span class="fu">log</span>(x), <span class="at">se=</span><span class="cn">FALSE</span>, <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">x=</span><span class="st">"District Income (in thousands)"</span>, <span class="at">y=</span><span class="st">"Test Score"</span>, <span class="at">title=</span><span class="st">"Log-linear and log-log model"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="summary-logarithmic-transformations" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="summary-logarithmic-transformations">Summary: Logarithmic transformations</h2>
+<ul>
+<li>Three cases, differing in whether <span class="math inline">\(Y\)</span> and/or <span class="math inline">\(X\)</span> is transformed by taking logarithms.</li>
+<li>The regression is linear in the new variable(s) <span class="math inline">\(ln(Y)\)</span> and/or <span class="math inline">\(ln(X)\)</span>, and the coefficients can be estimated by OLS.</li>
+<li>Hypothesis tests and confidence intervals are now implemented and interpreted <em>as usual.</em></li>
+<li>The interpretation of <span class="math inline">\(\beta_1\)</span> differs from case to case.</li>
+<li>Choice of specification should be guided by judgment (which interpretation makes the most sense in your application?), tests, and plotting predicted values.</li>
+</ul>
+</section>
+<section id="interactions-between-independent-variables" class="level2 rfist-text">
+<h2 class="rfist-text anchored" data-anchor-id="interactions-between-independent-variables">Interactions Between Independent Variables</h2>
+<p>There are research questions where it is interesting to learn how the effect on of a change in an independent variable depends on the value of another independent variable. For example, we may ask if districts with many English learners benefit differentially from a decrease in class sizes to those with few English learning students. To assess this using a multiple regression model, we include an interaction term. We consider three cases:</p>
+<ul>
+<li><p>Interactions between two binary variables.</p></li>
+<li><p>Interactions between a binary and a continuous variable.</p></li>
+<li><p>Interactions between two continuous variables.</p></li>
+</ul>
+<p>The following subsections discuss these cases briefly and demonstrate how to perform such regressions in R.</p>
+</section>
+<section id="interactions-between-binary-and-continuous-variables" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="interactions-between-binary-and-continuous-variables">Interactions Between Binary and Continuous Variables</h2>
+<p>An interaction term like <span class="math inline">\(X_i \times D_i\)</span>(where <span class="math inline">\(X_i\)</span> is continuous and <span class="math inline">\(D_i\)</span> is binary) allows for the slope to depend on the binary variable. There are three possibilities:</p>
+<section id="different-intercept-and-same-slope" class="level3">
+<h3 class="anchored" data-anchor-id="different-intercept-and-same-slope">1.Different intercept and same slope:</h3>
+<p><span class="math inline">\(Y_i = \beta_0 + \beta_1 X_i + \beta_2 D_i + u_i\)</span></p>
+</section>
+<section id="different-intercept-and-different-slope" class="level3">
+<h3 class="anchored" data-anchor-id="different-intercept-and-different-slope">2.Different intercept and different slope:</h3>
+<p><span class="math inline">\(Y_i = \beta_0 + \beta_1 X_i + \beta_2 D_i + \beta_3 \times (X_i \times D_i) + u_i\)</span></p>
+</section>
+<section id="same-intercept-and-different-slope" class="level3">
+<h3 class="anchored" data-anchor-id="same-intercept-and-different-slope">3.Same intercept and different slope:</h3>
+<p><span class="math inline">\(Y_i = \beta_0 + \beta_1 X_i + \beta_2 (X_i \times D_i) + u_i\)</span></p>
+</section>
+</section>
+<section id="interactions-between-two-binary-variables" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="interactions-between-two-binary-variables">Interactions Between Two Binary Variables</h2>
+<p>Take two binary variables <span class="math inline">\(D_1\)</span> and <span class="math inline">\(D_2\)</span> and the population regression model <span class="math inline">\(Y_i = \beta_0 + \beta_1 \times D_{1i} + \beta_2 \times D_{2i} + u_i.\)</span> Now assume that<br>
+$$<span class="math display">\[\begin{align*}
+  Y_i=&amp; \, \ln(Earnings_i),\\
+  D_{1i} =&amp; \,
+   \begin{cases}
+      1 &amp; \text{if $i^{th}$ person has a college degree,} \\
+      0 &amp; \text{else}.
+    \end{cases} \\
+  D_{2i} =&amp; \,
+    \begin{cases}
+      1 &amp; \text{if $i^{th}$ person is female,} \\
+      0 &amp; \text{if $i^{th}$ person is male}.
+    \end{cases}
+\end{align*}\]</span>$$</p>
+<p>We know that <span class="math inline">\(\beta_1\)</span> measures the average difference in <span class="math inline">\(\ln(Earnings)\)</span> between individuals with and without a college degree and $\beta_2$ is the gender differential in <span class="math inline">\(\ln(Earnings)\)</span> , ceteris paribus. This model does not allow us to determine if there is a gender specific effect of having a college degree and, if so, how strong this effect is.</p>
+</section>
+<section id="section-9" class="level2">
+<h2 class="anchored" data-anchor-id="section-9"></h2>
+<p>It is easy to come up with a model specification that allows to investigate this:</p>
+<p><span class="math inline">\(Y_i = \beta_0 + \beta_1 \times D_{1i} + \beta_2 \times D_{2i} + \beta_3 \times (D_{1i} \times D_{2i}) + u_i\)</span></p>
+<p><span class="math inline">\((D_{1i} \times D_{2i})\)</span> is called an interaction term and <span class="math inline">\(\beta_3\)</span> measures the difference in the effect of having a college degree for women versus men.</p>
+</section>
+<section id="a-method-for-interpreting-coefficients-in-regression-with-binary-variables" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="a-method-for-interpreting-coefficients-in-regression-with-binary-variables">A Method for Interpreting Coefficients in Regression with Binary Variables</h2>
+<p>Compute expected values of <span class="math inline">\(Y\)</span> for each possible set described by the set of binary variables. Compare the expected values. The coefficients can be expressed either as expected values or as the difference between at least two expected values. Following this idea:</p>
+<p><span class="math inline">\(\begin{align*} E(Y_i\vert D_{1i}=0, D_{2i} = d_2) =&amp; \, \beta_0 + \beta_1 \times 0 + \beta_2 \times d_2 + \beta_3 \times (0 \times d_2) \\=&amp; \, \beta_0 + \beta_2 \times d_2.\end{align*}\)</span></p>
+<p><br>
+If <span class="math inline">\(D_{1i}\)</span> switches from <span class="math inline">\(0\)</span> to <span class="math inline">\(1\)</span> we obtain</p>
+<p><span class="math inline">\(\begin{align*}E(Y_i\vert D_{1i}=1, D_{2i} = d_2) =&amp; \, \beta_0 + \beta_1 \times 1 + \beta_2 \times d_2 + \beta_3 \times (1 \times d_2) \\=&amp; \, \beta_0 + \beta_1 + \beta_2 \times d_2 + \beta_3 \times d_2.\end{align*}\)</span> Hence the overall effect is</p>
+<p><span class="math inline">\(E(Y_i\vert D_{1i}=1, D_{2i} = d_2) - E(Y_i\vert D_{1i}=0, D_{2i} = d_2) = \beta_1 + \beta_3 \times d_2\)</span></p>
+</section>
+<section id="application-to-the-student-teacher-ratio-and-the-percentage-of-english-learners" class="level2 smallest">
+<h2 class="smallest anchored" data-anchor-id="application-to-the-student-teacher-ratio-and-the-percentage-of-english-learners">Application to the Student-Teacher Ratio and the Percentage of English Learners</h2>
+<p>Now let <span class="math display">\[\begin{align*}
+  HiSTR =&amp; \,
+    \begin{cases}
+      1, &amp; \text{if $STR \geq 20$} \\
+      0, &amp; \text{else},
+    \end{cases} \\
+  \\
+  HiEL =&amp; \,
+    \begin{cases}
+      1, &amp; \text{if $PctEL \geq 10$} \\
+      0, &amp; \text{else}.
+    \end{cases}
+\end{align*}\]</span></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># append HiSTR to CASchools</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>caschool<span class="sc">$</span>HiSTR <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(caschool<span class="sc">$</span>str <span class="sc">&gt;=</span> <span class="dv">20</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># append HiEL to CASchools</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>caschool<span class="sc">$</span>HiEL <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(caschool<span class="sc">$</span>el_pct <span class="sc">&gt;=</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>We can estimate <span class="math inline">\(\begin{align} TestScore = \beta_0 + \beta_1 \times HiSTR + \beta_2 \times HiEL + \beta_3 \times (HiSTR \times HiEL) + u_i. \tag{8.1} \end{align}\)</span></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate the model with a binary interaction term</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>bi_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(testscr <span class="sc">~</span> HiSTR <span class="sc">*</span> HiEL, <span class="at">data =</span> caschool)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(bi_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;"> Model 1 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:center;"> 664.143 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (1.315) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> HiSTR </td>
+   <td style="text-align:center;"> −1.908 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (2.234) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> HiEL </td>
+   <td style="text-align:center;"> −18.163 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (2.150) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> HiSTR × HiEL </td>
+   <td style="text-align:center;"> −3.494 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (3.222) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 420 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 </td>
+   <td style="text-align:center;"> 0.296 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Adj. </td>
+   <td style="text-align:center;"> 0.290 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AIC </td>
+   <td style="text-align:center;"> 3529.4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BIC </td>
+   <td style="text-align:center;"> 3549.6 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Log.Lik. </td>
+   <td style="text-align:center;"> −1759.723 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> F </td>
+   <td style="text-align:center;"> 58.179 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RMSE </td>
+   <td style="text-align:center;"> 15.97 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="empirical" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="empirical">Empirical</h2>
+<p>The estimated regression model is <span class="math inline">\(\widehat{TestScore} = \underset{(1.39)}{664.1} - \underset{(1.93)}{1.9} \times HiSTR - \underset{(2.33)}{18.3} \times HiEL - \underset{(3.12)}{3.3} \times (HiSTR \times HiEL)\)</span> and it predicts that the effect of moving from a school district with a low student-teacher ratio to a district with a high student-teacher ratio, depending on high or low percentage of english learners is <span class="math inline">\(-1.9-3.3\times HiEL\)</span> . So for districts with a low share of english learners (<span class="math inline">\(HiEL = 0\)</span>), the estimated effect is a decrease of <span class="math inline">\(1.9\)</span> points in test scores while for districts with a large fraction of English learners (<span class="math inline">\(HiEL = 1\)</span>), the predicted decrease in test scores amounts to <span class="math inline">\(1.9 + 3.3 = 5.2\)</span> points.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate means for all combinations of HiSTR and HiEL</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 1.</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(bi_model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="st">"HiSTR"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"HiEL"</span> <span class="ot">=</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1 
+664.1433 </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2.</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(bi_model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="st">"HiSTR"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"HiEL"</span> <span class="ot">=</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1 
+645.9803 </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3.</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(bi_model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="st">"HiSTR"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"HiEL"</span> <span class="ot">=</span> <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1 
+662.2354 </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4.</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(bi_model, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="st">"HiSTR"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"HiEL"</span> <span class="ot">=</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1 
+640.5782 </code></pre>
+</div>
+</div>
+</section>
+<section id="section-10" class="level2 scrollable">
+<h2 class="scrollable anchored" data-anchor-id="section-10"></h2>
+<p><span class="math inline">\(\begin{align*} \widehat{TestScore} = \hat\beta_0 = 664.1 \quad &amp;\Leftrightarrow \quad HiSTR = 0, \, HIEL = 0\\ \widehat{TestScore} = \hat\beta_0 + \hat\beta_2 = 664.1 - 18.3 = 645.8 \quad &amp;\Leftrightarrow \quad HiSTR = 0, \, HIEL = 1\\ \widehat{TestScore} = \hat\beta_0 + \hat\beta_1 = 664.1 - 1.9 = 662.2 \quad &amp;\Leftrightarrow \quad HiSTR = 1, \, HIEL = 0\\ \widehat{TestScore} = \hat\beta_0 + \hat\beta_1 + \hat\beta_2 + \hat\beta_3 = 664.1 - 1.9 - 18.3 - 3.3 = 640.6 \quad &amp;\Leftrightarrow \quad HiSTR = 1, \, HIEL = 1 \end{align*}\)</span></p>
+</section>
+<section id="interactions-between-a-continuous-and-a-binary-variable" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="interactions-between-a-continuous-and-a-binary-variable">Interactions Between a Continuous and a Binary Variable</h2>
+<p>Now let <span class="math inline">\(X_i\)</span> denote the years of working experience of person <span class="math inline">\(i\)</span>, which is a continuous variable. We have <span class="math inline">\(\begin{align*} Y_i =&amp; \, \ln(Earnings_i), \\ \\ X_i =&amp; \, \text{working experience of person }i, \\ \\ D_i =&amp; \, \begin{cases} 1, &amp; \text{if $i^{th}$ person has a college degree} \\ 0, &amp; \text{else}. \end{cases} \end{align*}\)</span></p>
+<p>The baseline model thus is <span class="math inline">\(Y_i = \beta_0 + \beta_1 X_i + \beta_2 D_i + u_i,\)</span> With interaction <span class="math inline">\(Y_i = \beta_0 + \beta_1 X_i + \beta_2 D_i + \beta_3 (X_i \times D_i) + u_i.\)</span></p>
+<p>Here, <span class="math inline">\(\beta_3\)</span> is the expected difference in the effect of an additional year of work experience for college graduates versus non-graduates. Another possible specification is <span class="math inline">\(Y_i = \beta_0 + \beta_1 X_i + \beta_2 (X_i \times D_i) + u_i.\)</span></p>
+<p>This model states that the expected impact of an additional year of work experience on earnings differs for college graduates and non-graduates but that graduating on its own does not increase earnings.</p>
+</section>
+<section id="application-to-the-student-teacher-ratio-and-the-percentage-of-english-learners-1" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="application-to-the-student-teacher-ratio-and-the-percentage-of-english-learners-1">Application to the Student-Teacher Ratio and the Percentage of English Learners</h2>
+<p><span class="math inline">\(\widehat{TestScore_i} = \beta_0 + \beta_1 \times str + \beta_2 \times HiEL_i + \beta_2 (str \times HiEL_i) + u_i.\)</span></p>
+<p><span class="math inline">\(\widehat{TestScore} = \underset{(11.87)}{682.2} - \underset{(0.59)}{0.97} \times size + \underset{(19.51)}{5.6} \times HiEL - \underset{(0.97)}{1.28} \times (size \times HiEL).\)</span></p>
+<p>For <span class="math inline">\(HiEL=0\)</span>, <span class="math inline">\(\widehat{TestScore} = 682.2 - 0.97\times str.\)</span> For districts with higher percentage of english learners <span class="math inline">\(\begin{align*} \widehat{TestScore} =&amp; \, 682.2 + 5.6 - 0.97\times str - 1.28 \times str \\ =&amp; \, 687.8 - 2.25 \times str. \end{align*}\)</span></p>
+</section>
+<section id="interaction-plot" class="level2">
+<h2 class="anchored" data-anchor-id="interaction-plot">Interaction plot</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(interactions)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>bci_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(testscr <span class="sc">~</span> str <span class="sc">+</span> HiEL <span class="sc">+</span> str<span class="sc">*</span> HiEL, <span class="at">data =</span> caschool)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">interact_plot</span>(bci_model, <span class="at">pred =</span> str, <span class="at">modx =</span> HiEL,<span class="at">plot.points =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="interaction-between-two-continuous-random-variables" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="interaction-between-two-continuous-random-variables">Interaction between two continuous random variables</h2>
+<p><span class="math inline">\(\Delta Y_i = \beta_0 + \beta_1 \times X_{1i} + \beta_2 \times X_{2i} + \beta_3 \times (X_{1i} \times X_{2i}) + u_i\)</span> And we find effect on <span class="math inline">\(Y\)</span> of <span class="math inline">\(X_1\)</span> for a given <span class="math inline">\(X_2\)</span> <span class="math inline">\(\frac{\Delta Y}{\Delta X_1} = \beta_1 + \beta_3 X_2.\)</span> and vice versa <span class="math inline">\(\frac{\Delta Y}{\Delta X_2} = \beta_2 + \beta_3 X_1\)</span></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate regression model including the interaction between 'el_pct' and 'str'</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>cci_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(testscr <span class="sc">~</span> str <span class="sc">+</span> el_pct <span class="sc">+</span> el_pct <span class="sc">*</span> str, <span class="at">data =</span> caschool) </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">interact_plot</span>(cci_model, <span class="at">pred =</span> str, <span class="at">modx =</span> el_pct,<span class="at">plot.points =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><span class="math inline">\(\widehat{TestScore} = \underset{(11.76)}{686.3} - \underset{(0.59)}{1.12} \times STR - \underset{(0.37)}{0.67} \times PctEL + \underset{(0.02)}{0.0012} \times (STR\times PctEL).\)</span></p>
+</section>
+<section id="nonlinear-effect-of-the-str-on-testscr" class="level2 smallest">
+<h2 class="smallest anchored" data-anchor-id="nonlinear-effect-of-the-str-on-testscr">Nonlinear Effect of the str on testscr</h2>
+<p><span class="math inline">\(\begin{align} TestScore_i =&amp; \beta_0 + \beta_1 size_i + \beta_4 english_i + \beta_9 lunch_i + u_i \\ TestScore_i =&amp; \beta_0 + \beta_1 size_i + \beta_4 english_i + \beta_9 lunch_i + \beta_{10} \ln(income_i) + u_i \\ TestScore_i =&amp; \beta_0 + \beta_1 size_i + \beta_5 HiEL_i + \beta_6 (HiEL_i\times size_i) + u_i \\ TestScore_i =&amp; \beta_0 + \beta_1 size_i + \beta_5 HiEL_i + \beta_6 (HiEL_i\times size_i) + \beta_9 lunch_i + \beta_{10} \ln(income_i) + u_i \\ TestScore_i =&amp; \beta_0 + \beta_1 size_i + \beta_2 size_i^2 + \beta_5 HiEL_i + \beta_9 lunch_i + \beta_{10} \ln(income_i) + u_i \\ TestScore_i =&amp; \beta_0 + \beta_1 size_i + \beta_2 size_i^2 + \beta_3 size_i^3 + \beta_5 HiEL_i + \beta_6 (HiEL\times size) \\ &amp;+ \beta_7 (HiEL_i\times size_i^2) + \beta_8 (HiEL_i\times size_i^3) + \beta_9 lunch_i + \beta_{10} \ln(income_i) + u_i \\ TestScore_i =&amp; \beta_0 + \beta_1 size_i + \beta_2 size_i^2 + \beta_3 size_i^3 + \beta_4 english + \beta_9 lunch_i + \beta_{10} \ln(income_i) + u_i \end{align}\)</span></p>
+</section>
+<section id="estimate-models" class="level2 scrollable">
+<h2 class="scrollable anchored" data-anchor-id="estimate-models">Estimate models</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate all models</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>testscr_mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(testscr <span class="sc">~</span> str <span class="sc">+</span> el_pct <span class="sc">+</span> meal_pct, <span class="at">data =</span> caschool)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>testscr_mod2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(testscr <span class="sc">~</span> str <span class="sc">+</span> el_pct <span class="sc">+</span> meal_pct<span class="sc">+</span><span class="fu">log</span>(avginc), <span class="at">data =</span> caschool)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>testscr_mod3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(testscr <span class="sc">~</span> str <span class="sc">+</span> HiEL <span class="sc">+</span> HiEL<span class="sc">:</span>str, <span class="at">data =</span> caschool)</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>testscr_mod4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(testscr <span class="sc">~</span> str <span class="sc">+</span> HiEL <span class="sc">+</span> HiEL<span class="sc">:</span>str <span class="sc">+</span> meal_pct<span class="sc">+</span><span class="fu">log</span>(avginc), <span class="at">data =</span> caschool)</span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>testscr_mod5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(testscr <span class="sc">~</span> str <span class="sc">+</span> <span class="fu">I</span>(str<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(str<span class="sc">^</span><span class="dv">3</span>) <span class="sc">+</span> HiEL <span class="sc">+</span> meal_pct<span class="sc">+</span><span class="fu">log</span>(avginc), <span class="at">data =</span> caschool)</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>testscr_mod6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(testscr <span class="sc">~</span> str <span class="sc">+</span> <span class="fu">I</span>(str<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(str<span class="sc">^</span><span class="dv">3</span>) <span class="sc">+</span> HiEL <span class="sc">+</span> HiEL<span class="sc">:</span>str <span class="sc">+</span> HiEL<span class="sc">:</span><span class="fu">I</span>(str<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> HiEL<span class="sc">:</span><span class="fu">I</span>(str<span class="sc">^</span><span class="dv">3</span>) <span class="sc">+</span> meal_pct <span class="sc">+</span> <span class="fu">log</span>(avginc),</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> caschool)</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>testscr_mod7 <span class="ot">&lt;-</span> <span class="fu">lm</span>(testscr <span class="sc">~</span> str <span class="sc">+</span> <span class="fu">I</span>(str<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(str<span class="sc">^</span><span class="dv">3</span>)  <span class="sc">+</span> el_pct <span class="sc">+</span> meal_pct <span class="sc">+</span> <span class="fu">log</span>(avginc), <span class="at">data =</span> caschool)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stargazer)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sandwich)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># gather robust standard errors in a list</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="co"># generate a LaTeX table of regression outputs</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>models<span class="ot">&lt;-</span><span class="fu">list</span>(testscr_mod1,testscr_mod2,testscr_mod3,testscr_mod4,testscr_mod5,testscr_mod6,testscr_mod7)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;"> Model 1 </th>
+   <th style="text-align:center;"> Model 2 </th>
+   <th style="text-align:center;"> Model 3 </th>
+   <th style="text-align:center;"> Model 4 </th>
+   <th style="text-align:center;"> Model 5 </th>
+   <th style="text-align:center;"> Model 6 </th>
+   <th style="text-align:center;"> Model 7 </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:center;"> 700.150 </td>
+   <td style="text-align:center;"> 658.552 </td>
+   <td style="text-align:center;"> 682.246 </td>
+   <td style="text-align:center;"> 653.666 </td>
+   <td style="text-align:center;"> 252.051 </td>
+   <td style="text-align:center;"> 122.354 </td>
+   <td style="text-align:center;"> 244.809 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (4.686) </td>
+   <td style="text-align:center;"> (7.685) </td>
+   <td style="text-align:center;"> (10.511) </td>
+   <td style="text-align:center;"> (8.891) </td>
+   <td style="text-align:center;"> (165.824) </td>
+   <td style="text-align:center;"> (192.177) </td>
+   <td style="text-align:center;"> (165.932) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> str </td>
+   <td style="text-align:center;"> −0.998 </td>
+   <td style="text-align:center;"> −0.734 </td>
+   <td style="text-align:center;"> −0.968 </td>
+   <td style="text-align:center;"> −0.531 </td>
+   <td style="text-align:center;"> 64.339 </td>
+   <td style="text-align:center;"> 83.701 </td>
+   <td style="text-align:center;"> 65.285 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.239) </td>
+   <td style="text-align:center;"> (0.231) </td>
+   <td style="text-align:center;"> (0.540) </td>
+   <td style="text-align:center;"> (0.300) </td>
+   <td style="text-align:center;"> (25.462) </td>
+   <td style="text-align:center;"> (29.690) </td>
+   <td style="text-align:center;"> (25.478) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> el_pct </td>
+   <td style="text-align:center;"> −0.122 </td>
+   <td style="text-align:center;"> −0.176 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> −0.166 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.032) </td>
+   <td style="text-align:center;"> (0.032) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (0.032) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> meal_pct </td>
+   <td style="text-align:center;"> −0.547 </td>
+   <td style="text-align:center;"> −0.398 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> −0.411 </td>
+   <td style="text-align:center;"> −0.420 </td>
+   <td style="text-align:center;"> −0.418 </td>
+   <td style="text-align:center;"> −0.402 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.022) </td>
+   <td style="text-align:center;"> (0.030) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (0.029) </td>
+   <td style="text-align:center;"> (0.028) </td>
+   <td style="text-align:center;"> (0.029) </td>
+   <td style="text-align:center;"> (0.030) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> log(avginc) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 11.569 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 12.124 </td>
+   <td style="text-align:center;"> 11.748 </td>
+   <td style="text-align:center;"> 11.800 </td>
+   <td style="text-align:center;"> 11.509 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (1.740) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (1.765) </td>
+   <td style="text-align:center;"> (1.734) </td>
+   <td style="text-align:center;"> (1.751) </td>
+   <td style="text-align:center;"> (1.726) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> HiEL </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 5.639 </td>
+   <td style="text-align:center;"> 5.498 </td>
+   <td style="text-align:center;"> −5.474 </td>
+   <td style="text-align:center;"> 816.075 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (16.718) </td>
+   <td style="text-align:center;"> (9.139) </td>
+   <td style="text-align:center;"> (1.032) </td>
+   <td style="text-align:center;"> (434.612) </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> str × HiEL </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> −1.277 </td>
+   <td style="text-align:center;"> −0.578 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> −123.282 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (0.844) </td>
+   <td style="text-align:center;"> (0.465) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (66.354) </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> I(str^2) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> −3.424 </td>
+   <td style="text-align:center;"> −4.381 </td>
+   <td style="text-align:center;"> −3.466 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (1.294) </td>
+   <td style="text-align:center;"> (1.512) </td>
+   <td style="text-align:center;"> (1.295) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> I(str^3) </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 0.059 </td>
+   <td style="text-align:center;"> 0.075 </td>
+   <td style="text-align:center;"> 0.060 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (0.022) </td>
+   <td style="text-align:center;"> (0.025) </td>
+   <td style="text-align:center;"> (0.022) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> I(str^2) × HiEL </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> 6.121 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> (3.353) </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> I(str^3) × HiEL </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;"> −0.101 </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.056) </td>
+   <td style="text-align:center;box-shadow: 0px 1px">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 420 </td>
+   <td style="text-align:center;"> 420 </td>
+   <td style="text-align:center;"> 420 </td>
+   <td style="text-align:center;"> 420 </td>
+   <td style="text-align:center;"> 420 </td>
+   <td style="text-align:center;"> 420 </td>
+   <td style="text-align:center;"> 420 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 </td>
+   <td style="text-align:center;"> 0.775 </td>
+   <td style="text-align:center;"> 0.796 </td>
+   <td style="text-align:center;"> 0.310 </td>
+   <td style="text-align:center;"> 0.797 </td>
+   <td style="text-align:center;"> 0.801 </td>
+   <td style="text-align:center;"> 0.803 </td>
+   <td style="text-align:center;"> 0.801 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> R2 Adj. </td>
+   <td style="text-align:center;"> 0.773 </td>
+   <td style="text-align:center;"> 0.794 </td>
+   <td style="text-align:center;"> 0.305 </td>
+   <td style="text-align:center;"> 0.795 </td>
+   <td style="text-align:center;"> 0.798 </td>
+   <td style="text-align:center;"> 0.799 </td>
+   <td style="text-align:center;"> 0.798 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AIC </td>
+   <td style="text-align:center;"> 3051.0 </td>
+   <td style="text-align:center;"> 3010.5 </td>
+   <td style="text-align:center;"> 3520.5 </td>
+   <td style="text-align:center;"> 3010.1 </td>
+   <td style="text-align:center;"> 3004.3 </td>
+   <td style="text-align:center;"> 3006.1 </td>
+   <td style="text-align:center;"> 3005.2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BIC </td>
+   <td style="text-align:center;"> 3071.2 </td>
+   <td style="text-align:center;"> 3034.7 </td>
+   <td style="text-align:center;"> 3540.7 </td>
+   <td style="text-align:center;"> 3038.4 </td>
+   <td style="text-align:center;"> 3036.7 </td>
+   <td style="text-align:center;"> 3050.6 </td>
+   <td style="text-align:center;"> 3037.5 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Log.Lik. </td>
+   <td style="text-align:center;"> −1520.499 </td>
+   <td style="text-align:center;"> −1499.253 </td>
+   <td style="text-align:center;"> −1755.268 </td>
+   <td style="text-align:center;"> −1498.069 </td>
+   <td style="text-align:center;"> −1494.170 </td>
+   <td style="text-align:center;"> −1492.061 </td>
+   <td style="text-align:center;"> −1494.594 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> F </td>
+   <td style="text-align:center;"> 476.306 </td>
+   <td style="text-align:center;"> 405.359 </td>
+   <td style="text-align:center;"> 62.399 </td>
+   <td style="text-align:center;"> 325.804 </td>
+   <td style="text-align:center;"> 277.212 </td>
+   <td style="text-align:center;"> 185.777 </td>
+   <td style="text-align:center;"> 276.515 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RMSE </td>
+   <td style="text-align:center;"> 9.04 </td>
+   <td style="text-align:center;"> 8.59 </td>
+   <td style="text-align:center;"> 15.80 </td>
+   <td style="text-align:center;"> 8.57 </td>
+   <td style="text-align:center;"> 8.49 </td>
+   <td style="text-align:center;"> 8.45 </td>
+   <td style="text-align:center;"> 8.50 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
