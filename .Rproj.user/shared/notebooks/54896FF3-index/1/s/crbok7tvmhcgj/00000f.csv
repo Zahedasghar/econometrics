@@ -1,6 +1,0 @@
-"0","#| warning: false"
-"0","#| message: false"
-"0","#vtable(caschool)"
-"0","m1<-lm(testscr~str,data = caschool)"
-"2","Error in is.data.frame(data) : object 'caschool' not found
-"

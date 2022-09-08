@@ -1,0 +1,21 @@
+---
+format:
+  revealjs: 
+    theme: [default, custom2.scss]
+highlight-style: "nord"
+---
+
+## Fancy Carbon-Copy
+
+```{r}
+#| echo: true
+#| eval: false
+#| code-line-numbers: false
+library(tidyverse)
+
+diamonds |>
+  count(color, cut, sort = TRUE)
+# A tibble: 35 × 3
+
+# … with 25 more rows
+```

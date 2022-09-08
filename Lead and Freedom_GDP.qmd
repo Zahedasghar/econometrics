@@ -1,0 +1,603 @@
+---
+title: "Lead_Content and Freedom_GDP"
+date: "`r Sys.Date()`"
+subtitle: "Zahid Asghar<br><br> School of Economics, QAU, Islamabad"
+logo: "QAU-Logo.jpg"
+format:
+  html: 
+    theme: [cosmo]
+    toc: true
+    code-fold: true
+execute: 
+  warning: false
+chalkboard: true
+editor: visual
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Empirical Exercise 8.1 Stock and Watson
+
+Answer the following questions using `R`. When necessary, please write answers in the same document (knitted `Rmd` to `html` or `pdf`, typed `.doc(x)`, or handwritten) as your answers to the above questions. Be sure to include (email or print an `.R` file, or show in your knitted `markdown`) your code and the outputs of your code with the rest of your answers. I am using this post material from [Ryan Safner](http://metricsf21.classes.ryansafner.com)
+
+## Question 8.1
+
+-   [<i class="fas fa-table"></i> `LeadMortality.csv`](http://metricsf21.classes.ryansafner.com/data/LeadMortality.csv)
+
+Lead is toxic, particularly for young children, and for this reason government regulations severely restrict the amount of lead in our environment. In the early part of the 20^th^ century, the underground water pipes in many U.S. cities contained lead, and lead from these pipes leached into drinking water. This exercise will have you investigate the effect of these lead pipes on infant mortality. This dataset contains data on:
+
+| Variable  | Description                                                        |
+|-----------|--------------------------------------------------------------------|
+| `infrate` | infant mortality rate (deaths per 100 in population)               |
+| `lead`    | $=1$ if city has lead water pipes, $=0$ if did not have lead pipes |
+| `pH`      | water pH                                                           |
+
+and several demographic variables for 172 U.S. cities in 1900.
+
+### Part A
+
+Part A
+
+**Using `R` to examine the data, find the average infant mortality rate for cities with lead pipes and for cities without lead pipes. Calculate the difference, and run a** $t$-test to determine if this difference is statistically significant.
+
+------------------------------------------------------------------------
+
+<!--WRITE YOUR ANSWERS BELOW -->
+
+```{r}
+# load tidyverse
+library("tidyverse")
+library(haven)
+# read in data
+lead <- read_dta("lead_mortality.dta")
+```
+
+```{r}
+# mean of infrate for cities with lead
+mean_lead <- lead %>%
+    filter(lead == 1) %>%
+    summarize(mean(infrate)) %>%
+    pull() # to save as number
+
+# look at it
+mean_lead
+
+# mean of infrate for cities with no lead
+mean_no_lead <- lead %>%
+    filter(lead == 0) %>%
+    summarize(mean(infrate)) %>%
+    pull() # to save as number
+
+# look at it
+mean_no_lead
+
+# take difference
+mean_lead - mean_no_lead
+```
+
+Cities with lead pipes have an infant mortality rate of 0.40, and cities without lead pipes have an infant mortality rate of 0.38. So the difference is 0.02.
+
+```{r}
+# run t-test of difference
+t.test(infrate ~ lead, data = lead)
+```
+
+We get a $t$-statistic of $-0.90$ and a $p$-value of $0.3681$, so the difference is *not* statistically significant.
+
+------------------------------------------------------------------------
+
+### Part B
+
+**Run a regression of `infrate` on `lead`, and write down the estimated regression equation. Use the regression coefficients to find:**
+
+-   the average infant mortality rate for cities with lead pipes
+-   the average infant mortality rate for cities without lead pipes
+-   the difference between the averages for cities with or without lead pipes
+
+------------------------------------------------------------------------
+
+<!--WRITE YOUR ANSWERS BELOW -->
+
+```{r}
+lead_reg1 <- lm(infrate ~ lead, data = lead)
+summary(lead_reg1)
+```
+
+$$\widehat{\text{Infrate}_i} = 0.38+0.02 \, \text{Lead}_i$$
+
+-   Cities *without* lead pipes have an infant mortality rate of 0.38 $(\hat{\beta_0})$
+-   Cities *with* lead pipes have an infant mortality rate of $0.38+0.02=0.40$ $(\hat{\beta_0}+\hat{\beta_1})$
+-   The difference is $0.02$ $(\hat{\beta_3})$
+
+------------------------------------------------------------------------
+
+### Part C
+
+**Does the pH of the water matter? Include `ph` in your regression from part B. Write down the estimated regression equation, and interpret each coefficient (note there is no interaction effect here). What happens to the estimate on `lead`?**
+
+------------------------------------------------------------------------
+
+<!--WRITE YOUR ANSWERS BELOW -->
+
+```{r}
+lead_reg2 <- lm(infrate ~ lead + ph, data = lead)
+summary(lead_reg2)
+```
+
+$$\widehat{\text{Infrate}_i}=1.17+0.05 \, \text{Lead}_i-0.11 \, \text{pH}_i$$
+
+-   $\hat{\beta_0}:$ the infant mortality rate for cities with a pH of 0, holding the type of pipe constant is 1.17
+-   $\hat{\beta_1}$: the infant mortality rate for cities with lead pipes is 0.05 higher than cities without lead pipes, holding pH constant
+-   $\hat{\beta_2}$: the infant mortality rate falls by 0.11 for every increase of 1 in the city water's pH (less acidic), holding the type of pipe constant
+
+The estimate on `lead` doubled and became significant at the 5% level.
+
+------------------------------------------------------------------------
+
+### Part D
+
+**The amount of lead leached from lead pipes normally depends on the chemistry of the water running through the pipes: the more acidic the water (lower pH), the more lead is leached. Create an interaction term between lead and pH, and run a regression of `infrate` on `lead`, `pH`, and your interaction term. Write down the estimated regression equation. Is this interaction significant?**
+
+------------------------------------------------------------------------
+
+<!--WRITE YOUR ANSWERS BELOW -->
+
+```{r}
+lead_reg3 <- lm(infrate ~ lead + ph + lead:ph, data = lead)
+summary(lead_reg3)
+```
+
+$$\widehat{\text{Infrate}_i}=0.92+0.46 \, \text{Lead}_i-0.08 \, \text{pH}_i- \, 0.06 \, (\text{Lead} \times \text{pH})$$
+
+We see that this interaction is just barely insignificant, with a $p$-value of 0.06.
+
+------------------------------------------------------------------------
+
+### Part E
+
+**What we actually have are two different regression lines. Visualize this with a scatterplot between `infrate`** $(Y)$ and `ph` $(X)$ by `lead`.
+
+------------------------------------------------------------------------
+
+<!--WRITE YOUR ANSWERS BELOW -->
+
+```{r, fig.retina=3}
+lead_scatter <- ggplot(data = lead)+
+    aes(x = ph,
+        y = infrate)+
+    geom_point(aes(color = as.factor(lead)))+ # making it a factor makes color discrete rather than continuous!
+    geom_smooth(method = "lm")+
+    # now I'm just making it pretty
+    # changing color
+    scale_color_viridis_d("Pipes",
+                          labels = c("0" = "Not Lead",
+                                     "1" = "Lead"))+ # changing labels for colors
+  labs(x = "pH",
+       y = "Infant Mortality Rate")+
+  theme_classic(base_family = "Fira Sans Condensed",
+           base_size=20)
+
+lead_scatter
+```
+
+```{r}
+lead_scatter + facet_wrap(~lead, 
+                        labeller = labeller(lead = c("0" = "Not Lead",
+                                                     "1" = "Lead")))+ # change facet titles
+    guides(color = F) # hide other legend
+```
+
+------------------------------------------------------------------------
+
+### Part F
+
+**Do the two regression lines have the same intercept? The same slope? Use the original regression in part D to test these possibilities.**
+
+------------------------------------------------------------------------
+
+<!--WRITE YOUR ANSWERS BELOW -->
+
+$\beta_1$ (on `lead`) measures the difference in intercept between the lead & no lead regression lines. So we would want to test:
+
+$$\begin{align*}
+    H_0: & \beta_1=0\\
+    H_a: & \beta_1 \neq 0\\ 
+\end{align*}$$
+
+The `R` output tells us $\hat{\beta_1}$ is $0.46$ with a standard error of 0.22, so the $t$-statistic for this test is $2.09$ with a $p$-value of 0.04, so there is a statistically significant difference at the 5% level.
+
+$\beta_3$ (on the interaction term) measures the difference in slope between the lead & no lead regression lines. So we would want to test:
+
+$$\begin{align*}
+    H_0: & \beta_3=0\\
+    H_a: & \beta_3 \neq 0\\ 
+\end{align*}$$
+
+The output tells us $\hat{\beta_3}$ is $-0.06$ with a standard error of 0.3, so the $t$-statistic for this test is $-1.87$ with a $p$-value of $0.06$, so there is not a statistically significant difference at the 5% level.
+
+Therefore, they have *difference* intercepts, and the *same* slopes, statistically.
+
+------------------------------------------------------------------------
+
+### Part G
+
+**Take your regression equation from part D and rewrite it as two separate regression equations (one for no lead and one for lead). Interpret the coefficients for each.**
+
+------------------------------------------------------------------------
+
+<!--WRITE YOUR ANSWERS BELOW -->
+
+For no lead (`lead=0`):
+
+$$\begin{align*}
+    \widehat{Infrate}&=0.92+0.46 \, Lead-0.08 \, pH-0.06\, (Lead \times pH)\\
+        &=0.92+0.46(\mathbf{0})-0.08pH-0.06((\mathbf{0}) \times pH)\\
+        &=0.92-0.08 \, pH\\
+\end{align*}$$
+
+For lead (`lead=1`):
+
+$$\begin{align*}
+    \widehat{Infrate}&=0.92+0.46 \, Lead-0.08 \, pH-0.06\, (Lead \times pH)\\
+        &=0.92+0.46(\mathbf{1})-0.08pH-0.06((\mathbf{1}) \times pH)\\
+        &=(0.92+0.46)+(-0.08-0.06) \, pH\\
+        &=1.30-0.14 \, pH\\
+\end{align*}$$
+
+Cities without lead pipes have an infant mortality rate of $0.92$ $(\hat{\beta_0}$ from reg 1) vs. cities with lead pipes have an infant mortality rate of $1.30$ ($\hat{\beta_0}$ from reg 2). For every additional unit of pH, the infant mortality rate of a city without lead pipes would decrease by 0.06 $(\hat{\beta_1}$ from reg 1) vs. a city with lead pipes which would see a fall of 0.14.
+
+So again, we can see the difference in infant mortality rates between cities with lead pipes vs. those that don't, with a water pH of 0 is $1.30-0.92=\$0.38$, $(\hat{\beta_0}$ from the regression in (part d)), and the cities with lead raise their infant mortality rates by $0.14-0.08=0.06$ more from each unit of pH than cities without lead do $(\hat{\beta_3})$ from the regression in (part d)).
+
+------------------------------------------------------------------------
+
+### Part H
+
+**Double check your calculations in G are correct by running the regression in D twice, once for cities without lead pipes and once for cities with lead pipes. \[Hint: `filter()` the data first, then use the filtered data for the `data=` in each regression.\]**
+
+------------------------------------------------------------------------
+
+<!--WRITE YOUR ANSWERS BELOW -->
+
+```{r}
+# regression for no lead
+
+lead %>%
+    filter(lead == 0) %>%
+    lm(data = ., infrate ~ lead + ph + lead:ph) %>%
+    summary()
+
+# regression for lead
+
+lead %>%
+    filter(lead == 1) %>%
+    lm(data = ., infrate ~ lead + ph + lead:ph) %>%
+    summary()
+```
+
+------------------------------------------------------------------------
+
+### Part I
+
+**Use `huxtable` to make a nice output table of all of your regressions from parts B, C, and D.**
+
+------------------------------------------------------------------------
+
+<!--WRITE YOUR ANSWERS BELOW -->
+
+```{r}
+
+library(huxtable)
+huxreg(lead_reg1,
+       lead_reg2,
+       lead_reg3,
+       coefs = c("Constant" = "(Intercept)",
+                 "Lead Pipes" = "lead",
+                 "pH" = "ph",
+                 "Lead * pH" = "lead:ph"),
+       statistics = c("N" = "nobs",
+                      "R-Squared" = "r.squared",
+                      "SER" = "sigma"),
+       number_format = 2)
+```
+
+------------------------------------------------------------------------
+
+## Question 10
+
+-   [<i class="fas fa-table"></i> `freedom.csv`](http://metricsf21.classes.ryansafner.com/data/freedom.csv)
+
+Let's look at economic freedom and GDP per capita using some data I sourced from [Gapminder](https://gapminder.org/tools)[^1], [Freedom House](https://freedomhouse.org/content/freedom-world-data-and-resources)[^2] and [Fraser Institute Data](https://www.fraserinstitute.org/economic-freedom/dataset?geozone=world&year=2016&page=dataset)[^3] and cleaned up for you, with the following variables:
+
+[^1]: GDP per capita (2018)
+
+[^2]: Political freedom score (2018)
+
+[^3]: Economic Freedom score (2016)
+
+| Variable       | Description                                                            |
+|----------------|------------------------------------------------------------------------|
+| `Country`      | Name of country                                                        |
+| `ISO`          | Code of country (good for plotting)                                    |
+| `econ_freedom` | Economic Freedom Index score (2016) from 1 (least) to 10 (most free)   |
+| `pol_freedom`  | Political freedom index score (2018) from 1 (least) top 10 (most free) |
+| `gdp_pc`       | GDP per capita (2018 USD)                                              |
+| `continent`    | Continent of country                                                   |
+
+### Part A
+
+**Does economic freedom affect GDP per capita? Create a scatterplot of `gdp_pc` (`Y`) against `econ_freedom` (`x`). Does the effect appear to be linear or nonlinear?**
+
+------------------------------------------------------------------------
+
+<!--WRITE YOUR ANSWERS BELOW -->
+
+```{r}
+# load data
+freedom <- read_csv("freedom.csv")
+```
+
+```{r}
+
+freedom_plot <- ggplot(data = freedom)+
+    aes(x = econ_freedom,
+        y = gdp_pc)+
+    geom_point(aes(color = continent))+
+    scale_y_continuous(labels = scales::dollar)+
+  labs(x = "Economic Freedom Score (0-10)",
+       y = "GDP per Capita")+
+  theme_classic(base_family = "Fira Sans Condensed",
+           base_size = 20)
+
+freedom_plot
+```
+
+The effect appears to be nonlinear.
+
+------------------------------------------------------------------------
+
+### Part B
+
+**Run a simple regression of `gdp_pc` on `econ_freedom`. Write out the estimated regression equation. What is the marginal effect of `econ_freedom` on `gdp_pc`?**
+
+------------------------------------------------------------------------
+
+<!--WRITE YOUR ANSWERS BELOW -->
+
+```{r}
+
+freedom_reg1 <- lm(gdp_pc ~ econ_freedom, data = freedom)
+
+summary(freedom_reg1)
+```
+
+------------------------------------------------------------------------
+
+### Part C
+
+**Let's try a quadratic model. Run a quadratic regression of `gdp_pc` on `econ_freedom`. Write out the estimated regression equation.**
+
+------------------------------------------------------------------------
+
+<!--WRITE YOUR ANSWERS BELOW -->
+
+```{r}
+
+freedom_reg2 <- lm(gdp_pc ~ econ_freedom + I(econ_freedom^2),
+                   data = freedom)
+
+summary(freedom_reg2)
+```
+
+------------------------------------------------------------------------
+
+### Part D
+
+**Add the quadratic regression to your scatterplot.**
+
+------------------------------------------------------------------------
+
+<!--WRITE YOUR ANSWERS BELOW -->
+
+```{r,fig.retina=3}
+
+freedom_plot +
+  geom_smooth(method = "lm", formula = "y~x+I(x^2)", color = "green")
+```
+
+------------------------------------------------------------------------
+
+### Part E
+
+**What is the marginal effect of `econ_freedom` on `gdp_pc`?**
+
+------------------------------------------------------------------------
+
+<!--WRITE YOUR ANSWERS BELOW -->
+
+The marginal effect can be found by taking the derivative of the regression with respect to `econ_freedom` (or recalling the rule):
+
+$$\begin{align*}
+    \frac{d \, Y}{d \, X} &= \beta_1+2\beta_2 X\\
+    \frac{d \, GDPpc}{d \, econfreedom} &= -96618+2(8327)econfreedom\, econ\\
+    &=-96618+16654 \, econfreedom\\
+    \end{align*}$$
+
+```{r}
+# if you want to calculate it in R
+
+library(broom)
+
+freedom_reg2_tidy <- tidy(freedom_reg2)
+
+freedom_beta_1 <- freedom_reg2_tidy %>%
+    filter(term == "econ_freedom") %>%
+    pull(estimate)
+
+freedom_beta_2 <- freedom_reg2_tidy %>%
+    filter(term == "I(econ_freedom^2)") %>%
+    pull(estimate)
+
+# freedom_beta_1+2*freedom_beta_2* # number
+```
+
+------------------------------------------------------------------------
+
+### Part F
+
+**As a quadratic model, this relationship should predict an`econ_freedom` score where `gdp_pc` is at a *minimum*. What is that minimum Economic Freedom score, and what is the associated GDP per capita?**
+
+------------------------------------------------------------------------
+
+<!--WRITE YOUR ANSWERS BELOW -->
+
+We can set the derivative equal to 0, or you can just remember the formula and plug in the parameters:
+
+$$\begin{align*}
+    \frac{d Y}{d X}  &= \beta_1+2\beta_2 X\\
+    0 &=\beta_1+2\beta_2 X\\
+    -\beta_1&=2\beta_2 X\\
+    -\frac{1}{2} \times \frac{\beta_1}{\beta_2}&=econfreedom^*\\
+    -\frac{1}{2} \times\frac{(-96618)}{(8327)} &= econfreedom^*\\
+    -\frac{1}{2} \times -11.603 & \approx econfreedom^*\\
+    5.801 & \approx econfreedom ^*\\
+\end{align*}$$
+
+```{r}
+
+# to calculate in R
+
+min <- -0.5*(freedom_beta_1/freedom_beta_2)
+min
+```
+
+```{r,fig.retina=3}
+
+# let's visualize on the scatterplot
+
+freedom_plot +
+  geom_smooth(method = "lm", formula = "y~x+I(x^2)", color = "green")+
+  geom_vline(xintercept = min, linetype = "dashed", size = 1)+
+  geom_label(x = min, y = 75000, label = round(min,2))
+
+```
+
+------------------------------------------------------------------------
+
+### Part G
+
+**Run a cubic model to see if we should keep going up in polynomials. Write out the estimated regression equation. Should we add a cubic term?**
+
+------------------------------------------------------------------------
+
+<!--WRITE YOUR ANSWERS BELOW -->
+
+```{r}
+
+freedom_reg3 <- lm(gdp_pc ~ econ_freedom + I(econ_freedom^2)+ I(econ_freedom^3),
+                   data = freedom)
+
+summary(freedom_reg3)
+```
+
+There's no good theoretical reason why we should expect economic freedom to "change direction" twice - go down, then up, then down again - in its effect on GDP.
+
+Statistically, we can see that $\hat{\beta_3}$ on `I(econ_freedom^3)` is not significant (`p-value` is `0.590`), so we should *not* include the cubic term.
+
+```{r}
+# let's visualize it on the scatterplot
+freedom_plot+
+  geom_smooth(method = "lm", formula = "y~x+I(x^2)", color = "green")+
+  geom_smooth(method = "lm", formula = "y~x+I(x^2)+I(x^3)", color = "orange")
+```
+
+------------------------------------------------------------------------
+
+### Part H
+
+**Another way we can *test* for non-linearity is to run an** $F$-test on all non-linear variables - i.e. the quadratic term and the cubic term $(\hat{\beta_2}$ and $\hat{\beta_3}$) and test against the null hypothesis that: $$H_0: \hat{\beta_2} = \hat{\beta_3} = 0$$
+
+**Run this joint hypothesis test, and what can you conclude?**
+
+------------------------------------------------------------------------
+
+<!--WRITE YOUR ANSWERS BELOW -->
+
+```{r}
+#| eval: false
+# run F test
+library(car)
+linearHypothesis(freedom_reg3, c("I(econ_freedom^2)", "I(econ_freedom^3)"))
+```
+
+The null hypothesis is that the polynomial terms (quadratic and cubic) jointly do not matter (and the relationship is therefore linear). We have sufficient evidence to reject that hypothesis (`p-value` is very small). Thus, the relationship is in fact *not* linear.
+
+------------------------------------------------------------------------
+
+### Part I
+
+**Instead of a polynomial model, try out a logarithmic model. It is hard to interpret percent changes on an index, but it is easy to understand percent changes in GDP per capita, so run a *log-linear* regression. Write out the estimated regression equation. What is the marginal effect of `econ_freedom`?**
+
+------------------------------------------------------------------------
+
+<!--WRITE YOUR ANSWERS BELOW -->
+
+```{r}
+# log linear model 
+freedom_reg4 <- lm(log(gdp_pc) ~ econ_freedom, data = freedom)
+
+summary(freedom_reg4)
+```
+
+For every 1 point increase on the economic freedom index, a country's GDP per capita increases by $1.2889 \times 100\%=128.90\%$
+
+------------------------------------------------------------------------
+
+### Part J
+
+**Make a scatterplot of your log-linear model with a regression line.**
+
+------------------------------------------------------------------------
+
+<!--WRITE YOUR ANSWERS BELOW -->
+
+```{r, fig.retina=3}
+
+log_freedom_plot <- ggplot(data = freedom)+
+    aes(x = econ_freedom,
+        y = log(gdp_pc))+
+    geom_point(aes(color = continent))+
+    geom_smooth(method = "lm")+
+  labs(x = "Economic Freedom Score (0-10)",
+       y = "Log GDP per Capita")+
+  theme_classic(base_family = "Fira Sans Condensed",
+           base_size = 20)
+
+log_freedom_plot
+```
+
+------------------------------------------------------------------------
+
+### Part K
+
+**Put all of your results together in a regression output table with `huxtable` from your answers in questions B, C, G, and H.**
+
+------------------------------------------------------------------------
+
+<!--WRITE YOUR ANSWERS BELOW -->
+
+```{r}
+
+huxreg("GDP per Capita" = freedom_reg1,
+       "GDP per Capita" = freedom_reg2,
+       "Log(GDP per Capita)" = freedom_reg3,
+       coefs = c("Constant" = "(Intercept)",
+                 "Economic Freedom Score (0-10)" = "econ_freedom",
+                 "Economic Freedom Squared" = "I(econ_freedom^2)",
+                 "Economic Freedom Cubed" = "I(econ_freedom^3)"),
+       statistics = c("N" = "nobs",
+                      "R-Squared" = "r.squared",
+                      "SER" = "sigma"),
+       number_format = 2)
+```

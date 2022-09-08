@@ -1,6 +1,6 @@
 ---
 title: "Applied Econometrics Workship with R and STATA"
-subtitle: "7-9 Oct, 2022"
+subtitle: "7-9 Oct, 2022 Tentative"
 logo: "QAU-Logo.jpg"
 footer: "[School of Economics, QAU]{.yellow}"
 format:

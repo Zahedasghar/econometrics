@@ -1,0 +1,1759 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Regression with a binary dependent variable</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="ch11_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ch11_files/libs/quarto-html/quarto.js"></script>
+<script src="ch11_files/libs/quarto-html/popper.min.js"></script>
+<script src="ch11_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ch11_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ch11_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ch11_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="ch11_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ch11_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ch11_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+
+<script src="ch11_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="ch11_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Regression with a binary dependent variable</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<section id="regression-with-a-binary-dependent-variable" class="level2">
+<h2 class="anchored" data-anchor-id="regression-with-a-binary-dependent-variable">Regression with a binary dependent variable</h2>
+<p>So far the dependent variable (<span class="math inline">\(Y\)</span>) has been continuous:</p>
+<ul>
+<li>district-wide average test score</li>
+<li>economic growth rate</li>
+<li>earnings</li>
+</ul>
+<p>What if <span class="math inline">\(Y\)</span> is binary?</p>
+<ul>
+<li><span class="math inline">\(Y\)</span> = get into college, or not; <span class="math inline">\(X\)</span> = years of education</li>
+</ul>
+<p>- <span class="math inline">\(Y\)</span> = person smokes, or not; <span class="math inline">\(X\)</span> = income</p>
+<p>- <span class="math inline">\(Y\)</span> = mortgage application is accepted, or not; <span class="math inline">\(X\)</span> = income, house characteristics, marital status, race</p>
+</section>
+<section id="section" class="level2 scrollable">
+<h2 class="scrollable anchored" data-anchor-id="section"></h2>
+<table class="table">
+<caption>Examples of Binary Dependent Variables</caption>
+<colgroup>
+<col style="width: 32%">
+<col style="width: 30%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Topic</th>
+<th>Dummy Dependent Variable</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Labour Force Participation</td>
+<td>Inlabourforce</td>
+<td><p>0 if out of LF</p>
+<p>1 if in the LF</p></td>
+</tr>
+<tr class="even">
+<td>Choice of Occupation</td>
+<td>Managerial</td>
+<td><p>0 if not managerial</p>
+<p>1 if managerial</p></td>
+</tr>
+<tr class="odd">
+<td>Firm Location</td>
+<td>Shoppingmall</td>
+<td><p>0 if not in the shopping mall</p>
+<p>1 if in the shopping mall</p></td>
+</tr>
+<tr class="even">
+<td>Union Membership</td>
+<td>Union</td>
+<td><p>0 if not a union member</p>
+<p>1 if a union member</p></td>
+</tr>
+<tr class="odd">
+<td>Retirement</td>
+<td>Retired</td>
+<td><p>0 if not retired</p>
+<p>1 if retired</p></td>
+</tr>
+<tr class="even">
+<td>Use of Seat Belts</td>
+<td>Seatbeltused</td>
+<td><p>0 if does not use seat belt</p>
+<p>1 if uses seat belt</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="main-concepts" class="level2">
+<h2 class="anchored" data-anchor-id="main-concepts">Main concepts</h2>
+<p>We review the following concepts:</p>
+<ul>
+<li>the linear probability model</li>
+<li>the Probit model</li>
+<li>the Logit model</li>
+<li>maximum likelihood estimation of nonlinear regression models</li>
+</ul>
+</section>
+<section id="scatter-plot-of-the-boston-hmda-data" class="level2">
+<h2 class="anchored" data-anchor-id="scatter-plot-of-the-boston-hmda-data">Scatter plot of the Boston HMDA data</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>hmda <span class="ot">&lt;-</span> <span class="fu">read_stata</span>(<span class="st">"hmda_sw.dta"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create the variables of interest</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>hmda<span class="sc">$</span>deny <span class="ot">=</span> <span class="fu">ifelse</span>(hmda<span class="sc">$</span>s7<span class="sc">==</span><span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>hmda<span class="sc">$</span>pi_ratio <span class="ot">=</span> hmda<span class="sc">$</span>s46<span class="sc">/</span><span class="dv">100</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>hmda<span class="sc">$</span>black <span class="ot">=</span> <span class="fu">ifelse</span>(hmda<span class="sc">$</span>s13<span class="sc">==</span><span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>figure11_1 <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>hmda, <span class="fu">aes</span>(<span class="at">x=</span>pi_ratio, <span class="at">y=</span>deny))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>figure11_1 <span class="ot">=</span> figure11_1 <span class="sc">+</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.2</span>, <span class="at">size=</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>, <span class="at">se=</span>F) <span class="sc">+</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ylim</span>(<span class="sc">-</span><span class="fl">0.4</span>,<span class="fl">1.4</span>) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">3</span>,<span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">x=</span><span class="st">"P/I Ratio"</span>, <span class="at">y=</span><span class="st">"Deny"</span>) <span class="sc">+</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">annotate</span>(<span class="st">"text"</span>,<span class="at">x=</span><span class="fl">2.5</span>,<span class="at">y=</span><span class="fl">0.9</span>,<span class="at">label=</span><span class="st">"Mortgage denied"</span>) <span class="sc">+</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">annotate</span>(<span class="st">"text"</span>,<span class="at">x=</span><span class="fl">2.5</span>,<span class="at">y=</span><span class="sc">-</span><span class="fl">0.1</span>,<span class="at">label=</span><span class="st">"Mortgage approved"</span>) <span class="sc">+</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_bw</span>()</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>figure11_1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="ch11_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="trimming-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="trimming-the-data">Trimming the data</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># sample of the HMDA data with 150 observations</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>hmda_s1 <span class="ot">=</span> dplyr<span class="sc">::</span><span class="fu">sample_n</span>(<span class="fu">filter</span>(hmda,s13<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> s7<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> s46<span class="sc">/</span><span class="dv">100</span><span class="sc">&lt;</span><span class="dv">1</span>), <span class="dv">35</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>hmda_s2 <span class="ot">=</span> dplyr<span class="sc">::</span><span class="fu">sample_n</span>(<span class="fu">filter</span>(hmda,s13<span class="sc">==</span><span class="dv">3</span> <span class="sc">&amp;</span> s46<span class="sc">/</span><span class="dv">100</span><span class="sc">&lt;</span><span class="dv">1</span>), <span class="dv">15</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>hmda_s3 <span class="ot">=</span> dplyr<span class="sc">::</span><span class="fu">sample_n</span>(<span class="fu">filter</span>(hmda,s13<span class="sc">==</span><span class="dv">5</span> <span class="sc">&amp;</span> s46<span class="sc">/</span><span class="dv">100</span><span class="sc">&lt;</span><span class="dv">1</span>), <span class="dv">50</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>hmda_s <span class="ot">=</span> <span class="fu">rbind</span>(hmda_s1, hmda_s2, hmda_s3)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># create the variables of interest</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>hmda_s<span class="sc">$</span>deny <span class="ot">=</span> <span class="fu">ifelse</span>(hmda_s<span class="sc">$</span>s7<span class="sc">==</span><span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>hmda_s<span class="sc">$</span>pi_ratio <span class="ot">=</span> hmda_s<span class="sc">$</span>s46<span class="sc">/</span><span class="dv">100</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>hmda_s<span class="sc">$</span>black <span class="ot">=</span> <span class="fu">ifelse</span>(hmda_s<span class="sc">$</span>s13<span class="sc">==</span><span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>figure11_1mod <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>hmda_s, <span class="fu">aes</span>(<span class="at">x=</span>pi_ratio, <span class="at">y=</span>deny))</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>figure11_1mod <span class="ot">=</span> figure11_1mod <span class="sc">+</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">2</span>, <span class="at">shape=</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>, <span class="at">se=</span>F) <span class="sc">+</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ylim</span>(<span class="sc">-</span><span class="fl">0.4</span>,<span class="fl">1.4</span>) <span class="sc">+</span> <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.1</span>)) <span class="sc">+</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">x=</span><span class="st">"P/I Ratio"</span>, <span class="at">y=</span><span class="st">"Deny"</span>) <span class="sc">+</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">annotate</span>(<span class="st">"text"</span>,<span class="at">x=</span><span class="fl">0.6</span>,<span class="at">y=</span><span class="fl">1.1</span>,<span class="at">label=</span><span class="st">"Mortgage denied"</span>) <span class="sc">+</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">annotate</span>(<span class="st">"text"</span>,<span class="at">x=</span><span class="fl">0.6</span>,<span class="at">y=</span><span class="sc">-</span><span class="fl">0.1</span>,<span class="at">label=</span><span class="st">"Mortgage approved"</span>) <span class="sc">+</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">annotate</span>(<span class="st">"label"</span>,<span class="at">x=</span><span class="fl">0.3</span>,<span class="at">y=</span><span class="fl">0.5</span>,<span class="at">label=</span><span class="st">"LPM"</span>) <span class="sc">+</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_bw</span>()</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>figure11_1mod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="ch11_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="lpm" class="level2">
+<h2 class="anchored" data-anchor-id="lpm">LPM</h2>
+<p>Equation of the LPM regression line: <span class="math inline">\(\begin{align} deny = \beta_0 + \beta_1 \times P/I\ ratio + u. \tag{11.1} \end{align}\)</span></p>
+<p><span class="math inline">\(\begin{align} \widehat{deny} = -\underset{(0.032)}{0.080} + \underset{(0.098)}{0.604} P/I \ ratio. \tag{11.2} \end{align}\)</span></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sandwich)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>LPM <span class="ot">=</span> <span class="fu">lm</span>(deny <span class="sc">~</span> pi_ratio, <span class="at">data=</span>hmda)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(LPM, <span class="at">vcov =</span> sandwich)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+t test of coefficients:
+
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -0.079910   0.031953 -2.5008  0.01246 *  
+pi_ratio     0.603535   0.098441  6.1309 1.02e-09 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="lpm-inclduing-race-variable" class="level2">
+<h2 class="anchored" data-anchor-id="lpm-inclduing-race-variable">LPM inclduing race variable</h2>
+<p><span class="math inline">\(\begin{align} \widehat{deny} =&amp; \, -\underset{(0.029)}{0.091} + \underset{(0.089)}{0.559} P/I \ ratio + \underset{(0.025)}{0.177} black. \tag{11.3} \end{align}\)</span></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>LPM2 <span class="ot">=</span> <span class="fu">lm</span>(deny <span class="sc">~</span> pi_ratio <span class="sc">+</span> black, <span class="at">data=</span>hmda)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(LPM2, <span class="at">vcov=</span>sandwich)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+t test of coefficients:
+
+             Estimate Std. Error t value  Pr(&gt;|t|)    
+(Intercept) -0.090514   0.028582 -3.1669  0.001561 ** 
+pi_ratio     0.559195   0.088610  6.3107 3.303e-10 ***
+black        0.177428   0.024931  7.1169 1.455e-12 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="logit-and-probit-model" class="level2">
+<h2 class="anchored" data-anchor-id="logit-and-probit-model">Logit and Probit model</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">5</span>)), <span class="fu">aes</span>(<span class="at">x=</span>x)) <span class="sc">+</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> pnorm, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Probit"</span>)) <span class="sc">+</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> plogis, <span class="fu">aes</span>(<span class="at">colour =</span> <span class="st">"Logit"</span>)) <span class="sc">+</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">name =</span> <span class="st">"Function G"</span>,<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>)) <span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">name =</span> <span class="st">"Pr(y = 1 | x)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="ch11_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="probit-model-predicted-probabilities-and-estimated-effects" class="level2">
+<h2 class="anchored" data-anchor-id="probit-model-predicted-probabilities-and-estimated-effects">Probit Model, Predicted Probabilities and Estimated Effects</h2>
+<p>Assume that <span class="math inline">\(Y\)</span> is a binary variable. The model <span class="math display">\[Y= \beta_0 + \beta_1 + X_1 + \beta_2 X_2 + \dots + \beta_k X_k + u\]</span> with <span class="math inline">\(P(Y = 1 \vert X_1, X_2, \dots ,X_k)\\ = \Phi(\beta_0 + \beta_1 + X_1 + \beta_2 X_2 + \dots + \beta_k X_k)\)</span> is the population Probit model with multiple regressors <span class="math inline">\(X_1, X_2, \dots, X_k\)</span> and <span class="math inline">\(\Phi(\cdot)\)</span> is the cumulative standard normal distribution function.</p>
+</section>
+<section id="logit-regression" class="level2">
+<h2 class="anchored" data-anchor-id="logit-regression">Logit regression</h2>
+<p>The population Logit regression function is <span class="math display">\[\begin{align*}
+  P(Y=1\vert X_1, X_2, \dots, X_k) \\=&amp; \, F(\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_k X_k) \\
+  =&amp; \, \frac{1}{1+e^{-(\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_k X_k)}}.
+\end{align*}\]</span> The idea is similar to Probit regression except that a different CDF is used: <span class="math inline">\(F(x) = \frac{1}{1+e^{-x}}\)</span></p>
+<p>is the CDF of a standard logistically distributed random variable.</p>
+</section>
+<section id="probit-regression" class="level2">
+<h2 class="anchored" data-anchor-id="probit-regression">Probit regression</h2>
+<p><span class="math inline">\(\begin{align} E(Y\vert X) = P(Y=1\vert X) = \Phi(\beta_0 + \beta_1 X). \tag{11.4} \end{align}\)</span> <span class="math inline">\(\beta_0 + \beta_1 X\)</span> in (11.4) plays a role of a quantile <span class="math inline">\(z\)</span>.Remember that <span class="math inline">\(\Phi(z) = P(Z \leq z) \ , \ Z \sim \mathcal{N}(0,1)\)</span> such that the Probit coefficient <span class="math inline">\(\beta_1\)</span> in (11.4) is the change in <span class="math inline">\(z\)</span> associated with a one unit change in <span class="math inline">\(X\)</span>. Although the effect on <span class="math inline">\(z\)</span> of a change in <span class="math inline">\(X\)</span> is linear, the link between <span class="math inline">\(z\)</span> and the dependent variable <span class="math inline">\(Y\)</span> is nonlinear since <span class="math inline">\(\Phi\)</span> is a nonlinear function of <span class="math inline">\(X\)</span>. .</p>
+</section>
+<section id="probit-chart-code" class="level2">
+<h2 class="anchored" data-anchor-id="probit-chart-code">Probit chart code</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>figure11_3mod <span class="ot">=</span> <span class="fu">ggplot</span>(<span class="at">data=</span>hmda_s, <span class="fu">aes</span>(<span class="at">x=</span>pi_ratio, <span class="at">y=</span>deny))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>figure11_3probit <span class="ot">=</span> figure11_3mod <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_point</span>(<span class="at">shape=</span><span class="dv">1</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"glm"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="at">method.args=</span><span class="fu">list</span>(<span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"probit"</span>)),</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="at">se=</span>F) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ylim</span>(<span class="sc">-</span><span class="fl">0.4</span>,<span class="fl">1.4</span>) <span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.1</span>)) <span class="sc">+</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">x=</span><span class="st">"P/I Ratio"</span>, <span class="at">y=</span><span class="st">"Deny"</span>) <span class="sc">+</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">annotate</span>(<span class="st">"label"</span>,<span class="at">x=</span><span class="fl">0.3</span>,<span class="at">y=</span><span class="fl">0.5</span>,<span class="at">label=</span><span class="st">"Probit Regression"</span>) <span class="sc">+</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="probit-regression-1" class="level2 r-fit-text">
+<h2 class="r-fit-text anchored" data-anchor-id="probit-regression-1">Probit regression</h2>
+<p><span class="math inline">\(\begin{align} \widehat{P(deny\vert P/I \ ratio, black)} = \Phi (-\underset{(0.18)}{2.26} + \underset{(0.50)}{2.74} P/I \ ratio + \underset{(0.08)}{0.71} black) \end{align}\)</span></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>probit <span class="ot">=</span> <span class="fu">glm</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>deny <span class="sc">~</span> black <span class="sc">+</span> pi_ratio,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="at">data=</span>hmda,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>))</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(probit, <span class="at">vcov=</span>sandwich)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+z test of coefficients:
+
+            Estimate Std. Error  z value  Pr(&gt;|z|)    
+(Intercept) -4.12556    0.34576 -11.9320 &lt; 2.2e-16 ***
+black        1.27278    0.14607   8.7136 &lt; 2.2e-16 ***
+pi_ratio     5.37036    0.96315   5.5758 2.464e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="lpm-logit-probit" class="level2 scrollable">
+<h2 class="scrollable anchored" data-anchor-id="lpm-logit-probit">LPM , Logit, Probit</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rename and create some variables for regression</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>hmda<span class="sc">$</span>hse_inc <span class="ot">=</span> hmda<span class="sc">$</span>s45<span class="sc">/</span><span class="dv">100</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>hmda<span class="sc">$</span>loan_val <span class="ot">=</span> hmda<span class="sc">$</span>s6<span class="sc">/</span>hmda<span class="sc">$</span>s50</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>hmda<span class="sc">$</span>ccred <span class="ot">=</span> hmda<span class="sc">$</span>s43</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>hmda<span class="sc">$</span>mcred <span class="ot">=</span> hmda<span class="sc">$</span>s42</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>hmda<span class="sc">$</span>pubrec <span class="ot">=</span> <span class="fu">ifelse</span>(hmda<span class="sc">$</span>s44<span class="sc">&gt;</span><span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>hmda<span class="sc">$</span>denpmi <span class="ot">=</span> <span class="fu">ifelse</span>(hmda<span class="sc">$</span>s53<span class="sc">==</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>hmda<span class="sc">$</span>selfemp <span class="ot">=</span> <span class="fu">ifelse</span>(hmda<span class="sc">$</span>s27a<span class="sc">==</span><span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>hmda<span class="sc">$</span>married <span class="ot">=</span> <span class="fu">ifelse</span>(hmda<span class="sc">$</span>s23a<span class="sc">==</span><span class="st">"M"</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>hmda<span class="sc">$</span>single <span class="ot">=</span> <span class="fu">ifelse</span>(hmda<span class="sc">$</span>married<span class="sc">==</span><span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>hmda<span class="sc">$</span>hischl <span class="ot">=</span> <span class="fu">ifelse</span>(hmda<span class="sc">$</span>school<span class="sc">&gt;=</span><span class="dv">12</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>hmda<span class="sc">$</span>probunmp <span class="ot">=</span> hmda<span class="sc">$</span>uria</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>hmda<span class="sc">$</span>condo <span class="ot">=</span> <span class="fu">ifelse</span>(hmda<span class="sc">$</span>s51 <span class="sc">==</span> <span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># LPM</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>model_1 <span class="ot">=</span> <span class="fu">lm</span>(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>deny <span class="sc">~</span> black <span class="sc">+</span> pi_ratio <span class="sc">+</span> hse_inc <span class="sc">+</span> loan_val <span class="sc">+</span> ccred <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>mcred <span class="sc">+</span> pubrec <span class="sc">+</span> <span class="sc">+</span> denpmi <span class="sc">+</span> selfemp,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="at">data=</span>hmda)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Logit</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>model_2 <span class="ot">=</span> <span class="fu">glm</span>(</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>deny <span class="sc">~</span> black <span class="sc">+</span> pi_ratio <span class="sc">+</span> hse_inc <span class="sc">+</span> loan_val <span class="sc">+</span> ccred <span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>mcred <span class="sc">+</span> pubrec <span class="sc">+</span> <span class="sc">+</span> denpmi <span class="sc">+</span> selfemp,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="at">data=</span>hmda,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"logit"</span>))</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Probit</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>model_3 <span class="ot">=</span> <span class="fu">glm</span>(</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>deny <span class="sc">~</span> black <span class="sc">+</span> pi_ratio <span class="sc">+</span> hse_inc <span class="sc">+</span> loan_val <span class="sc">+</span> ccred <span class="sc">+</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>mcred <span class="sc">+</span> pubrec <span class="sc">+</span> <span class="sc">+</span> denpmi <span class="sc">+</span> selfemp,</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="at">data=</span>hmda,</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="at">family=</span><span class="fu">binomial</span>(<span class="at">link=</span><span class="st">"probit"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>models<span class="ot">&lt;-</span><span class="fu">list</span>(model_1,model_2,model_3)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(huxtable)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models,<span class="at">estimate =</span> <span class="st">"{estimate}{stars}"</span>, <span class="at">output=</span><span class="st">"huxtable"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<table class="huxtable" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; ; margin-left: auto; margin-right: auto;  " id="tab:unnamed-chunk-10">
+<colgroup><col><col><col><col></colgroup><tbody><tr>
+<th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"> </th><th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Model 1</th><th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Model 2</th><th style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Model 3</th></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(Intercept)</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-0.241***</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-6.830***</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-3.519***</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.032)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.541)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.266)</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">black</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.090***</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.726***</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.408***</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.017)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.175)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.096)</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">pi_ratio</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.461***</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">4.743***</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">2.472***</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.087)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(1.046)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.549)</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">hse_inc</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-0.054</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-0.191</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-0.238</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.096)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(1.234)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.653)</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">loan_val</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.092**</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">1.784***</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.764**</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.034)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.498)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.251)</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">ccred</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.031***</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.290***</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.154***</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.004)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.040)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.021)</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">mcred</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.023*</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.307*</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.161*</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.011)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.139)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.073)</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">pubrec</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.201***</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">1.221***</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.701***</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.023)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.203)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.117)</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">denpmi</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.712***</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">4.518***</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">2.542***</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.041)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.550)</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.281)</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">selfemp</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.060***</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.672**</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.354**</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.018)</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.210)</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">(0.111)</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Num.Obs.</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">2380</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">2380</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 1pt 0pt 0pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">2380</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">R2</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.258</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">R2 Adj.</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.255</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;"></td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">AIC</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">711.7</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">1302.1</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">1305.7</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">BIC</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">775.2</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">1359.8</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">1363.4</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">Log.Lik.</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-344.855</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-641.046</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">-642.847</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">F</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">91.479</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">32.298</td><td style="vertical-align: top; text-align: left; white-space: normal; padding: 6pt 6pt 6pt 6pt; font-weight: normal;">35.294</td></tr>
+<tr>
+<td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">RMSE</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.28</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.28</td><td style="vertical-align: top; text-align: left; white-space: normal; border-style: solid solid solid solid; border-width: 0pt 0pt 1pt 0pt;    padding: 6pt 6pt 6pt 6pt; font-weight: normal;">0.28</td></tr>
+</tbody></table>
+
+</div>
+</div>
+</section>
+<section id="mroz-data-from-aerwoolridge" class="level2">
+<h2 class="anchored" data-anchor-id="mroz-data-from-aerwoolridge"><a href="https://scpoecon.github.io/ScPoEconometrics/binary.html#the-linear-probability-model">mroz data from AER/Woolridge</a></h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mroz, <span class="at">package =</span> <span class="st">"wooldridge"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">factor</span>(inlf) <span class="sc">~</span> age, <span class="at">data =</span> mroz, </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylevels =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">1</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"in labor force?"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="ch11_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1"></h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>LPM <span class="ot">=</span> <span class="fu">lm</span>(inlf <span class="sc">~</span> nwifeinc <span class="sc">+</span> educ <span class="sc">+</span> exper </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>         <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> age <span class="sc">+</span><span class="fu">I</span>(age<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> kidslt6, mroz)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(LPM)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = inlf ~ nwifeinc + educ + exper + I(exper^2) + age + 
+    I(age^2) + kidslt6, data = mroz)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.94194 -0.37773  0.08935  0.34283  0.97979 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.3219554  0.4863667   0.662  0.50820    
+nwifeinc    -0.0034271  0.0014531  -2.358  0.01861 *  
+educ         0.0374662  0.0073476   5.099 4.33e-07 ***
+exper        0.0382568  0.0057700   6.630 6.44e-11 ***
+I(exper^2)  -0.0005649  0.0001895  -2.981  0.00296 ** 
+age         -0.0011177  0.0225100  -0.050  0.96041    
+I(age^2)    -0.0001822  0.0002581  -0.706  0.48044    
+kidslt6     -0.2603675  0.0340826  -7.639 6.72e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.4273 on 745 degrees of freedom
+Multiple R-squared:  0.2637,    Adjusted R-squared:  0.2568 
+F-statistic: 38.13 on 7 and 745 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+</section>
+<section id="section-2" class="level2">
+<h2 class="anchored" data-anchor-id="section-2"></h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pr <span class="ot">=</span> <span class="fu">predict</span>(LPM)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pr[<span class="fu">order</span>(pr)],<span class="at">ylab =</span> <span class="st">"p(inlf = 1)"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="ch11_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="section-3" class="level2">
+<h2 class="anchored" data-anchor-id="section-3"></h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>mroz <span class="sc">%&lt;&gt;%</span> </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># classify age into 3 and huswage into 2 classes</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">age_fct =</span> <span class="fu">cut</span>(age,<span class="at">breaks =</span> <span class="dv">3</span>,<span class="at">labels =</span> <span class="cn">FALSE</span>),</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">huswage_fct =</span> <span class="fu">cut</span>(huswage, <span class="at">breaks =</span> <span class="dv">2</span>,<span class="at">labels =</span> <span class="cn">FALSE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">classes =</span> <span class="fu">paste0</span>(<span class="st">"age_"</span>,age_fct,<span class="st">"_hus_"</span>,huswage_fct))</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>LPM_saturated <span class="ot">=</span> mroz <span class="sc">%&gt;%</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lm</span>(inlf <span class="sc">~</span> classes, <span class="at">data =</span> .)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>mroz<span class="sc">$</span>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(LPM_saturated)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mroz[<span class="fu">order</span>(mroz<span class="sc">$</span>pred),], <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(mroz),<span class="at">y =</span> pred,<span class="at">color =</span> classes)) <span class="sc">+</span> </span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">name =</span> <span class="st">"p(inlf)"</span>) <span class="sc">+</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"LPM in a Saturated Model is Perfectly Fine"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="ch11_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="interpretation-of-coefficients" class="level2 scrollable">
+<h2 class="scrollable anchored" data-anchor-id="interpretation-of-coefficients">Interpretation of coefficients</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>probit <span class="ot">&lt;-</span> <span class="fu">glm</span>(inlf <span class="sc">~</span> age, </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> mroz, </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"probit"</span>))</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>logit <span class="ot">&lt;-</span> <span class="fu">glm</span>(inlf <span class="sc">~</span> age, </span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> mroz, </span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>))</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>modelsummary<span class="sc">::</span><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">"probit"</span> <span class="ot">=</span> probit,<span class="st">"logit"</span> <span class="ot">=</span> logit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;"> probit </th>
+   <th style="text-align:center;"> logit </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:center;"> 0.707 </td>
+   <td style="text-align:center;"> 1.136 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.248) </td>
+   <td style="text-align:center;"> (0.398) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age </td>
+   <td style="text-align:center;"> −0.013 </td>
+   <td style="text-align:center;"> −0.020 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.006) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.009) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 753 </td>
+   <td style="text-align:center;"> 753 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> AIC </td>
+   <td style="text-align:center;"> 1028.9 </td>
+   <td style="text-align:center;"> 1028.9 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BIC </td>
+   <td style="text-align:center;"> 1038.1 </td>
+   <td style="text-align:center;"> 1038.1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Log.Lik. </td>
+   <td style="text-align:center;"> −512.442 </td>
+   <td style="text-align:center;"> −512.431 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> F </td>
+   <td style="text-align:center;"> 4.828 </td>
+   <td style="text-align:center;"> 4.858 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RMSE </td>
+   <td style="text-align:center;"> 0.49 </td>
+   <td style="text-align:center;"> 0.49 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</section>
+<section id="section-4" class="level2 scrollable">
+<h2 class="scrollable anchored" data-anchor-id="section-4"></h2>
+<p><a href="https://floswald.shinyapps.io/marginal_effects_of_logit_probit/">shinyapp</a></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mfx)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="st">"inlf ~ age + kidslt6 + nwifeinc"</span> <span class="co"># setup a formula</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>glms <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>glms<span class="sc">$</span>probit <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">formula =</span> f, </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> mroz, </span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"probit"</span>))</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>glms<span class="sc">$</span>logit <span class="ot">&lt;-</span> <span class="fu">glm</span>(<span class="at">formula =</span> f, </span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> mroz, </span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>))</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co"># now the marginal effects versions</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>glms<span class="sc">$</span>probitMean <span class="ot">&lt;-</span> mfx<span class="sc">::</span><span class="fu">probitmfx</span>(<span class="at">formula =</span> f, </span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> mroz, <span class="at">atmean =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>glms<span class="sc">$</span>probitAvg <span class="ot">&lt;-</span> mfx<span class="sc">::</span><span class="fu">probitmfx</span>(<span class="at">formula =</span> f, </span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> mroz, <span class="at">atmean =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>glms<span class="sc">$</span>logitMean <span class="ot">&lt;-</span> mfx<span class="sc">::</span><span class="fu">logitmfx</span>(<span class="at">formula =</span> f, </span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> mroz, <span class="at">atmean =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>glms<span class="sc">$</span>logitAvg <span class="ot">&lt;-</span> mfx<span class="sc">::</span><span class="fu">logitmfx</span>(<span class="at">formula =</span> f, </span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> mroz, <span class="at">atmean =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>modelsummary<span class="sc">::</span><span class="fu">modelsummary</span>(glms, </span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>                           <span class="at">stars =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>                           <span class="at">gof_omit =</span> <span class="st">"AIC|BIC"</span>,</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>                           <span class="at">title =</span> <span class="st">"Logit and Probit estimates and marginal effects evaluated at mean of x or as sample average of effects"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table">
+<caption>Logit and Probit estimates and marginal effects evaluated at mean of x or as sample average of effects</caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:center;"> probit </th>
+   <th style="text-align:center;"> logit </th>
+   <th style="text-align:center;"> probitMean </th>
+   <th style="text-align:center;"> probitAvg </th>
+   <th style="text-align:center;"> logitMean </th>
+   <th style="text-align:center;"> logitAvg </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> (Intercept) </td>
+   <td style="text-align:center;"> 2.080*** </td>
+   <td style="text-align:center;"> 3.394*** </td>
+   <td style="text-align:center;"> 2.080*** </td>
+   <td style="text-align:center;"> 2.080*** </td>
+   <td style="text-align:center;"> 3.394*** </td>
+   <td style="text-align:center;"> 3.394*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.309) </td>
+   <td style="text-align:center;"> (0.516) </td>
+   <td style="text-align:center;"> (0.309) </td>
+   <td style="text-align:center;"> (0.309) </td>
+   <td style="text-align:center;"> (0.516) </td>
+   <td style="text-align:center;"> (0.516) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> age </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.014*** </td>
+   <td style="text-align:center;"> −0.013*** </td>
+   <td style="text-align:center;"> −0.014*** </td>
+   <td style="text-align:center;"> −0.013*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.014*** </td>
+   <td style="text-align:center;"> −0.013*** </td>
+   <td style="text-align:center;"> −0.014*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.014*** </td>
+   <td style="text-align:center;"> −0.013*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.013*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.014*** </td>
+   <td style="text-align:center;"> −0.013*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.014*** </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.014*** </td>
+   <td style="text-align:center;"> −0.013*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.014*** </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.014*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.014*** </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.013*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.014*** </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.013*** </td>
+   <td style="text-align:center;"> −0.014*** </td>
+   <td style="text-align:center;"> −0.013*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.013*** </td>
+   <td style="text-align:center;"> −0.014*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.013*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.013*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.013*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.014*** </td>
+   <td style="text-align:center;"> −0.013*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.014*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.013*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.035*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+   <td style="text-align:center;"> −0.057*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.003) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.003) </td>
+   <td style="text-align:center;"> (0.003) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.003) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.003) </td>
+   <td style="text-align:center;"> (0.011) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.003) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.003) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.003) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.011) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.003) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.003) </td>
+   <td style="text-align:center;"> (0.003) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.003) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.003) </td>
+   <td style="text-align:center;"> (0.011) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.003) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.003) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.003) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.011) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.003) </td>
+   <td style="text-align:center;"> (0.003) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.003) </td>
+   <td style="text-align:center;"> (0.011) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.003) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.011) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.003) </td>
+   <td style="text-align:center;"> (0.003) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.003) </td>
+   <td style="text-align:center;"> (0.011) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.003) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.011) </td>
+   <td style="text-align:center;"> (0.011) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> kidslt6 </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −0.314*** </td>
+   <td style="text-align:center;"> −0.290*** </td>
+   <td style="text-align:center;"> −0.322*** </td>
+   <td style="text-align:center;"> −0.292*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −0.314*** </td>
+   <td style="text-align:center;"> −0.290*** </td>
+   <td style="text-align:center;"> −0.322*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −0.314*** </td>
+   <td style="text-align:center;"> −0.290*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −0.292*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −0.314*** </td>
+   <td style="text-align:center;"> −0.290*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −0.314*** </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −0.322*** </td>
+   <td style="text-align:center;"> −0.292*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −0.314*** </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −0.322*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −0.314*** </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −0.292*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −0.314*** </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −0.290*** </td>
+   <td style="text-align:center;"> −0.322*** </td>
+   <td style="text-align:center;"> −0.292*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −0.290*** </td>
+   <td style="text-align:center;"> −0.322*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −0.290*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −0.292*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −0.290*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −0.322*** </td>
+   <td style="text-align:center;"> −0.292*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −0.322*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −0.292*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −0.800*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+   <td style="text-align:center;"> −1.313*** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.044) </td>
+   <td style="text-align:center;"> (0.036) </td>
+   <td style="text-align:center;"> (0.046) </td>
+   <td style="text-align:center;"> (0.047) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.044) </td>
+   <td style="text-align:center;"> (0.036) </td>
+   <td style="text-align:center;"> (0.046) </td>
+   <td style="text-align:center;"> (0.188) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.044) </td>
+   <td style="text-align:center;"> (0.036) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.047) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.044) </td>
+   <td style="text-align:center;"> (0.036) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.188) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.044) </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.046) </td>
+   <td style="text-align:center;"> (0.047) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.044) </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.046) </td>
+   <td style="text-align:center;"> (0.188) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.044) </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.047) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.044) </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.188) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.036) </td>
+   <td style="text-align:center;"> (0.046) </td>
+   <td style="text-align:center;"> (0.047) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.036) </td>
+   <td style="text-align:center;"> (0.046) </td>
+   <td style="text-align:center;"> (0.188) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.036) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.047) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.036) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.188) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.046) </td>
+   <td style="text-align:center;"> (0.047) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.046) </td>
+   <td style="text-align:center;"> (0.188) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.047) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.111) </td>
+   <td style="text-align:center;"> (0.188) </td>
+   <td style="text-align:center;"> (0.188) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> nwifeinc </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.004** </td>
+   <td style="text-align:center;"> −0.004** </td>
+   <td style="text-align:center;"> −0.005** </td>
+   <td style="text-align:center;"> −0.004** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.004** </td>
+   <td style="text-align:center;"> −0.004** </td>
+   <td style="text-align:center;"> −0.005** </td>
+   <td style="text-align:center;"> −0.019** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.004** </td>
+   <td style="text-align:center;"> −0.004** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.004** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.004** </td>
+   <td style="text-align:center;"> −0.004** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.019** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.004** </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.005** </td>
+   <td style="text-align:center;"> −0.004** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.004** </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.005** </td>
+   <td style="text-align:center;"> −0.019** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.004** </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.004** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.004** </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.019** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.004** </td>
+   <td style="text-align:center;"> −0.005** </td>
+   <td style="text-align:center;"> −0.004** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.004** </td>
+   <td style="text-align:center;"> −0.005** </td>
+   <td style="text-align:center;"> −0.019** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.004** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.004** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.004** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.019** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.005** </td>
+   <td style="text-align:center;"> −0.004** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.005** </td>
+   <td style="text-align:center;"> −0.019** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.004** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.011** </td>
+   <td style="text-align:center;"> −0.019** </td>
+   <td style="text-align:center;"> −0.019** </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.001) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.002) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.001) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.007) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.001) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.002) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.001) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.007) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.002) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.007) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.002) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.007) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.001) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.002) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.001) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.007) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.001) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.002) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.001) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.007) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.002) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.002) </td>
+   <td style="text-align:center;"> (0.007) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;">  </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.004) </td>
+   <td style="text-align:center;"> (0.007) </td>
+   <td style="text-align:center;"> (0.002) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;box-shadow: 0px 1px">  </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.004) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.007) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.004) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.004) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.007) </td>
+   <td style="text-align:center;box-shadow: 0px 1px"> (0.007) </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Num.Obs. </td>
+   <td style="text-align:center;"> 753 </td>
+   <td style="text-align:center;"> 753 </td>
+   <td style="text-align:center;"> 753 </td>
+   <td style="text-align:center;"> 753 </td>
+   <td style="text-align:center;"> 753 </td>
+   <td style="text-align:center;"> 753 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Log.Lik. </td>
+   <td style="text-align:center;"> −478.395 </td>
+   <td style="text-align:center;"> −478.377 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> F </td>
+   <td style="text-align:center;"> 21.784 </td>
+   <td style="text-align:center;"> 20.280 </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+   <td style="text-align:center;">  </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RMSE </td>
+   <td style="text-align:center;"> 0.47 </td>
+   <td style="text-align:center;"> 0.47 </td>
+   <td style="text-align:center;"> 0.47 </td>
+   <td style="text-align:center;"> 0.47 </td>
+   <td style="text-align:center;"> 0.47 </td>
+   <td style="text-align:center;"> 0.47 </td>
+  </tr>
+</tbody>
+<tfoot><tr><td style="padding: 0; " colspan="100%">
+<sup></sup> + p &lt; 0.1, * p &lt; 0.05, ** p &lt; 0.01, *** p &lt; 0.001</td></tr></tfoot>
+</table>
+
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
