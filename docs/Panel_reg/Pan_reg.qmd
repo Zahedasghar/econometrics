@@ -9,6 +9,16 @@ highlight-style: "nord"
 editor: visual
 ---
 
+```{r}
+#| echo: true
+#| fig-width: 18
+#| fig-align: center
+library(leaflet)
+leaflet() %>%
+  addTiles() %>%
+  addMarkers(lng = 73.136946, lat =33.748294 ,
+             popup = "School of Economics, QAU, Islamabad")
+```
 ## Panel Data Regression
 
 A *panel dataset* contains observations on multiple entities (individuals), where each entity is observed at two or more points in time.
