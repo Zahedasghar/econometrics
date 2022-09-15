@@ -23,6 +23,70 @@
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #d8dee9; background-color: #2e3440; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #d8dee9; } /* Normal */
+    code span.al { color: #bf616a; background-color: #3b4252; font-weight: bold; } /* Alert */
+    code span.an { color: #d08770; } /* Annotation */
+    code span.at { color: #8fbcbb; } /* Attribute */
+    code span.bn { color: #b48ead; } /* BaseN */
+    code span.bu { color: #88c0d0; font-style: italic; } /* BuiltIn */
+    code span.cf { color: #81a1c1; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #ebcb8b; } /* Char */
+    code span.cn { color: #eceff4; font-weight: bold; } /* Constant */
+    code span.co { color: #616e88; } /* Comment */
+    code span.cv { color: #e5e9f0; } /* CommentVar */
+    code span.do { color: #5e81ac; } /* Documentation */
+    code span.dt { color: #81a1c1; } /* DataType */
+    code span.dv { color: #b48ead; } /* DecVal */
+    code span.er { color: #bf616a; text-decoration: underline; } /* Error */
+    code span.ex { color: #8fbcbb; font-weight: bold; } /* Extension */
+    code span.fl { color: #b48ead; } /* Float */
+    code span.fu { color: #88c0d0; } /* Function */
+    code span.im { color: #a3be8c; } /* Import */
+    code span.in { color: #ebcb8b; } /* Information */
+    code span.kw { color: #81a1c1; font-weight: bold; } /* Keyword */
+    code span.op { color: #81a1c1; } /* Operator */
+    code span.ot { color: #8fbcbb; } /* Other */
+    code span.pp { color: #5e81ac; } /* Preprocessor */
+    code span.re { color: #88c0d0; background-color: #3b4252; } /* RegionMarker */
+    code span.sc { color: #ebcb8b; } /* SpecialChar */
+    code span.ss { color: #d08770; } /* SpecialString */
+    code span.st { color: #a3be8c; } /* String */
+    code span.va { color: #5e81ac; } /* Variable */
+    code span.vs { color: #a3be8c; } /* VerbatimString */
+    code span.wa { color: #bf616a; } /* Warning */
   </style>
   <link rel="stylesheet" href="Pan_reg_files/libs/revealjs/dist/theme/quarto.css" id="theme">
   <link href="Pan_reg_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -313,6 +377,15 @@
       margin-right: 0; 
     }
   </style>
+  <script src="Pan_reg_files/libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+  <script src="Pan_reg_files/libs/jquery-1.12.4/jquery.min.js"></script>
+  <link href="Pan_reg_files/libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+  <script src="Pan_reg_files/libs/leaflet-1.3.1/leaflet.js"></script>
+  <link href="Pan_reg_files/libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+  <script src="Pan_reg_files/libs/proj4-2.6.2/proj4.min.js"></script>
+  <script src="Pan_reg_files/libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+  <link href="Pan_reg_files/libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+  <script src="Pan_reg_files/libs/leaflet-binding-2.1.1/leaflet.js"></script>
 </head>
 <body class="quarto-dark">
   <div class="reveal">
@@ -323,6 +396,20 @@
   <p class="author">Zahid Asghar<br><br> School of Economics, QAU, Islamabad</p>
 </section>
 
+<section class="slide level2">
+
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(leaflet)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">leaflet</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>  <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>  <span class="fu">addMarkers</span>(<span class="at">lng =</span> <span class="fl">73.136946</span>, <span class="at">lat =</span><span class="fl">33.748294</span> ,</span>
+<span id="cb1-5"><a href="#cb1-5"></a>             <span class="at">popup =</span> <span class="st">"School of Economics, QAU, Islamabad"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="htmlwidget-16edae0b7630e652c507" style="width:1728px;height:480px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-16edae0b7630e652c507">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[33.748294,73.136946,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"School of Economics, QAU, Islamabad",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[33.748294,33.748294],"lng":[73.136946,73.136946]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
 <section id="panel-data-regression" class="slide level2">
 <h2>Panel Data Regression</h2>
 <p>A <em>panel dataset</em> contains observations on multiple entities (individuals), where each entity is observed at two or more points in time.</p>
@@ -415,11 +502,11 @@ $ gsp          &lt;dbl&gt; -0.022124760, 0.046558253, 0.062797837, 0.027489973, 
 <section id="u.s-traffic-death-data-for-1982" class="slide level2">
 <h2>U.S traffic death data for 1982</h2>
 
-<img data-src="Pan_reg_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"></section>
+<img data-src="Pan_reg_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
 <section id="u.s-traffic-death-data-for-1988" class="slide level2">
 <h2>U.S traffic death data for 1988</h2>
 
-<img data-src="Pan_reg_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
+<img data-src="Pan_reg_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
 <section id="regression-line" class="slide level2">
 <h2>Regression line</h2>
 <div class="cell">
@@ -500,7 +587,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 
-<img data-src="Pan_reg_files/figure-revealjs/unnamed-chunk-7-1.png" width="960" class="r-stretch"></section>
+<img data-src="Pan_reg_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch"></section>
 <section id="fixed-effects-regression" class="slide level2">
 <h2>Fixed Effects Regression</h2>
 <p>What if you have more than 2 time periods <span class="math inline">\((T &gt; 2)?\)</span></p>
@@ -588,7 +675,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="section-7" class="slide level2">
 <h2></h2>
 
-<img data-src="Pan_reg_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section>
+<img data-src="Pan_reg_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"></section>
 <section id="compute-mean-fatality-rate-over-all-states-for-all-time-periods" class="slide level2">
 <h2>compute mean fatality rate over all states for all time periods</h2>
 <div class="cell">
@@ -756,12 +843,12 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="cell">
 <div class="cell-output-display">
 
-<div id="urwgyoeshb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="fatopubbnd" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#urwgyoeshb .gt_table {
+#fatopubbnd .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -786,7 +873,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#urwgyoeshb .gt_heading {
+#fatopubbnd .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -798,7 +885,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#urwgyoeshb .gt_title {
+#fatopubbnd .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -810,7 +897,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-bottom-width: 0;
 }
 
-#urwgyoeshb .gt_subtitle {
+#fatopubbnd .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -822,13 +909,13 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-top-width: 0;
 }
 
-#urwgyoeshb .gt_bottom_border {
+#fatopubbnd .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#urwgyoeshb .gt_col_headings {
+#fatopubbnd .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -843,7 +930,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#urwgyoeshb .gt_col_heading {
+#fatopubbnd .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -863,7 +950,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   overflow-x: hidden;
 }
 
-#urwgyoeshb .gt_column_spanner_outer {
+#fatopubbnd .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -875,15 +962,15 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   padding-right: 4px;
 }
 
-#urwgyoeshb .gt_column_spanner_outer:first-child {
+#fatopubbnd .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#urwgyoeshb .gt_column_spanner_outer:last-child {
+#fatopubbnd .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#urwgyoeshb .gt_column_spanner {
+#fatopubbnd .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -895,7 +982,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   width: 100%;
 }
 
-#urwgyoeshb .gt_group_heading {
+#fatopubbnd .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -920,7 +1007,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   vertical-align: middle;
 }
 
-#urwgyoeshb .gt_empty_group_heading {
+#fatopubbnd .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -935,15 +1022,15 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   vertical-align: middle;
 }
 
-#urwgyoeshb .gt_from_md > :first-child {
+#fatopubbnd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#urwgyoeshb .gt_from_md > :last-child {
+#fatopubbnd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#urwgyoeshb .gt_row {
+#fatopubbnd .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -962,7 +1049,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   overflow-x: hidden;
 }
 
-#urwgyoeshb .gt_stub {
+#fatopubbnd .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -975,7 +1062,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   padding-right: 5px;
 }
 
-#urwgyoeshb .gt_stub_row_group {
+#fatopubbnd .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -989,11 +1076,11 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   vertical-align: top;
 }
 
-#urwgyoeshb .gt_row_group_first td {
+#fatopubbnd .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#urwgyoeshb .gt_summary_row {
+#fatopubbnd .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1003,16 +1090,16 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   padding-right: 5px;
 }
 
-#urwgyoeshb .gt_first_summary_row {
+#fatopubbnd .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#urwgyoeshb .gt_first_summary_row.thick {
+#fatopubbnd .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#urwgyoeshb .gt_last_summary_row {
+#fatopubbnd .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1022,7 +1109,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#urwgyoeshb .gt_grand_summary_row {
+#fatopubbnd .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1032,7 +1119,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   padding-right: 5px;
 }
 
-#urwgyoeshb .gt_first_grand_summary_row {
+#fatopubbnd .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1042,11 +1129,11 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#urwgyoeshb .gt_striped {
+#fatopubbnd .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#urwgyoeshb .gt_table_body {
+#fatopubbnd .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1055,7 +1142,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#urwgyoeshb .gt_footnotes {
+#fatopubbnd .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1069,7 +1156,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#urwgyoeshb .gt_footnote {
+#fatopubbnd .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1078,7 +1165,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   padding-right: 5px;
 }
 
-#urwgyoeshb .gt_sourcenotes {
+#fatopubbnd .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1092,7 +1179,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#urwgyoeshb .gt_sourcenote {
+#fatopubbnd .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1100,36 +1187,36 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   padding-right: 5px;
 }
 
-#urwgyoeshb .gt_left {
+#fatopubbnd .gt_left {
   text-align: left;
 }
 
-#urwgyoeshb .gt_center {
+#fatopubbnd .gt_center {
   text-align: center;
 }
 
-#urwgyoeshb .gt_right {
+#fatopubbnd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#urwgyoeshb .gt_font_normal {
+#fatopubbnd .gt_font_normal {
   font-weight: normal;
 }
 
-#urwgyoeshb .gt_font_bold {
+#fatopubbnd .gt_font_bold {
   font-weight: bold;
 }
 
-#urwgyoeshb .gt_font_italic {
+#fatopubbnd .gt_font_italic {
   font-style: italic;
 }
 
-#urwgyoeshb .gt_super {
+#fatopubbnd .gt_super {
   font-size: 65%;
 }
 
-#urwgyoeshb .gt_two_val_uncert {
+#fatopubbnd .gt_two_val_uncert {
   display: inline-block;
   line-height: 1em;
   text-align: right;
@@ -1138,31 +1225,31 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   margin-left: 0.1em;
 }
 
-#urwgyoeshb .gt_footnote_marks {
+#fatopubbnd .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#urwgyoeshb .gt_asterisk {
+#fatopubbnd .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#urwgyoeshb .gt_slash_mark {
+#fatopubbnd .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#urwgyoeshb .gt_fraction_numerator {
+#fatopubbnd .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#urwgyoeshb .gt_fraction_denominator {
+#fatopubbnd .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
