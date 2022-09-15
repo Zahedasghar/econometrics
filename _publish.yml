@@ -1,0 +1,4 @@
+- source: index.qmd
+  quarto-pub:
+    - id: bf42b1c0-7964-4bfb-96da-051bc9ce569b
+      url: 'https://quartopub.com/sites/zahid/regression-with-a-binary-dependent-variable'

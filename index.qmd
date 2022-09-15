@@ -1,10 +1,9 @@
 ---
 title: "Regression with a binary dependent variable"
-format:
-  html: 
-    theme: [default, custom.scss]
-    toc: false
-    code-fold: true
+format: 
+  revealjs: 
+    theme: [default, custom2.scss]
+  
 execute: 
   warning: false
 chalkboard: true

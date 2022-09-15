@@ -1,8 +1,8 @@
 ---
 title: "Regression with a binary dependent variable"
 format:
-  html: 
-    theme: [default, custom.scss]
+  revealjs: 
+    theme: [default, ryan.scss]
     toc: false
     code-fold: true
 execute: 
@@ -167,7 +167,7 @@ is the CDF of a standard logistically distributed random variable.
 
 ## Probit regression
 
-$\begin{align} E(Y\vert X) = P(Y=1\vert X) = \Phi(\beta_0 + \beta_1 X). \tag{11.4} \end{align}$ $\beta_0 + \beta_1 X$ in (11.4) plays a role of a quantile $z$.Remember that $\Phi(z) = P(Z \leq z) \ , \ Z \sim \mathcal{N}(0,1)$ such that the Probit coefficient $\beta_1$ in (11.4) is the change in $z$ associated with a one unit change in $X$. Although the effect on $z$ of a change in $X$ is linear, the link between $z$ and the dependent variable $Y$ is nonlinear since $\Phi$ is a nonlinear function of $X$. . 
+$\begin{align} E(Y\vert X) = P(Y=1\vert X) = \Phi(\beta_0 + \beta_1 X). \tag{11.4} \end{align}$ $\beta_0 + \beta_1 X$ in (11.4) plays a role of a quantile $z$.Remember that $\Phi(z) = P(Z \leq z) \ , \ Z \sim \mathcal{N}(0,1)$ such that the Probit coefficient $\beta_1$ in (11.4) is the change in $z$ associated with a one unit change in $X$. Although the effect on $z$ of a change in $X$ is linear, the link between $z$ and the dependent variable $Y$ is nonlinear since $\Phi$ is a nonlinear function of $X$. .
 
 ## Probit chart code
 
@@ -312,7 +312,7 @@ logit <- glm(inlf ~ age,
 modelsummary::modelsummary(list("probit" = probit,"logit" = logit))
 ```
 
-## {.scrollable} 
+##  {.scrollable}
 
 [shinyapp](https://floswald.shinyapps.io/marginal_effects_of_logit_probit/)
 
@@ -339,4 +339,17 @@ modelsummary::modelsummary(glms,
                            stars = TRUE,
                            gof_omit = "AIC|BIC",
                            title = "Logit and Probit estimates and marginal effects evaluated at mean of x or as sample average of effects")
+```
+
+## This is why R
+
+```{r}
+#| echo: true
+#| fig-width: 18
+#| fig-align: center
+library(leaflet)
+leaflet() %>%
+  addTiles() %>%
+  addMarkers(lng = 73.136946, lat =33.748294 ,
+             popup = "School of Economics, QAU, Islamabad")
 ```

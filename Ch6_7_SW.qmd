@@ -3,8 +3,8 @@ title: "Linear Regression with Multiple Regressors"
 author: "Zahid Asghar<br><br> School of Economics, QAU, Islamabad"
 logo: "QAU-Logo.jpg"
 format:
-  revealjs: 
-    theme: [default, custom2.scss]
+  pdf: 
+    theme: [default, custom.scss]
 highlight-style: "nord"
 editor: visual
 ---

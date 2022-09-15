@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="Pan_reg_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Pan_reg_files/libs/quarto-html/tabby.min.js"></script>
+<script src="Pan_reg_files/libs/quarto-html/popper.min.js"></script>
+<script src="Pan_reg_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="Pan_reg_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Pan_reg_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="Pan_reg_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.0.38">
+
+  <meta name="author" content="Zahid Asghar   School of Economics, QAU, Islamabad">
+  <title>Panel Data Regression</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="Pan_reg_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="Pan_reg_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="Pan_reg_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link href="Pan_reg_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="Pan_reg_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="Pan_reg_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="Pan_reg_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-captioned.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-captioned) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-captioned.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-captioned .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-captioned .callout-caption  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-captioned.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-captioned.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-caption {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-caption {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-caption {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-captioned .callout-body > .callout-content > :last-child {
+    margin-bottom: 0.5rem;
+  }
+
+  .callout.callout-captioned .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-captioned) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-caption {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-caption {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-caption {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-caption {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-caption {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-dark">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="center">
+  <h1 class="title">Panel Data Regression</h1>
+  <p class="author">Zahid Asghar<br><br> School of Economics, QAU, Islamabad</p>
+</section>
+
+<section id="panel-data-regression" class="slide level2">
+<h2>Panel Data Regression</h2>
+<p>A <em>panel dataset</em> contains observations on multiple entities (individuals), where each entity is observed at two or more points in time.</p>
+<p>Hypothetical examples:</p>
+<ul>
+<li><p>Data on 50 districts in 2010 floods and again in 2022, for 100 observations total.</p></li>
+<li><p>Data on 100 SMES, each SME is observed in 3 years, for a total of 150 observations.</p></li>
+<li><p>Data on 1000 individuals, in four different months, for 4000 observations total.</p></li>
+</ul>
+</section>
+<section id="notations-for-panel-data" class="slide level2">
+<h2>Notations for Panel Data</h2>
+<p>A double subscript distinguishes entities (states) and time periods (years)</p>
+<p><span class="math inline">\(i\)</span> = entity (state), <span class="math inline">\(n\)</span> = number of entities, so <span class="math inline">\(i = 1,\dots,n\)</span></p>
+<p><span class="math inline">\(t\)</span> = time period (year), <span class="math inline">\(T\)</span> = number of time periods so <span class="math inline">\(t =1,\dots,T\)</span></p>
+<p>Data: Suppose we have 1 regressor. The data are:</p>
+<p><span class="math inline">\((X_{it}, Y_{i}t), i = 1,\dots,n,\ t = 1,…,T\)</span></p>
+<p>Panel data with <span class="math inline">\(K\)</span> regressors <span class="math inline">\((X_{1it},X_{2it},\dots,X_{kit} Y_{i}t), i = 1,\dots,n,\ t = 1,…,T\)</span> <span class="math inline">\(n\)</span> = number of entities (states) <span class="math inline">\(T\)</span> = number of time periods (years) Also called <strong>longitudinal data</strong></p>
+</section>
+<section id="why-are-panel-data-useful" class="slide level2">
+<h2>Why are panel data useful?</h2>
+<p>With panel data we can control for factors that: - Vary across entities (states) but do not vary over time - Could cause omitted variable bias if they are omitted - are unobserved or unmeasured – and therefore cannot be included in the regression using multiple regression</p>
+<p>Here’s the key idea: &gt; If an omitted variable does not change over time, then any changes in Y over time cannot be caused by the omitted variable.</p>
+</section>
+<section id="example-of-a-panel-data-set" class="slide level2">
+<h2>Example of a panel data set</h2>
+<p>Observational unit: a year in a U.S. state - 48 U.S. states, so <span class="math inline">\(n\)</span> = # of entities = 48$ - 7 years (1982,…, 1988), so <span class="math inline">\(T\)</span> = # of time periods = 7 - Balanced panel, so total # observations = <span class="math inline">\(7\times48\)</span> = 336 Variables: - Traffic fatality rate (# traffic deaths in that state in that year, per 10,000 state residents) - Tax on a case of beer - Other (legal driving age, drunk driving laws, etc.)</p>
+</section>
+<section id="an-overview-of-data" class="slide level2 scrollable">
+<h2>An overview of data</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 336
+Columns: 34
+$ state        &lt;fct&gt; al, al, al, al, al, al, al, az, az, az, az, az, az, az, a…
+$ year         &lt;fct&gt; 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1982, 1983, 198…
+$ spirits      &lt;dbl&gt; 1.37, 1.36, 1.32, 1.28, 1.23, 1.18, 1.17, 1.97, 1.90, 2.1…
+$ unemp        &lt;dbl&gt; 14.4, 13.7, 11.1, 8.9, 9.8, 7.8, 7.2, 9.9, 9.1, 5.0, 6.5,…
+$ income       &lt;dbl&gt; 10544.15, 10732.80, 11108.79, 11332.63, 11661.51, 11944.0…
+$ emppop       &lt;dbl&gt; 50.69204, 52.14703, 54.16809, 55.27114, 56.51450, 57.5098…
+$ beertax      &lt;dbl&gt; 1.53937948, 1.78899074, 1.71428561, 1.65254235, 1.6099070…
+$ baptist      &lt;dbl&gt; 30.3557, 30.3336, 30.3115, 30.2895, 30.2674, 30.2453, 30.…
+$ mormon       &lt;dbl&gt; 0.32829, 0.34341, 0.35924, 0.37579, 0.39311, 0.41123, 0.4…
+$ drinkage     &lt;dbl&gt; 19.00, 19.00, 19.00, 19.67, 21.00, 21.00, 21.00, 19.00, 1…
+$ dry          &lt;dbl&gt; 25.0063, 22.9942, 24.0426, 23.6339, 23.4647, 23.7924, 23.…
+$ youngdrivers &lt;dbl&gt; 0.211572, 0.210768, 0.211484, 0.211140, 0.213400, 0.21552…
+$ miles        &lt;dbl&gt; 7233.887, 7836.348, 8262.990, 8726.917, 8952.854, 9166.30…
+$ breath       &lt;fct&gt; no, no, no, no, no, no, no, no, no, no, no, no, no, no, n…
+$ jail         &lt;fct&gt; no, no, no, no, no, no, no, yes, yes, yes, yes, yes, yes,…
+$ service      &lt;fct&gt; no, no, no, no, no, no, no, yes, yes, yes, yes, yes, yes,…
+$ fatal        &lt;int&gt; 839, 930, 932, 882, 1081, 1110, 1023, 724, 675, 869, 893,…
+$ nfatal       &lt;int&gt; 146, 154, 165, 146, 172, 181, 139, 131, 112, 149, 150, 17…
+$ sfatal       &lt;int&gt; 99, 98, 94, 98, 119, 114, 89, 76, 60, 81, 75, 85, 87, 67,…
+$ fatal1517    &lt;int&gt; 53, 71, 49, 66, 82, 94, 66, 40, 40, 51, 48, 72, 50, 54, 3…
+$ nfatal1517   &lt;int&gt; 9, 8, 7, 9, 10, 11, 8, 7, 7, 8, 11, 19, 16, 14, 5, 2, 2, …
+$ fatal1820    &lt;int&gt; 99, 108, 103, 100, 120, 127, 105, 81, 83, 118, 100, 104, …
+$ nfatal1820   &lt;int&gt; 34, 26, 25, 23, 23, 31, 24, 16, 19, 34, 26, 30, 25, 14, 2…
+$ fatal2124    &lt;int&gt; 120, 124, 118, 114, 119, 138, 123, 96, 80, 123, 121, 130,…
+$ nfatal2124   &lt;int&gt; 32, 35, 34, 45, 29, 30, 25, 36, 17, 33, 30, 25, 34, 31, 1…
+$ afatal       &lt;dbl&gt; 309.438, 341.834, 304.872, 276.742, 360.716, 368.421, 298…
+$ pop          &lt;dbl&gt; 3942002, 3960008, 3988992, 4021008, 4049994, 4082999, 410…
+$ pop1517      &lt;dbl&gt; 208999.6, 202000.1, 197000.0, 194999.7, 203999.9, 204999.…
+$ pop1820      &lt;dbl&gt; 221553.4, 219125.5, 216724.1, 214349.0, 212000.0, 208998.…
+$ pop2124      &lt;dbl&gt; 290000.1, 290000.2, 288000.2, 284000.3, 263000.3, 258999.…
+$ milestot     &lt;dbl&gt; 28516, 31032, 32961, 35091, 36259, 37426, 39684, 19729, 1…
+$ unempus      &lt;dbl&gt; 9.7, 9.6, 7.5, 7.2, 7.0, 6.2, 5.5, 9.7, 9.6, 7.5, 7.2, 7.…
+$ emppopus     &lt;dbl&gt; 57.8, 57.9, 59.5, 60.1, 60.7, 61.5, 62.3, 57.8, 57.9, 59.…
+$ gsp          &lt;dbl&gt; -0.022124760, 0.046558253, 0.062797837, 0.027489973, 0.03…</code></pre>
+</div>
+</div>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<p>A large number of variables and 336 total observations. We need to select only a few variables required in doing this exercise.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 2
+  year  count
+  &lt;fct&gt; &lt;int&gt;
+1 1982     48
+2 1983     48
+3 1984     48
+4 1985     48
+5 1986     48
+6 1987     48
+7 1988     48</code></pre>
+</div>
+</div>
+</section>
+<section id="u.s-traffic-death-data-for-1982" class="slide level2">
+<h2>U.S traffic death data for 1982</h2>
+
+<img data-src="Pan_reg_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"></section>
+<section id="u.s-traffic-death-data-for-1988" class="slide level2">
+<h2>U.S traffic death data for 1988</h2>
+
+<img data-src="Pan_reg_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
+<section id="regression-line" class="slide level2">
+<h2>Regression line</h2>
+<div class="cell">
+
+</div>
+<p><span class="math inline">\(\widehat{FatalityRate}= 2.01 + 0.15beertax\)</span></p>
+<p><span class="math inline">\(\widehat{FatalityRate}= 1.86 + 0.43beertax\)</span></p>
+<p><strong>High alcohal tax, more deaths</strong> :smiley:</p>
+</section>
+<section id="why-might-there-be-higher-more-traffic-deaths-in-states-that-have-higher-alcohol-taxes" class="slide level2">
+<h2>Why might there be higher more traffic deaths in states that have higher alcohol taxes?</h2>
+<p>Other factors that determine traffic fatality rate: - Quality (age) of automobiles - Quality of roads - “Culture” around drinking and driving - Density of cars on the road</p>
+</section>
+<section id="these-omitted-variables-could-cause-omitted-variable-bias" class="slide level2">
+<h2>These omitted variables could cause omitted variable bias</h2>
+<p>Example #1: traffic density. Suppose:</p>
+<ol type="1">
+<li><p>High traffic density means more traffic deaths</p></li>
+<li><p>(Western) states with lower traffic density have lower alcohol taxes</p></li>
+</ol>
+<p>Then the two conditions for omitted variable bias are satisfied.</p>
+<ul>
+<li>Specifically, “high taxes” could reflect “high traffic density” (so the OLS coefficient would be biased positively – high taxes, more deaths)</li>
+<li>Panel data lets us eliminate omitted variable bias when the omitted variables are constant over time within a given state.</li>
+</ul>
+</section>
+<section id="cultural-attitude-towards-driving-and-drinking" class="slide level2">
+<h2>Cultural attitude towards driving and drinking</h2>
+<ol type="1">
+<li>arguably are a determinant of traffic deaths; and</li>
+<li>potentially are correlated with the beer tax, so beer taxes could be picking up cultural differences (omitted variable bias).</li>
+</ol>
+<ul>
+<li>Then the two conditions for omitted variable bias are satisfied. Specifically, “high taxes” could reflect “cultural attitudes towards drinking” (so the OLS coefficient would be biased)</li>
+<li>Panel data lets us eliminate omitted variable bias when the omitted variables are constant over time within a given state.</li>
+</ul>
+</section>
+<section id="panel-data-with-two-time-periods" class="slide level2">
+<h2>Panel Data with Two Time Periods</h2>
+<p>Consider the panel data model: <span class="math inline">\(\widehat{FatalityRate_{it}} = \beta_0 + \beta_1 BeerTax_{it} + \beta_2Zi + u_{it}\)</span></p>
+<p><span class="math inline">\(Z_i\)</span> is a factor that does not change over time (density), at least during the years on which we have data. • Suppose <span class="math inline">\(Z_i\)</span> is not observed, so its omission could result in omitted variable bias. • The effect of <span class="math inline">\(Z_i\)</span> can be eliminated using <span class="math inline">\(T = 2\)</span> years.</p>
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+<p>The key idea:<br>
+Any change in the fatality rate from 1982 to 1988 cannot be caused by <span class="math inline">\(Z_i\)</span>, because <span class="math inline">\(Z_i\)</span> (by assumption) does not change between 1982 and 1988.</p>
+<p>The math: consider fatality rates in 1988 and 1982: <span class="math inline">\(FatalityRate_{i1988} = \beta_0 + \beta_1 BeerTax_{it} + \beta_2Zi + u_{i1988}\)</span> <span class="math inline">\(FatalityRate_{i1982} = \beta_0 + \beta_1 BeerTax_{it} + \beta_2Zi + u_{i1982}\)</span></p>
+<p>Suppose <span class="math inline">\(E{(u_{it}}{/BeerTax_{it},Z_i})=0\)</span> E(uit|BeerTaxit, Zi) = 0.</p>
+<p>Subtracting 1988 – 1982 (that is, calculating the change), eliminates the effect of <span class="math inline">\(Z_i\dots\)</span></p>
+</section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+<p><span class="math inline">\(FatalityRate_{i1988} = \beta_0 + \beta_1 BeerTax_{it} + \beta_2Zi + u_{i1988}\)</span> <span class="math inline">\(FatalityRate_{i1982} = \beta_0 + \beta_1 BeerTax_{it} + \beta_2Zi + u_{i1982}\)</span></p>
+<p>so <span class="math inline">\(FatalityRate_{i1988} – FatalityRate_{i1982}=\\\beta_1(BeerTaxi1988 – BeerTaxi1982) + (u_{i1988} – u_{i1982})\)</span></p>
+<p>• The new error term, <span class="math inline">\((u_{i1988} – u_{i1982})\)</span>, is uncorrelated with either <span class="math inline">\(FatalityRate_{i1988}\)</span> or <span class="math inline">\(FatalityRate_{i1982}\)</span> • This “difference” equation can be estimated by OLS, even though <span class="math inline">\(Z_i\)</span> isn’t observed. • The omitted variable <span class="math inline">\(Z_i\)</span> doesn’t change, so it cannot be a determinant of the change in <span class="math inline">\(Y\)</span></p>
+</section>
+<section id="section-3" class="slide level2">
+<h2></h2>
+<p>1982 data</p>
+<p><span class="math inline">\(\widehat{FatalityRate}= 2.01 + 0.15beertax \ n=48\)</span></p>
+<p>1988 data</p>
+<p><span class="math inline">\(\widehat{FatalityRate}= 1.86 + 0.43beertax \ n=48\)</span></p>
+<p>Difference regression</p>
+<p><span class="math inline">\(\widehat{FatalityRate_{i1988} - FatalityRate_{i1982}} =\\ -\underset{(0.065)}{0.072} -\underset{(0.36)}{1.04} \times (BeerTax_{i1988}-BeerTax_{i1982}).\)</span></p>
+</section>
+<section id="section-4" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+t test of coefficients:
+
+              Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)  -0.072037   0.065355 -1.1022 0.276091   
+diff_beertax -1.040973   0.355006 -2.9323 0.005229 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+
+<img data-src="Pan_reg_files/figure-revealjs/unnamed-chunk-7-1.png" width="960" class="r-stretch"></section>
+<section id="fixed-effects-regression" class="slide level2">
+<h2>Fixed Effects Regression</h2>
+<p>What if you have more than 2 time periods <span class="math inline">\((T &gt; 2)?\)</span></p>
+<p><span class="math inline">\(Y_{it} = \beta_0 + \beta_1 X_{it} + \beta_2Z_{i} + u_{it}, i =1,\dots,n, T = 1,\dots,T\)</span></p>
+<p>We can rewrite this in two useful ways: 1. “<span class="math inline">\(n-1\)</span> binary regressor” regression model 2. “Fixed Effects” regression model</p>
+<p>We first rewrite this in “fixed effects” form. Suppose we have <span class="math inline">\(n = 3\)</span> states: California, Texas, Massachusetts.</p>
+</section>
+<section id="section-5" class="slide level2">
+<h2></h2>
+<p><span class="math inline">\(Y_{it} = \beta_0 + \beta_1 X_{it} + \beta_2Z_{i} + u_{it}, i =1,\dots,n, T = 1,\dots,T\)</span></p>
+<p>Population regression for California (that is, <span class="math inline">\(i = CA\)</span>): <span class="math inline">\(Y_{CA,t} = \beta_0 + \beta_1X_{CA,t} + \beta_2Z_{CA} + u_{CA,t}\\  = (\beta_0 + \beta_2Z_{CA}) + \beta_1X_{CA,t} + u_{CA,t}\)</span> or <span class="math inline">\(Y_{CA,t} = \alpha + \beta_1X_{CA,t} + u_{CA,t}\)</span></p>
+<p>• <span class="math inline">\(\alpha_{CA} = \beta_0 + \beta_1Z_{CA}\)</span> doesn’t change over time • <span class="math inline">\(\alpha_{CA}\)</span> is the intercept for CA, and <span class="math inline">\(\beta_1\)</span> is the slope • The intercept is unique to CA, but the slope is the same in all the states: parallel lines.</p>
+</section>
+<section id="section-6" class="slide level2">
+<h2></h2>
+<p><span class="math inline">\(Y_{it} = \beta_0 + \beta_1 X_{it} + \beta_2Z_{i} + u_{it}, i =1,\dots,n, T = 1,\dots,T\)</span></p>
+<p>Population regression for Texax (that is, <span class="math inline">\(i = TX\)</span>): <span class="math inline">\(Y_{TX,t} = \beta_0 + \beta_1X_{TX,t} + \beta_2Z_{TX} + u_{TX,t}\\  = (\beta_0 + \beta_2Z_{TX}) + \beta_1X_{TX,t} + u_{TX,t}\)</span> or <span class="math inline">\(Y_{TX,t} = \alpha + \beta_1X_{TX,t} + u_{TX,t}\)</span></p>
+<p>Collecting the like terms</p>
+<p><span class="math inline">\(Y_{CA,t} = \alpha + \beta_1X_{CA,t} + u_{CA,t}\)</span></p>
+<p><span class="math inline">\(Y_{TX,t} = \alpha + \beta_1X_{TX,t} + u_{TX,t}\)</span></p>
+<p><span class="math inline">\(Y_{MA,t} = \alpha + \beta_1X_{MA,t} + u_{MA,t}\)</span></p>
+<p>or <span class="math inline">\(Y_{it} = \alpha_{i} + \beta_1 X_{it} + u_{it}, i =CA,TX,MA, T = 1,\dots,T\)</span></p>
+</section>
+<section id="regression-equation-for-three-states" class="slide level2">
+<h2>Regression equation for three states</h2>
+<p><img data-src="fixed_effect.png"> In binary regressor form: <span class="math inline">\(Y_{it} = \beta_0 + \gamma CADCAi + \gamma TXDTXi + \beta_1X_{it} + u_{it}\)</span> • <span class="math inline">\(DCA_{i} = 1\)</span> if state is <span class="math inline">\(CA, = 0\)</span> otherwise • <span class="math inline">\(DTX_{t} = 1\)</span> if state is <span class="math inline">\(TX, = 0\)</span> otherwise • leave out <span class="math inline">\(DMA_{i}\)</span> (why?)</p>
+</section>
+<section id="the-fixed-effects-regression-model" class="slide level2">
+<h2>The Fixed Effects Regression Model</h2>
+<p>The fixed effect model is <span class="math inline">\(\begin{align} Y_{it} = \beta_1 X_{1,it} + \cdots + \beta_k X_{k,it} + \alpha_i + u_{it} \tag{10.3} \end{align}\)</span> with <span class="math inline">\(i=1,\dots,n\)</span> and <span class="math inline">\(t=1,\dots,T\)</span> . The <span class="math inline">\(\alpha_i\)</span> are entity-specific intercepts that capture heterogeneities across entities. An equivalent representation of this model is given by <span class="math inline">\(\begin{align} Y_{it} = \beta_0 + \beta_1 X_{1,it} + \cdots + \beta_k X_{k,it} + \gamma_2 D2_i + \gamma_3 D3_i + \cdots + \gamma_n Dn_i + u_{it} \tag{10.4} \end{align}\)</span><br>
+where the <span class="math inline">\(D2_i,D3_i,\dots,Dn_i\)</span> are dummy variables.</p>
+</section>
+<section id="summary-two-ways-to-write-the-fixed-effects-model-n-1-binary-regressor-form" class="slide level2">
+<h2>Summary: Two ways to write the fixed effects model “n-1 binary regressor” form</h2>
+<p><span class="math inline">\(Y_{it} = \beta_0 + \beta_1 X_{1,it} + \gamma_2 D2_i + \gamma_3 D3_i + \cdots + \gamma_n Dn_i + u_{it}\)</span></p>
+<p>where <span class="math inline">\(D2i =1\)</span> if <span class="math inline">\(i=2\)</span> <span class="math inline">\(=0\)</span> otherwise , etc.</p>
+<p>“Fixed effects” form: <span class="math inline">\(Y_{it} = \beta_1X_{it} + \alpha_i + u_{it}\)</span></p>
+<p>• <span class="math inline">\(\alpha_i\)</span> is called a “state fixed effect” or “state effect” – it is the constant (fixed) effect of being in state <span class="math inline">\(i\)</span>.</p>
+</section>
+<section id="fixed-effects-regression-estimation" class="slide level2">
+<h2>Fixed Effects Regression: Estimation</h2>
+<p>Three estimation methods: 1. “n-1 binary regressors” OLS regression 2. “Entity-demeaned” OLS regression 3. “Changes” specification, without an intercept (only works for T = 2)</p>
+<p>• These three methods produce identical estimates of the regression coefficients, and identical standard errors. • We already did the “changes” specification (1988 minus 1982) – but this only works for T = 2 years • Methods #1 and #2 work for general T • Method #1 is only practical when n isn’t too big</p>
+</section>
+<section id="n-1-binary-regressors-ols-regression" class="slide level2">
+<h2>1. “n-1 binary regressors” OLS regression</h2>
+<p><span class="math inline">\(Y_{it} = \beta_0 + \beta_1 X_{1,it} + \gamma_2 D2_i + \gamma_3 D3_i + \cdots + \gamma_n Dn_i + u_{it}\)</span></p>
+<p>where <span class="math inline">\(D2i =1\)</span> if <span class="math inline">\(i=2\)</span> <span class="math inline">\(=0\)</span> otherwise , - First create the binary variables D2i,…,Dni - Then estimate (1) by OLS - Inference (hypothesis tests, confidence intervals) is as usual (using heteroskedasticity-robust standard errors) - This is impractical when n is very large (for example if n = 1000 workers)</p>
+</section>
+<section id="entity-demeaned-ols-regression" class="slide level2">
+<h2>2. “Entity-demeaned” OLS regression</h2>
+<p><span class="math display">\[\begin{align*}
+\frac{1}{n} \sum_{i=1}^n Y_{it} =&amp; \, \beta_1 \frac{1}{n} \sum_{i=1}^n X_{it} + \frac{1}{n} \sum_{i=1}^n a_i + \frac{1}{n} \sum_{i=1}^n u_{it} \\
+\overline{Y} =&amp; \, \beta_1 \overline{X}_i + \alpha_i + \overline{u}_i.
+\end{align*}\]</span> Subtracting from 10.1 yields $$<span class="math display">\[\begin{align}
+
+
+\begin{split}
+Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \overline{u}_i) \\
+\overset{\sim}{Y}_{it} =&amp; \, \beta_1 \overset{\sim}{X}_{it} + \overset{\sim}{u}_{it}.
+\end{split} \tag{10.5}
+\end{align}\]</span>$$</p>
+<p>In this model, the OLS estimate of the parameter of interest <span class="math inline">\(\beta_1\)</span> is equal to the estimate obtained using (10.2) — without the need to estimate <span class="math inline">\(n-1\)</span> dummies and an intercept.</p>
+</section>
+<section>
+<section id="application-to-traffic-deaths" class="title-slide slide level1 center">
+<h1>Application to traffic deaths</h1>
+
+</section>
+<section id="panel-data-for-two-years" class="slide level2">
+<h2>Panel Data for two years</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+t test of coefficients:
+
+              Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)  -0.072037   0.065355 -1.1022 0.276091   
+diff_beertax -1.040973   0.355006 -2.9323 0.005229 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="section-7" class="slide level2">
+<h2></h2>
+
+<img data-src="Pan_reg_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section>
+<section id="compute-mean-fatality-rate-over-all-states-for-all-time-periods" class="slide level2">
+<h2>compute mean fatality rate over all states for all time periods</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 2
+  year   mean
+  &lt;fct&gt; &lt;dbl&gt;
+1 1982   2.09
+2 1983   2.01
+3 1984   2.02
+4 1985   1.97
+5 1986   2.07
+6 1987   2.06
+7 1988   2.07</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.040444</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      mean
+1 2.040444</code></pre>
+</div>
+</div>
+</section>
+<section id="section-8" class="slide level2">
+<h2></h2>
+<p><span class="math inline">\(\begin{align} FatalityRate_{it} = \beta_1 BeerTax_{it} + StateFixedEffects\\ + u_{it}, \tag{10.6} \end{align}\)</span></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = fatal_rate ~ beertax + state - 1, data = df)
+
+Coefficients:
+beertax  stateal  stateaz  statear  stateca  stateco  statect  statede  
+-0.6559   3.4776   2.9099   2.8227   1.9682   1.9933   1.6154   2.1700  
+statefl  statega  stateid  stateil  statein  stateia  stateks  stateky  
+ 3.2095   4.0022   2.8086   1.5160   2.0161   1.9337   2.2544   2.2601  
+statela  stateme  statemd  statema  statemi  statemn  statems  statemo  
+ 2.6305   2.3697   1.7712   1.3679   1.9931   1.5804   3.4486   2.1814  
+statemt  statene  statenv  statenh  statenj  statenm  stateny  statenc  
+ 3.1172   1.9555   2.8769   2.2232   1.3719   3.9040   1.2910   3.1872  
+statend  stateoh  stateok  stateor  statepa  stateri  statesc  statesd  
+ 1.8542   1.8032   2.9326   2.3096   1.7102   1.2126   4.0348   2.4739  
+statetn  statetx  stateut  statevt  stateva  statewa  statewv  statewi  
+ 2.6020   2.5602   2.3137   2.5116   2.1874   1.8181   2.5809   1.7184  
+statewy  
+ 3.2491  </code></pre>
+</div>
+</div>
+</section>
+<section id="demeaned-regressioin" class="slide level2">
+<h2>Demeaned Regressioin</h2>
+<p><span class="math inline">\(\overset{\sim}{FatalityRate} = \beta_1 \overset{\sim}{BeerTax}_{it} + u_{it}.\)</span></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = fatal_rate ~ beertax - 1, data = Fatalities_demeaned)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.58696 -0.08284 -0.00127  0.07955  0.89780 
+
+Coefficients:
+        Estimate Std. Error t value Pr(&gt;|t|)    
+beertax  -0.6559     0.1739  -3.772 0.000191 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1757 on 335 degrees of freedom
+Multiple R-squared:  0.04074,   Adjusted R-squared:  0.03788 
+F-statistic: 14.23 on 1 and 335 DF,  p-value: 0.0001913</code></pre>
+</div>
+</div>
+</section>
+<section id="use-plm" class="slide level2">
+<h2>Use plm</h2>
+<p>Alternatively use <code>plm</code> package</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+t test of coefficients:
+
+        Estimate Std. Error t value Pr(&gt;|t|)  
+beertax -0.65587    0.28880  -2.271  0.02388 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section>
+<section id="section-9" class="slide level2">
+<h2></h2>
+<p><span class="math inline">\(\begin{align} \widehat{FatalityRate} = -\underset{(0.29)}{0.66} \times BeerTax + \\ StateFixedEffects. \tag{10.7} \end{align}\)</span></p>
+<p>The coefficient on $BeerTax $ is negative and significant. The interpretation is that the estimated reduction in traffic fatalities due to an increase in the real beer tax by <span class="math inline">\(1\$\)</span> is <span class="math inline">\(0.66\)</span> per <span class="math inline">\(10,000\)</span> people, which is still pretty high.</p>
+</section>
+<section id="regression-with-time-fixed-effect" class="slide level2">
+<h2>Regression with Time Fixed Effect</h2>
+<p><span class="math inline">\(Y_{it} = \beta_0 + \beta_1 X_{it} + \delta_2 B2_t + \cdots\\ + \delta_T BT_t + u_{it},\)</span> where <span class="math inline">\(T-1\)</span> are binary variables (<span class="math inline">\(B_1\)</span> is ommited) <em>The entity time fixed effect</em> is <span class="math inline">\(Y_{it} = \beta_0 + \beta_1 X_{it} + \gamma_2 D2_i + \cdots \\ + \gamma_n DT_i + \delta_2 B2_t + \cdots + \delta_T BT_t + u_{it} .\)</span></p>
+<p><span class="math inline">\(FatalityRate_{it} = \beta_1 BeerTax_{it} + StateEffects + \\TimeFixedEffects + u_{it}\)</span></p>
+</section>
+<section id="section-10" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = fatal_rate ~ beertax + state + year - 1, data = df)
+
+Coefficients:
+ beertax   stateal   stateaz   statear   stateca   stateco   statect   statede  
+-0.63998   3.51137   2.96451   2.87284   2.02618   2.04984   1.67125   2.22711  
+ statefl   statega   stateid   stateil   statein   stateia   stateks   stateky  
+ 3.25132   4.02300   2.86242   1.57287   2.07123   1.98709   2.30707   2.31659  
+ statela   stateme   statemd   statema   statemi   statemn   statems   statemo  
+ 2.67772   2.41713   1.82731   1.42335   2.04488   1.63488   3.49146   2.23598  
+ statemt   statene   statenv   statenh   statenj   statenm   stateny   statenc  
+ 3.17160   2.00846   2.93322   2.27245   1.43016   3.95748   1.34849   3.22630  
+ statend   stateoh   stateok   stateor   statepa   stateri   statesc   statesd  
+ 1.90762   1.85664   2.97776   2.36597   1.76563   1.26964   4.06496   2.52317  
+ statetn   statetx   stateut   statevt   stateva   statewa   statewv   statewi  
+ 2.65670   2.61282   2.36165   2.56100   2.23618   1.87424   2.63364   1.77545  
+ statewy  year1983  year1984  year1985  year1986  year1987  year1988  
+ 3.30791  -0.07990  -0.07242  -0.12398  -0.03786  -0.05090  -0.05180  </code></pre>
+</div>
+</div>
+</section>
+<section id="via-plm" class="slide level2">
+<h2>Via plm</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+t test of coefficients:
+
+        Estimate Std. Error t value Pr(&gt;|t|)  
+beertax -0.63998    0.35015 -1.8277  0.06865 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p><strong>state</strong> and <strong>year</strong> are the <strong>class</strong> factors:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(\begin{align} \widehat{FatalityRate} = -\underset{(0.35)}{0.64} \times BeerTax + StateEffects + TimeFixedEffects. \tag{10.8} \end{align}\)</span></p>
+</section>
+<section id="the-fixed-effects-regression-assumptions" class="slide level2">
+<h2>The Fixed Effects Regression Assumptions</h2>
+<p>In the fixed effects model <span class="math inline">\(Y_{it} = \beta_1 X_{it} + \alpha_i + u_{it} \ \ , \ \ i=1,\dots,n, \ t=1,\dots,T,\)</span> we assume the following: 1. The error term <span class="math inline">\(u_{it}\)</span> has conditional mean zero, that is, <span class="math inline">\(E(u_{it}|X_{i1}, X_{i2},\dots, X_{iT})\)</span>. 2. <span class="math inline">\((X_{i1}, X_{i2}, \dots, X_{i3}, u_{i1}, \dots, u_{iT})\)</span> are i.i.d draw from their distributions. 3. Large outliers are unlikely, i.e., <span class="math inline">\((u_{it},x_{it})\)</span> have nonzero finite fourth moments. 4. There is no perfect multicollinearity. When there are multiple regressors, <span class="math inline">\(x_{it}\)</span> is replaced with <span class="math inline">\(X_{1,it}, X_{2,it}, \dots, X_{k,it}\)</span>.</p>
+</section>
+<section id="section-11" class="slide level2">
+<h2></h2>
+<p>discretize the minimum legal drinking age</p>
+<div class="cell">
+
+</div>
+</section>
+<section id="estimate-all-seven-models" class="slide level2">
+<h2>estimate all seven models</h2>
+<div class="cell">
+<div class="cell-output-display">
+
+<div id="urwgyoeshb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#urwgyoeshb .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#urwgyoeshb .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#urwgyoeshb .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#urwgyoeshb .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#urwgyoeshb .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#urwgyoeshb .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#urwgyoeshb .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#urwgyoeshb .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#urwgyoeshb .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#urwgyoeshb .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#urwgyoeshb .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#urwgyoeshb .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#urwgyoeshb .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#urwgyoeshb .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#urwgyoeshb .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#urwgyoeshb .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#urwgyoeshb .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#urwgyoeshb .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#urwgyoeshb .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#urwgyoeshb .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#urwgyoeshb .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#urwgyoeshb .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#urwgyoeshb .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#urwgyoeshb .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#urwgyoeshb .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#urwgyoeshb .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#urwgyoeshb .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#urwgyoeshb .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#urwgyoeshb .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#urwgyoeshb .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#urwgyoeshb .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#urwgyoeshb .gt_left {
+  text-align: left;
+}
+
+#urwgyoeshb .gt_center {
+  text-align: center;
+}
+
+#urwgyoeshb .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#urwgyoeshb .gt_font_normal {
+  font-weight: normal;
+}
+
+#urwgyoeshb .gt_font_bold {
+  font-weight: bold;
+}
+
+#urwgyoeshb .gt_font_italic {
+  font-style: italic;
+}
+
+#urwgyoeshb .gt_super {
+  font-size: 65%;
+}
+
+#urwgyoeshb .gt_two_val_uncert {
+  display: inline-block;
+  line-height: 1em;
+  text-align: right;
+  font-size: 60%;
+  vertical-align: -0.25em;
+  margin-left: 0.1em;
+}
+
+#urwgyoeshb .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#urwgyoeshb .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#urwgyoeshb .gt_slash_mark {
+  font-size: 0.7em;
+  line-height: 0.7em;
+  vertical-align: 0.15em;
+}
+
+#urwgyoeshb .gt_fraction_numerator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: 0.45em;
+}
+
+#urwgyoeshb .gt_fraction_denominator {
+  font-size: 0.6em;
+  line-height: 0.6em;
+  vertical-align: -0.05em;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"> </th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Model 1</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Model 2</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Model 3</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Model 4</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Model 5</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Model 6</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Model 7</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td class="gt_row gt_left">(Intercept)</td>
+<td class="gt_row gt_center">1.853***</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td></tr>
+    <tr><td class="gt_row gt_left"></td>
+<td class="gt_row gt_center">(0.047)</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td></tr>
+    <tr><td class="gt_row gt_left">beertax</td>
+<td class="gt_row gt_center">0.365***</td>
+<td class="gt_row gt_center">-0.656*</td>
+<td class="gt_row gt_center">-0.640+</td>
+<td class="gt_row gt_center">-0.445</td>
+<td class="gt_row gt_center">-0.690+</td>
+<td class="gt_row gt_center">-0.456</td>
+<td class="gt_row gt_center">-0.926*</td></tr>
+    <tr><td class="gt_row gt_left"></td>
+<td class="gt_row gt_center">(0.054)</td>
+<td class="gt_row gt_center">(0.298)</td>
+<td class="gt_row gt_center">(0.366)</td>
+<td class="gt_row gt_center">(0.318)</td>
+<td class="gt_row gt_center">(0.370)</td>
+<td class="gt_row gt_center">(0.327)</td>
+<td class="gt_row gt_center">(0.382)</td></tr>
+    <tr><td class="gt_row gt_left">drinkagec[18,19)</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">0.028</td>
+<td class="gt_row gt_center">-0.010</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">0.037</td></tr>
+    <tr><td class="gt_row gt_left"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">(0.074)</td>
+<td class="gt_row gt_center">(0.084)</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">(0.112)</td></tr>
+    <tr><td class="gt_row gt_left">drinkagec[19,20)</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">-0.018</td>
+<td class="gt_row gt_center">-0.076</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">-0.065</td></tr>
+    <tr><td class="gt_row gt_left"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">(0.050)</td>
+<td class="gt_row gt_center">(0.067)</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">(0.099)</td></tr>
+    <tr><td class="gt_row gt_left">drinkagec[20,21)</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">0.032</td>
+<td class="gt_row gt_center">-0.100+</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">-0.113</td></tr>
+    <tr><td class="gt_row gt_left"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">(0.053)</td>
+<td class="gt_row gt_center">(0.057)</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">(0.131)</td></tr>
+    <tr><td class="gt_row gt_left">punishyes</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">0.038</td>
+<td class="gt_row gt_center">0.085</td>
+<td class="gt_row gt_center">0.039</td>
+<td class="gt_row gt_center">0.089</td></tr>
+    <tr><td class="gt_row gt_left"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">(0.111)</td>
+<td class="gt_row gt_center">(0.119)</td>
+<td class="gt_row gt_center">(0.110)</td>
+<td class="gt_row gt_center">(0.179)</td></tr>
+    <tr><td class="gt_row gt_left">miles</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">0.000</td>
+<td class="gt_row gt_center">0.000</td>
+<td class="gt_row gt_center">0.000</td>
+<td class="gt_row gt_center">0.000*</td></tr>
+    <tr><td class="gt_row gt_left"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">(0.000)</td>
+<td class="gt_row gt_center">(0.000)</td>
+<td class="gt_row gt_center">(0.000)</td>
+<td class="gt_row gt_center">(0.000)</td></tr>
+    <tr><td class="gt_row gt_left">unemp</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">-0.063***</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">-0.063***</td>
+<td class="gt_row gt_center">-0.091***</td></tr>
+    <tr><td class="gt_row gt_left"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">(0.013)</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">(0.013)</td>
+<td class="gt_row gt_center">(0.022)</td></tr>
+    <tr><td class="gt_row gt_left">log(income)</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">1.816**</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">1.786**</td>
+<td class="gt_row gt_center">0.996</td></tr>
+    <tr><td class="gt_row gt_left"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">(0.646)</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">(0.650)</td>
+<td class="gt_row gt_center">(0.715)</td></tr>
+    <tr><td class="gt_row gt_left">drinkage</td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">-0.002</td>
+<td class="gt_row gt_center"></td></tr>
+    <tr><td class="gt_row gt_left"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center"></td>
+<td class="gt_row gt_center">(0.022)</td>
+<td class="gt_row gt_center"></td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+</div>
+</div>
+
+<img src="QAU-Logo.jpg" class="slide-logo r-stretch"><div class="footer footer-default">
+
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="Pan_reg_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="Pan_reg_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="Pan_reg_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="Pan_reg_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="Pan_reg_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="Pan_reg_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="Pan_reg_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="Pan_reg_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="Pan_reg_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="Pan_reg_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'smaller': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          // dispatch for htmlwidgets
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for reveal
+        if (window.Reveal) {
+          window.Reveal.addEventListener("slidechanged", function(event) {
+            fireSlideChanged(event.previousSlide, event.currentSlide);
+          });
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        target: function(trigger) {
+          return trigger.previousElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        setTimeout(function() {
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      });
+      function tippyHover(el, contentFn) {
+        const config = {
+          allowHTML: true,
+          content: contentFn,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'quarto-reveal',
+          placement: 'bottom-start'
+        };
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          let href = ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          return note.innerHTML;
+        });
+      }
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+        tippyHover(ref, function() {
+          var popup = window.document.createElement('div');
+          cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    });
+    </script>
+    
+
+</body></html>
