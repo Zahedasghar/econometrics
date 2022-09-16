@@ -226,9 +226,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="table-6.1" class="level2">
 <h2 class="anchored" data-anchor-id="table-6.1">Table 6.1</h2>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
 ✔ ggplot2 3.3.6     ✔ purrr   0.3.4
@@ -240,9 +243,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ✖ dplyr::group_rows() masks kableExtra::group_rows()
 ✖ dplyr::lag()        masks stats::lag()</code></pre>
 </div>
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>caschool <span class="ot">&lt;-</span> <span class="fu">read_dta</span>(<span class="st">"caschool.dta"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rstatix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'rstatix'
@@ -251,13 +257,18 @@ The following object is masked from 'package:stats':
 
     filter</code></pre>
 </div>
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>caschool<span class="ot">&lt;-</span>caschool <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">elq1=</span><span class="fu">ifelse</span>(el_pct<span class="sc">&lt;=</span><span class="fl">1.9</span>,<span class="dv">1</span>,<span class="dv">0</span>))</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>caschool<span class="ot">&lt;-</span>caschool <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">elq2=</span><span class="fu">ifelse</span>(el_pct<span class="sc">&gt;=</span><span class="fl">1.9</span> <span class="sc">&amp;</span> el_pct<span class="sc">&lt;</span><span class="fl">8.8</span>,<span class="dv">1</span>,<span class="dv">0</span>))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>caschool<span class="ot">&lt;-</span>caschool <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">elq3=</span><span class="fu">ifelse</span>(el_pct<span class="sc">&gt;=</span><span class="fl">8.8</span> <span class="sc">&amp;</span> el_pct<span class="sc">&lt;</span><span class="dv">23</span>,<span class="dv">1</span>,<span class="dv">0</span>))</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>caschool<span class="ot">&lt;-</span>caschool <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">elq4=</span><span class="fu">ifelse</span>(el_pct<span class="sc">&gt;=</span><span class="dv">23</span>,<span class="dv">1</span>,<span class="dv">0</span>))</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>caschool<span class="ot">&lt;-</span>caschool <span class="sc">%&gt;%</span>   <span class="fu">mutate</span>(<span class="at">str_20 =</span> <span class="fu">ifelse</span>(str<span class="sc">&lt;</span><span class="dv">20</span>, <span class="dv">1</span>,<span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>overall<span class="ot">&lt;-</span>caschool <span class="sc">%&gt;%</span> <span class="fu">t_test</span>(testscr<span class="sc">~</span>str_20,<span class="at">var.equal=</span>T)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>el_1<span class="fl">.9</span><span class="ot">&lt;-</span>caschool <span class="sc">%&gt;%</span> <span class="fu">filter</span>(elq1<span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">t_test</span>(testscr<span class="sc">~</span>str_20,<span class="at">var.equal=</span>T)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>el_8<span class="fl">.8</span><span class="ot">&lt;-</span>caschool <span class="sc">%&gt;%</span> <span class="fu">filter</span>(elq2<span class="sc">==</span><span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">t_test</span>(testscr<span class="sc">~</span>str_20,<span class="at">var.equal=</span>T)</span>
@@ -270,6 +281,7 @@ The following object is masked from 'package:stats':
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>df_tbl<span class="sc">$</span>statistic<span class="ot">&lt;-</span><span class="fu">round</span>(df_tbl<span class="sc">$</span>statistic,<span class="dv">2</span>)</span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>df_tbl<span class="sc">$</span>p<span class="ot">&lt;-</span><span class="fu">round</span>(df_tbl<span class="sc">$</span>p,<span class="dv">3</span>)</span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>df_tbl </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 7
   group1 group2    n1    n2 statistic    df     p
@@ -423,6 +435,8 @@ Difference <strong>After minus Before</strong> <span class="math inline">\({\Del
 <section id="section-9" class="level2">
 <h2 class="anchored" data-anchor-id="section-9"></h2>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>models<span class="ot">&lt;-</span><span class="fu">list</span>(mod1<span class="ot">&lt;-</span><span class="fu">lm</span>(testscr<span class="sc">~</span>str,<span class="at">data =</span> caschool),</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>mod2<span class="ot">&lt;-</span><span class="fu">lm</span>(testscr<span class="sc">~</span>str<span class="sc">+</span>el_pct,<span class="at">data =</span> caschool))</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>mod1<span class="ot">&lt;-</span><span class="fu">lm</span>(testscr<span class="sc">~</span>str,<span class="at">data =</span> caschool)</span>
@@ -433,6 +447,7 @@ Difference <strong>After minus Before</strong> <span class="math inline">\({\Del
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">estimate  =</span> <span class="fu">c</span>(</span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                <span class="st">"{estimate} ({std.error}){stars}"</span>),</span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">statistic =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -525,6 +540,8 @@ Difference <strong>After minus Before</strong> <span class="math inline">\({\Del
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>y_x2<span class="ot">&lt;-</span><span class="fu">lm</span>(testscr<span class="sc">~</span>el_pct, <span class="at">data=</span>caschool)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>x1_x2<span class="ot">&lt;-</span><span class="fu">lm</span>(str<span class="sc">~</span>el_pct,<span class="at">data=</span>caschool)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>resid1<span class="ot">&lt;-</span>y_x2<span class="sc">$</span>residuals</span>
@@ -532,6 +549,7 @@ Difference <strong>After minus Before</strong> <span class="math inline">\({\Del
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>resid_mod<span class="ot">&lt;-</span><span class="fu">lm</span>(resid1<span class="sc">~</span>resid2)</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>models<span class="ot">&lt;-</span><span class="fu">list</span>(mod1, mod2,resid_mod)</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -815,7 +833,10 @@ S S R r e s t r i c t e d being the sum of squared residuals from the restricted
 <section id="section-13" class="level2">
 <h2 class="anchored" data-anchor-id="section-13"></h2>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: carData</code></pre>
 </div>
@@ -833,12 +854,15 @@ Attaching package: 'car'</code></pre>
 
     some</code></pre>
 </div>
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate the multiple regression model</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(testscr <span class="sc">~</span> str <span class="sc">+</span> el_pct <span class="sc">+</span> meal_pct, <span class="at">data =</span> caschool)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># execute the function on the model object and provide both linear restrictions </span></span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># to be tested as strings</span></span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">linearHypothesis</span>(model, <span class="fu">c</span>(<span class="st">"str=0"</span>, <span class="st">"el_pct=0"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear hypothesis test
 
@@ -861,7 +885,10 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h2 class="anchored" data-anchor-id="section-14"></h2>
 <p>To test <span class="math inline">\(\beta_2+\beta_3=1\)</span> we can proceed as follows:</p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">linearHypothesis</span>(model,<span class="fu">c</span>(<span class="st">'el_pct+meal_pct=1'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear hypothesis test
 
@@ -882,10 +909,13 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="correlations" class="level2">
 <h2 class="anchored" data-anchor-id="correlations">Correlations</h2>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrr)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>caschool<span class="sc">|&gt;</span> <span class="fu">select</span>(testscr, str, el_pct, meal_pct, calw_pct)<span class="sc">|&gt;</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">correlate</span>()<span class="sc">|&gt;</span></span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autoplot</span>()<span class="sc">+</span><span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span><span class="fu">round</span>(r,<span class="at">digits =</span> <span class="dv">2</span>)),<span class="at">size=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="Ch6_7_SW_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -894,6 +924,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="fig-7.2" class="level2">
 <h2 class="anchored" data-anchor-id="fig-7.2">Fig 7.2</h2>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>p1<span class="ot">&lt;-</span> <span class="fu">ggplot</span>(caschool)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span>el_pct,<span class="at">y=</span>testscr)<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"percent"</span>,<span class="at">y=</span><span class="st">"Test Score"</span>)</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>p2<span class="ot">&lt;-</span> <span class="fu">ggplot</span>(caschool)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span>meal_pct,<span class="at">y=</span>testscr)<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span></span>
@@ -901,6 +933,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>p3<span class="ot">&lt;-</span> <span class="fu">ggplot</span>(caschool)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span>calw_pct,<span class="at">y=</span>testscr)<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span></span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"percent"</span>,<span class="at">y=</span><span class="st">"Test Score"</span>)</span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'gridExtra'</code></pre>
@@ -910,8 +943,11 @@ Attaching package: 'gridExtra'</code></pre>
 
     combine</code></pre>
 </div>
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#grid.arrange(p1,p2,p3, nrow=3)</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>p1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="Ch6_7_SW_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -920,7 +956,10 @@ Attaching package: 'gridExtra'</code></pre>
 <section id="section-15" class="level2">
 <h2 class="anchored" data-anchor-id="section-15"></h2>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>p2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="Ch6_7_SW_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -929,7 +968,10 @@ Attaching package: 'gridExtra'</code></pre>
 <section id="section-16" class="level2">
 <h2 class="anchored" data-anchor-id="section-16"></h2>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>p3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <p><img src="Ch6_7_SW_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -938,6 +980,8 @@ Attaching package: 'gridExtra'</code></pre>
 <section id="table-7.1-regressions-of-test-scores-on-student-teacher-ratio" class="level2 scrollable">
 <h2 class="scrollable anchored" data-anchor-id="table-7.1-regressions-of-test-scores-on-student-teacher-ratio">Table 7.1 Regressions of Test Scores on Student-Teacher Ratio</h2>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#vtable(caschool)</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>m1<span class="ot">&lt;-</span><span class="fu">lm</span>(testscr<span class="sc">~</span>str,<span class="at">data =</span> caschool)</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>m2<span class="ot">&lt;-</span><span class="fu">lm</span>(testscr<span class="sc">~</span>str<span class="sc">+</span>el_pct,<span class="at">data =</span> caschool)</span>
@@ -950,6 +994,7 @@ Attaching package: 'gridExtra'</code></pre>
 <span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(huxtable)</span>
 <span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="co">#etable(m1,m2,m3,m4)</span></span>
 <span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models,<span class="at">estimate =</span> <span class="st">"{estimate}{stars}"</span>, <span class="at">output=</span><span class="st">"huxtable"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 
 <table class="huxtable" style="border-collapse: collapse; border: 0px; margin-bottom: 2em; margin-top: 2em; ; margin-left: auto; margin-right: auto;  " id="tab:unnamed-chunk-12">
@@ -994,12 +1039,15 @@ Attaching package: 'gridExtra'</code></pre>
 </tbody></table>
 
 </div>
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">#modelsummary(models, fmt=4)</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co">#modelsummary(models,</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a> <span class="co">#            statistic = "{std.error} ({p.value})")</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">#modelsummary(models,</span></span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a> <span class="co">#            estimate = "{estimate}{stars}",</span></span>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#           gof_omit = ".*")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 

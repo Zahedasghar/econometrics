@@ -9,8 +9,8 @@ format:
   html: 
     theme: [default, custom.scss]
     code-link: true
-    code-fold: false    
-
+    code-fold: true    
+highlight-style: "nord"
 editor: visual
 ---
 

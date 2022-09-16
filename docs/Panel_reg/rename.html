@@ -197,14 +197,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 
 <div class="cell" data-layout-align="center">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(leaflet)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">leaflet</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addTiles</span>() <span class="sc">%&gt;%</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">addMarkers</span>(<span class="at">lng =</span> <span class="fl">73.136946</span>, <span class="at">lat =</span><span class="fl">33.748294</span> ,</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">popup =</span> <span class="st">"School of Economics, QAU, Islamabad"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
-<div id="htmlwidget-1201c795bb18113b1cb2" style="width:100%;height:180px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1201c795bb18113b1cb2">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[33.748294,73.136946,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"School of Economics, QAU, Islamabad",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[33.748294,33.748294],"lng":[73.136946,73.136946]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-d9dc21c2c95afca4d8f0" style="width:100%;height:180px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d9dc21c2c95afca4d8f0">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[33.748294,73.136946,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"School of Economics, QAU, Islamabad",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[33.748294,33.748294],"lng":[73.136946,73.136946]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <section id="panel-data-regression" class="level2">
@@ -282,10 +285,13 @@ $ gsp          &lt;dbl&gt; -0.022124760, 0.046558253, 0.062797837, 0.027489973, 
 <h2 class="anchored" data-anchor-id="section"></h2>
 <p>A large number of variables and 336 total observations. We need to select only a few variables required in doing this exercise.</p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Summarise the variable state and year</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>fatalities <span class="sc">%&gt;%</span> <span class="fu">select</span>(state,year) <span class="sc">%&gt;%</span> </span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span> </span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count=</span><span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 2
   year  count
@@ -298,6 +304,8 @@ $ gsp          &lt;dbl&gt; -0.022124760, 0.046558253, 0.062797837, 0.027489973, 
 6 1987     48
 7 1988     48</code></pre>
 </div>
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Traffic Deaths and Alcohal Taxes</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># define the fatality rate</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span>fatalities <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">fatal_rate=</span>fatal<span class="sc">/</span>pop<span class="sc">*</span><span class="dv">10000</span>)</span>
@@ -307,12 +315,16 @@ $ gsp          &lt;dbl&gt; -0.022124760, 0.046558253, 0.062797837, 0.027489973, 
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>Fatalities1982 <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(year<span class="sc">==</span><span class="st">"1982"</span>)</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>Fatalities1988 <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(year<span class="sc">==</span><span class="st">"1988"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="u.s-traffic-death-data-for-1982" class="level2">
 <h2 class="anchored" data-anchor-id="u.s-traffic-death-data-for-1982">U.S traffic death data for 1982</h2>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Fatalities1982)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span> beertax,<span class="at">y=</span>fatal_rate)<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>)<span class="sc">+</span><span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Beer Tax </span><span class="sc">\n</span><span class="st">(Dollars per case 1988)"</span>,<span class="at">y=</span><span class="st">"Fatality Rate </span><span class="sc">\n</span><span class="st"> Fatalities per 10000"</span>, <span class="at">title=</span><span class="st">"US traffice death for 1982"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula 'y ~ x'</code></pre>
 </div>
@@ -324,7 +336,10 @@ $ gsp          &lt;dbl&gt; -0.022124760, 0.046558253, 0.062797837, 0.027489973, 
 <section id="u.s-traffic-death-data-for-1988" class="level2">
 <h2 class="anchored" data-anchor-id="u.s-traffic-death-data-for-1988">U.S traffic death data for 1988</h2>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Fatalities1988)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span> beertax,<span class="at">y=</span>fatal_rate)<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>)<span class="sc">+</span><span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Beer Tax </span><span class="sc">\n</span><span class="st">(Dollars per case 1988)"</span>,<span class="at">y=</span><span class="st">"Fatality Rate </span><span class="sc">\n</span><span class="st"> Fatalities per 10000"</span>, <span class="at">title=</span><span class="st">"US traffice death for 1988"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula 'y ~ x'</code></pre>
 </div>
@@ -336,9 +351,12 @@ $ gsp          &lt;dbl&gt; -0.022124760, 0.046558253, 0.062797837, 0.027489973, 
 <section id="regression-line" class="level2">
 <h2 class="anchored" data-anchor-id="regression-line">Regression line</h2>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate simple regression models using 1982 and 1988 data</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>fatal1982_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(fatal_rate <span class="sc">~</span> beertax, <span class="at">data =</span> Fatalities1982)</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>fatal1988_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(fatal_rate <span class="sc">~</span> beertax, <span class="at">data =</span> Fatalities1988)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p><span class="math inline">\(\widehat{FatalityRate}= 2.01 + 0.15beertax\)</span></p>
 <p><span class="math inline">\(\widehat{FatalityRate}= 1.86 + 0.43beertax\)</span></p>
@@ -403,6 +421,8 @@ Any change in the fatality rate from 1982 to 1988 cannot be caused by <span clas
 <section id="section-4" class="level2">
 <h2 class="anchored" data-anchor-id="section-4"></h2>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="do">##Panel Data for two years</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the differences </span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>diff_fatal_rate <span class="ot">&lt;-</span> Fatalities1988<span class="sc">$</span>fatal_rate <span class="sc">-</span> Fatalities1982<span class="sc">$</span>fatal_rate</span>
@@ -412,6 +432,7 @@ Any change in the fatality rate from 1982 to 1988 cannot be caused by <span clas
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>fatal_diff_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(diff_fatal_rate <span class="sc">~</span> diff_beertax)</span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(fatal_diff_mod, <span class="at">vcov =</span> vcovHC, <span class="at">type =</span> <span class="st">"HC1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 t test of coefficients:
@@ -424,6 +445,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df2<span class="ot">&lt;-</span><span class="fu">cbind</span>(diff_fatal_rate,diff_beertax)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>df2<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(df2)</span>
@@ -432,6 +455,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,<span class="at">se=</span><span class="cn">FALSE</span>)</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>p2<span class="sc">+</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Change in beer tax (in 1988 dollars)"</span>,</span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Change in fatality rate (fatalities per 10000)"</span>)<span class="sc">+</span><span class="fu">ggtitle</span>(<span class="st">"Changes in Traffic Fatality Rates and Beer Taxes in 1982-1988"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula 'y ~ x'</code></pre>
 </div>
@@ -509,6 +533,8 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
 <section id="panel-data-for-two-years" class="level2">
 <h2 class="anchored" data-anchor-id="panel-data-for-two-years">Panel Data for two years</h2>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the differences </span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>diff_fatal_rate <span class="ot">&lt;-</span> Fatalities1988<span class="sc">$</span>fatal_rate <span class="sc">-</span> Fatalities1982<span class="sc">$</span>fatal_rate</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>diff_beertax <span class="ot">&lt;-</span> Fatalities1988<span class="sc">$</span>beertax <span class="sc">-</span> Fatalities1982<span class="sc">$</span>beertax</span>
@@ -517,6 +543,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>fatal_diff_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(diff_fatal_rate <span class="sc">~</span> diff_beertax)</span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(fatal_diff_mod, <span class="at">vcov =</span> vcovHC, <span class="at">type =</span> <span class="st">"HC1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 t test of coefficients:
@@ -532,6 +559,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="section-7" class="level2">
 <h2 class="anchored" data-anchor-id="section-7"></h2>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df2<span class="ot">&lt;-</span><span class="fu">cbind</span>(diff_fatal_rate,diff_beertax)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>df2<span class="ot">&lt;-</span><span class="fu">as.data.frame</span>(df2)</span>
@@ -540,6 +569,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,<span class="at">se=</span><span class="cn">FALSE</span>)</span>
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>p2<span class="sc">+</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Change in beer tax (in 1988 dollars)"</span>,</span>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Change in fatality rate (fatalities per 10000)"</span>)<span class="sc">+</span><span class="fu">ggtitle</span>(<span class="st">"Changes in Traffic Fatality Rates and Beer Taxes in 1982-1988"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula 'y ~ x'</code></pre>
 </div>
@@ -551,8 +581,11 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="compute-mean-fatality-rate-over-all-states-for-all-time-periods" class="level2">
 <h2 class="anchored" data-anchor-id="compute-mean-fatality-rate-over-all-states-for-all-time-periods">compute mean fatality rate over all states for all time periods</h2>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span> </span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(fatal_rate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 2
   year   mean
@@ -565,12 +598,18 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 6 1987   2.06
 7 1988   2.07</code></pre>
 </div>
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(df<span class="sc">$</span>fatal_rate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.040444</code></pre>
 </div>
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">select</span>(fatal_rate) <span class="sc">%&gt;%</span> </span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(fatal_rate))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>      mean
 1 2.040444</code></pre>
@@ -581,8 +620,11 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h2 class="anchored" data-anchor-id="section-8"></h2>
 <p><span class="math inline">\(\begin{align} FatalityRate_{it} = \beta_1 BeerTax_{it} + StateFixedEffects\\ + u_{it}, \tag{10.6} \end{align}\)</span></p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>fatal_fe_lm_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(fatal_rate <span class="sc">~</span> beertax <span class="sc">+</span> state <span class="sc">-</span> <span class="dv">1</span>, <span class="at">data =</span> df)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>fatal_fe_lm_mod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -610,6 +652,8 @@ statewy
 <h2 class="anchored" data-anchor-id="demeaned-regressioin">Demeaned Regressioin</h2>
 <p><span class="math inline">\(\overset{\sim}{FatalityRate} = \beta_1 \overset{\sim}{BeerTax}_{it} + u_{it}.\)</span></p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># obtain demeaned data</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>Fatalities_demeaned <span class="ot">&lt;-</span> <span class="fu">with</span>(df,</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">data.frame</span>(<span class="at">fatal_rate =</span> fatal_rate <span class="sc">-</span> <span class="fu">ave</span>(fatal_rate, state),</span>
@@ -617,6 +661,7 @@ statewy
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate the regression</span></span>
 <span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(fatal_rate <span class="sc">~</span> beertax <span class="sc">-</span> <span class="dv">1</span>, <span class="at">data =</span> Fatalities_demeaned))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -642,7 +687,10 @@ F-statistic: 14.23 on 1 and 335 DF,  p-value: 0.0001913</code></pre>
 <h2 class="anchored" data-anchor-id="use-plm">Use plm</h2>
 <p>Alternatively use <code>plm</code> package</p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'plm'</code></pre>
@@ -652,6 +700,8 @@ Attaching package: 'plm'</code></pre>
 
     between, lag, lead</code></pre>
 </div>
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate the fixed effects regression with plm()</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>fatal_fe_mod <span class="ot">&lt;-</span> <span class="fu">plm</span>(fatal_rate <span class="sc">~</span> beertax, </span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">data =</span> df,</span>
@@ -660,6 +710,7 @@ Attaching package: 'plm'</code></pre>
 <span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co"># print summary using robust standard errors</span></span>
 <span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(fatal_fe_mod, <span class="at">vcov. =</span> vcovHC, <span class="at">type =</span> <span class="st">"HC1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 t test of coefficients:
@@ -684,11 +735,14 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="section-10" class="level2">
 <h2 class="anchored" data-anchor-id="section-10"></h2>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimate a combined time and entity fixed effects regression model</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># via lm()</span></span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>fatal_tefe_lm_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(fatal_rate <span class="sc">~</span> beertax <span class="sc">+</span> state <span class="sc">+</span> year <span class="sc">-</span> <span class="dv">1</span>, <span class="at">data =</span> df)</span>
 <span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>fatal_tefe_lm_mod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -715,6 +769,8 @@ Coefficients:
 <section id="via-plm" class="level2">
 <h2 class="anchored" data-anchor-id="via-plm">Via plm</h2>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># via plm()</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>fatal_tefe_mod <span class="ot">&lt;-</span> <span class="fu">plm</span>(fatal_rate <span class="sc">~</span> beertax, </span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">data =</span> df,</span>
@@ -723,6 +779,7 @@ Coefficients:
 <span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">effect =</span> <span class="st">"twoways"</span>)</span>
 <span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(fatal_tefe_mod, <span class="at">vcov =</span> vcovHC, <span class="at">type =</span> <span class="st">"HC1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 t test of coefficients:
@@ -735,17 +792,26 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p><strong>state</strong> and <strong>year</strong> are the <strong>class</strong> factors:</p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check the class of 'state' and 'year'</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(Fatalities<span class="sc">$</span>state)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "factor"</code></pre>
 </div>
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "factor"</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(Fatalities<span class="sc">$</span>year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "factor"</code></pre>
 </div>
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "factor"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p><span class="math inline">\(\begin{align} \widehat{FatalityRate} = -\underset{(0.35)}{0.64} \times BeerTax + StateEffects + TimeFixedEffects. \tag{10.8} \end{align}\)</span></p>
 </section>
@@ -757,6 +823,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h2 class="anchored" data-anchor-id="section-11"></h2>
 <p>discretize the minimum legal drinking age</p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>drinkagec <span class="ot">&lt;-</span> <span class="fu">cut</span>(df<span class="sc">$</span>drinkage,</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">breaks =</span> <span class="dv">18</span><span class="sc">:</span><span class="dv">22</span>, </span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">include.lowest =</span> <span class="cn">TRUE</span>, </span>
@@ -768,11 +836,14 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a><span class="co"># mandadory jail or community service?</span></span>
 <span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>punish <span class="ot">&lt;-</span> <span class="fu">with</span>(df, <span class="fu">factor</span>(jail <span class="sc">==</span> <span class="st">"yes"</span> <span class="sc">|</span> service <span class="sc">==</span> <span class="st">"yes"</span>, </span>
 <span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>                                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"no"</span>, <span class="st">"yes"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="estimate-all-seven-models" class="level2">
 <h2 class="anchored" data-anchor-id="estimate-all-seven-models">estimate all seven models</h2>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>Fatalities_1982_1988 <span class="ot">&lt;-</span> df[<span class="fu">with</span>(df, year <span class="sc">==</span> <span class="dv">1982</span> <span class="sc">|</span> year <span class="sc">==</span> <span class="dv">1988</span>),]</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>models<span class="ot">&lt;-</span><span class="fu">list</span>(fatalities_mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(fatal_rate <span class="sc">~</span> beertax, <span class="at">data =</span> df),</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -817,6 +888,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb44-42"><a href="#cb44-42" aria-hidden="true" tabindex="-1"></a><span class="do">##We again use stargazer() (Hlavac, 2018) to generate a comprehensive tabular presentation of the results.</span></span>
 <span id="cb44-43"><a href="#cb44-43" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-44"><a href="#cb44-44" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stargazer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Please cite as: </code></pre>
@@ -827,8 +899,14 @@ Please cite as: </code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code> R package version 5.2.3. https://CRAN.R-project.org/package=stargazer </code></pre>
 </div>
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjPlot)</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjmisc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Learn more about sjmisc with 'browseVignettes("sjmisc")'.</code></pre>
+</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'sjmisc'</code></pre>
@@ -848,7 +926,10 @@ Attaching package: 'sjmisc'</code></pre>
 
     add_case</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjlabelled)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sjlabelled)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'sjlabelled'</code></pre>
@@ -868,17 +949,20 @@ Attaching package: 'sjlabelled'</code></pre>
 
     as_label</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models,<span class="at">fmt=</span><span class="dv">3</span>,<span class="at">vcov =</span> <span class="st">"robust"</span>,<span class="at">estimate =</span> <span class="st">"{estimate}{stars}"</span>,</span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">gof_omit =</span> <span class="st">".*"</span>,<span class="at">output =</span> <span class="st">"gt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(models,<span class="at">fmt=</span><span class="dv">3</span>,<span class="at">vcov =</span> <span class="st">"robust"</span>,<span class="at">estimate =</span> <span class="st">"{estimate}{stars}"</span>,</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">gof_omit =</span> <span class="st">".*"</span>,<span class="at">output =</span> <span class="st">"gt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 
-<div id="dhqkvtlxcq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="ikjpvopbyx" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#dhqkvtlxcq .gt_table {
+#ikjpvopbyx .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -903,7 +987,7 @@ Attaching package: 'sjlabelled'</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#dhqkvtlxcq .gt_heading {
+#ikjpvopbyx .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -915,7 +999,7 @@ Attaching package: 'sjlabelled'</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#dhqkvtlxcq .gt_title {
+#ikjpvopbyx .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -927,7 +1011,7 @@ Attaching package: 'sjlabelled'</code></pre>
   border-bottom-width: 0;
 }
 
-#dhqkvtlxcq .gt_subtitle {
+#ikjpvopbyx .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -939,13 +1023,13 @@ Attaching package: 'sjlabelled'</code></pre>
   border-top-width: 0;
 }
 
-#dhqkvtlxcq .gt_bottom_border {
+#ikjpvopbyx .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#dhqkvtlxcq .gt_col_headings {
+#ikjpvopbyx .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -960,7 +1044,7 @@ Attaching package: 'sjlabelled'</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#dhqkvtlxcq .gt_col_heading {
+#ikjpvopbyx .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -980,7 +1064,7 @@ Attaching package: 'sjlabelled'</code></pre>
   overflow-x: hidden;
 }
 
-#dhqkvtlxcq .gt_column_spanner_outer {
+#ikjpvopbyx .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -992,15 +1076,15 @@ Attaching package: 'sjlabelled'</code></pre>
   padding-right: 4px;
 }
 
-#dhqkvtlxcq .gt_column_spanner_outer:first-child {
+#ikjpvopbyx .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#dhqkvtlxcq .gt_column_spanner_outer:last-child {
+#ikjpvopbyx .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#dhqkvtlxcq .gt_column_spanner {
+#ikjpvopbyx .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1012,7 +1096,7 @@ Attaching package: 'sjlabelled'</code></pre>
   width: 100%;
 }
 
-#dhqkvtlxcq .gt_group_heading {
+#ikjpvopbyx .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1037,7 +1121,7 @@ Attaching package: 'sjlabelled'</code></pre>
   vertical-align: middle;
 }
 
-#dhqkvtlxcq .gt_empty_group_heading {
+#ikjpvopbyx .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1052,15 +1136,15 @@ Attaching package: 'sjlabelled'</code></pre>
   vertical-align: middle;
 }
 
-#dhqkvtlxcq .gt_from_md > :first-child {
+#ikjpvopbyx .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dhqkvtlxcq .gt_from_md > :last-child {
+#ikjpvopbyx .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dhqkvtlxcq .gt_row {
+#ikjpvopbyx .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1079,7 +1163,7 @@ Attaching package: 'sjlabelled'</code></pre>
   overflow-x: hidden;
 }
 
-#dhqkvtlxcq .gt_stub {
+#ikjpvopbyx .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1092,7 +1176,7 @@ Attaching package: 'sjlabelled'</code></pre>
   padding-right: 5px;
 }
 
-#dhqkvtlxcq .gt_stub_row_group {
+#ikjpvopbyx .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1106,11 +1190,11 @@ Attaching package: 'sjlabelled'</code></pre>
   vertical-align: top;
 }
 
-#dhqkvtlxcq .gt_row_group_first td {
+#ikjpvopbyx .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#dhqkvtlxcq .gt_summary_row {
+#ikjpvopbyx .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1120,16 +1204,16 @@ Attaching package: 'sjlabelled'</code></pre>
   padding-right: 5px;
 }
 
-#dhqkvtlxcq .gt_first_summary_row {
+#ikjpvopbyx .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#dhqkvtlxcq .gt_first_summary_row.thick {
+#ikjpvopbyx .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#dhqkvtlxcq .gt_last_summary_row {
+#ikjpvopbyx .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1139,7 +1223,7 @@ Attaching package: 'sjlabelled'</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#dhqkvtlxcq .gt_grand_summary_row {
+#ikjpvopbyx .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1149,7 +1233,7 @@ Attaching package: 'sjlabelled'</code></pre>
   padding-right: 5px;
 }
 
-#dhqkvtlxcq .gt_first_grand_summary_row {
+#ikjpvopbyx .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1159,11 +1243,11 @@ Attaching package: 'sjlabelled'</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#dhqkvtlxcq .gt_striped {
+#ikjpvopbyx .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#dhqkvtlxcq .gt_table_body {
+#ikjpvopbyx .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1172,7 +1256,7 @@ Attaching package: 'sjlabelled'</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#dhqkvtlxcq .gt_footnotes {
+#ikjpvopbyx .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1186,7 +1270,7 @@ Attaching package: 'sjlabelled'</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#dhqkvtlxcq .gt_footnote {
+#ikjpvopbyx .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1195,7 +1279,7 @@ Attaching package: 'sjlabelled'</code></pre>
   padding-right: 5px;
 }
 
-#dhqkvtlxcq .gt_sourcenotes {
+#ikjpvopbyx .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1209,7 +1293,7 @@ Attaching package: 'sjlabelled'</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#dhqkvtlxcq .gt_sourcenote {
+#ikjpvopbyx .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1217,36 +1301,36 @@ Attaching package: 'sjlabelled'</code></pre>
   padding-right: 5px;
 }
 
-#dhqkvtlxcq .gt_left {
+#ikjpvopbyx .gt_left {
   text-align: left;
 }
 
-#dhqkvtlxcq .gt_center {
+#ikjpvopbyx .gt_center {
   text-align: center;
 }
 
-#dhqkvtlxcq .gt_right {
+#ikjpvopbyx .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dhqkvtlxcq .gt_font_normal {
+#ikjpvopbyx .gt_font_normal {
   font-weight: normal;
 }
 
-#dhqkvtlxcq .gt_font_bold {
+#ikjpvopbyx .gt_font_bold {
   font-weight: bold;
 }
 
-#dhqkvtlxcq .gt_font_italic {
+#ikjpvopbyx .gt_font_italic {
   font-style: italic;
 }
 
-#dhqkvtlxcq .gt_super {
+#ikjpvopbyx .gt_super {
   font-size: 65%;
 }
 
-#dhqkvtlxcq .gt_two_val_uncert {
+#ikjpvopbyx .gt_two_val_uncert {
   display: inline-block;
   line-height: 1em;
   text-align: right;
@@ -1255,31 +1339,31 @@ Attaching package: 'sjlabelled'</code></pre>
   margin-left: 0.1em;
 }
 
-#dhqkvtlxcq .gt_footnote_marks {
+#ikjpvopbyx .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#dhqkvtlxcq .gt_asterisk {
+#ikjpvopbyx .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#dhqkvtlxcq .gt_slash_mark {
+#ikjpvopbyx .gt_slash_mark {
   font-size: 0.7em;
   line-height: 0.7em;
   vertical-align: 0.15em;
 }
 
-#dhqkvtlxcq .gt_fraction_numerator {
+#ikjpvopbyx .gt_fraction_numerator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: 0.45em;
 }
 
-#dhqkvtlxcq .gt_fraction_denominator {
+#ikjpvopbyx .gt_fraction_denominator {
   font-size: 0.6em;
   line-height: 0.6em;
   vertical-align: -0.05em;
@@ -1472,10 +1556,13 @@ Attaching package: 'sjlabelled'</code></pre>
 <section id="wage-data-woolridge-book" class="level1">
 <h1><a href="https://tyleransom.github.io/teaching/MetricsLabs/lab15.html">Wage data Woolridge book</a></h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wooldridge)</span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(wooldridge)</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'magrittr'</code></pre>
@@ -1490,41 +1577,53 @@ Attaching package: 'magrittr'</code></pre>
 
     extract</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(clubSandwich)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(clubSandwich)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Registered S3 method overwritten by 'clubSandwich':
   method    from    
   bread.mlm sandwich</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(estimatr)</span>
-<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plm)   <span class="co"># You may need to install this package</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelsummary)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(estimatr)</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plm)   <span class="co"># You may need to install this package</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <section id="load-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="load-the-data">Load the data</h2>
 <p>Load the data Our data set will be a panel of wages for 545 men. Load the data from the wooldridge package, format year to be a factor, and rename the variable nr to something more descriptive (id):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(wagepan)</span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&lt;&gt;%</span> <span class="fu">mutate</span>(<span class="at">year=</span><span class="fu">as.factor</span>(year))</span>
-<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&lt;&gt;%</span> <span class="fu">rename</span>(<span class="at">id =</span> nr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(wagepan)</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&lt;&gt;%</span> <span class="fu">mutate</span>(<span class="at">year=</span><span class="fu">as.factor</span>(year))</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&lt;&gt;%</span> <span class="fu">rename</span>(<span class="at">id =</span> nr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="summary-statistics-with-panel-data" class="level2">
 <h2 class="anchored" data-anchor-id="summary-statistics-with-panel-data">Summary Statistics with Panel Data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>df.within <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">select</span>(id,year,educ,married,union,rur) <span class="sc">%&gt;%</span> </span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span> </span>
-<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">summarize</span>(</span>
-<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">mean.edu =</span> <span class="fu">mean</span>(educ),</span>
-<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">var.edu  =</span> <span class="fu">var</span>(educ),</span>
-<span id="cb67-6"><a href="#cb67-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">mean.marr =</span> <span class="fu">mean</span>(married),</span>
-<span id="cb67-7"><a href="#cb67-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">var.marr =</span> <span class="fu">var</span>(married),</span>
-<span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">mean.union =</span> <span class="fu">mean</span>(union),</span>
-<span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">var.union =</span> <span class="fu">var</span>(union),</span>
-<span id="cb67-10"><a href="#cb67-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">mean.rural =</span> <span class="fu">mean</span>(rur),</span>
-<span id="cb67-11"><a href="#cb67-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">var.rural =</span> <span class="fu">var</span>(rur)</span>
-<span id="cb67-12"><a href="#cb67-12" aria-hidden="true" tabindex="-1"></a>             )</span>
-<span id="cb67-13"><a href="#cb67-13" aria-hidden="true" tabindex="-1"></a>df.within <span class="sc">%&gt;%</span> <span class="fu">datasummary_skim</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>df.within <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">select</span>(id,year,educ,married,union,rur) <span class="sc">%&gt;%</span> </span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>             <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span> </span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>             <span class="fu">summarize</span>(</span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">mean.edu =</span> <span class="fu">mean</span>(educ),</span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">var.edu  =</span> <span class="fu">var</span>(educ),</span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">mean.marr =</span> <span class="fu">mean</span>(married),</span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">var.marr =</span> <span class="fu">var</span>(married),</span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">mean.union =</span> <span class="fu">mean</span>(union),</span>
+<span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">var.union =</span> <span class="fu">var</span>(union),</span>
+<span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a>               <span class="at">mean.rural =</span> <span class="fu">mean</span>(rur),</span>
+<span id="cb68-11"><a href="#cb68-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">var.rural =</span> <span class="fu">var</span>(rur)</span>
+<span id="cb68-12"><a href="#cb68-12" aria-hidden="true" tabindex="-1"></a>             )</span>
+<span id="cb68-13"><a href="#cb68-13" aria-hidden="true" tabindex="-1"></a>df.within <span class="sc">%&gt;%</span> <span class="fu">datasummary_skim</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -1774,16 +1873,22 @@ Attaching package: 'magrittr'</code></pre>
 <h2 class="centered anchored" data-anchor-id="pooled-ols-random-effects-and-fixed-effects-models">Pooled OLS, Random Effects, and Fixed Effects Models</h2>
 <p><span class="math inline">\(\begin{align*} \log(wage_{it}) &amp; = \beta_0 + \beta_1 educ_{i} + \beta_2 black_{i} + \beta_3 hisp_{i} + \beta_4 exper_{it} + \beta_5 exper_{it}^2 + \beta_6 married_{it} + \\ &amp;\phantom{=\,\,}\beta_7 union_{it} + \beta_8 rur_{it} + \sum_t \beta_{9,t}year_{it} + a_i + u_{it} \end{align*}\)</span> The pooled ols by <code>lm_robust</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>est.pols <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>(lwage <span class="sc">~</span> educ <span class="sc">+</span> black <span class="sc">+</span> hisp <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> married <span class="sc">+</span> union <span class="sc">+</span> rur <span class="sc">+</span> year,</span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> df, <span class="at">clusters=</span>id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>est.pols <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>(lwage <span class="sc">~</span> educ <span class="sc">+</span> black <span class="sc">+</span> hisp <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> married <span class="sc">+</span> union <span class="sc">+</span> rur <span class="sc">+</span> year,</span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> df, <span class="at">clusters=</span>id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Interpret the coefficient on β7 in the pooled OLS model</p>
 </section>
 <section id="random-effects" class="level2">
 <h2 class="anchored" data-anchor-id="random-effects">Random effects</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>est.re <span class="ot">&lt;-</span> <span class="fu">plm</span>(lwage <span class="sc">~</span> educ <span class="sc">+</span> black <span class="sc">+</span> hisp <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> married <span class="sc">+</span> union <span class="sc">+</span> rur <span class="sc">+</span> year, </span>
-<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> df, <span class="at">index =</span> <span class="fu">c</span>(<span class="st">"id"</span>,<span class="st">"year"</span>), <span class="at">model =</span> <span class="st">"random"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>est.re <span class="ot">&lt;-</span> <span class="fu">plm</span>(lwage <span class="sc">~</span> educ <span class="sc">+</span> black <span class="sc">+</span> hisp <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> married <span class="sc">+</span> union <span class="sc">+</span> rur <span class="sc">+</span> year, </span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> df, <span class="at">index =</span> <span class="fu">c</span>(<span class="st">"id"</span>,<span class="st">"year"</span>), <span class="at">model =</span> <span class="st">"random"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>What is the estimate of <span class="math inline">\(θ\)</span> in the RE model? (Hint: check est.re<code>$ercomp$theta</code>) What does this tell you about what you expect the random effects estimates to be relative to the fixed effects estimates?</p>
 </section>
@@ -1791,23 +1896,32 @@ Attaching package: 'magrittr'</code></pre>
 <h2 class="anchored" data-anchor-id="fixed-effects">Fixed effects</h2>
 <p>FE also come from the <code>lm_robust()</code> function:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>est.fe <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>(lwage <span class="sc">~</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> married <span class="sc">+</span> union <span class="sc">+</span> rur <span class="sc">+</span> year, </span>
-<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> df, <span class="at">fixed_effects =</span> <span class="sc">~</span>id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>est.fe <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>(lwage <span class="sc">~</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> married <span class="sc">+</span> union <span class="sc">+</span> rur <span class="sc">+</span> year, </span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">data =</span> df, <span class="at">fixed_effects =</span> <span class="sc">~</span>id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>Explain why we cannot estimate coefficients on <span class="math inline">\(educ\)</span>, <span class="math inline">\(black\)</span>, <span class="math inline">\(hisp\)</span>, or <span class="math inline">\(exper\)</span> in the fixed effects model. (Note: the reason for not being able to estimate exper is more nuanced)</p>
 <p>##Clustered standard errors The most appropriate standard errors account for within-person serial correlation and are robust to heteroskedasticity.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>clust.re <span class="ot">&lt;-</span> <span class="fu">coef_test</span>(est.re, <span class="at">vcov =</span> <span class="st">"CR1"</span>, <span class="at">cluster =</span> <span class="st">"individual"</span>)</span>
-<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>clust.re.SE <span class="ot">&lt;-</span> clust.re<span class="sc">$</span>SE</span>
-<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(clust.re.SE) <span class="ot">&lt;-</span> <span class="fu">names</span>(est.re<span class="sc">$</span>coefficients)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>clust.re <span class="ot">&lt;-</span> <span class="fu">coef_test</span>(est.re, <span class="at">vcov =</span> <span class="st">"CR1"</span>, <span class="at">cluster =</span> <span class="st">"individual"</span>)</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>clust.re.SE <span class="ot">&lt;-</span> clust.re<span class="sc">$</span>SE</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(clust.re.SE) <span class="ot">&lt;-</span> <span class="fu">names</span>(est.re<span class="sc">$</span>coefficients)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="model-summary" class="level2 scrollable">
 <h2 class="scrollable anchored" data-anchor-id="model-summary">Model summary</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">"POLS"</span><span class="ot">=</span>est.pols,<span class="st">"RE"</span><span class="ot">=</span>est.re,<span class="st">"FE"</span><span class="ot">=</span>est.fe),</span>
-<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">statistic_override=</span><span class="fu">list</span>(<span class="fu">sqrt</span>(<span class="fu">diag</span>(est.pols<span class="sc">$</span>vcov)),clust.re.SE,<span class="fu">sqrt</span>(<span class="fu">diag</span>(est.fe<span class="sc">$</span>vcov))),</span>
-<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">output=</span><span class="st">"markdown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">"POLS"</span><span class="ot">=</span>est.pols,<span class="st">"RE"</span><span class="ot">=</span>est.re,<span class="st">"FE"</span><span class="ot">=</span>est.fe),</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">statistic_override=</span><span class="fu">list</span>(<span class="fu">sqrt</span>(<span class="fu">diag</span>(est.pols<span class="sc">$</span>vcov)),clust.re.SE,<span class="fu">sqrt</span>(<span class="fu">diag</span>(est.fe<span class="sc">$</span>vcov))),</span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">output=</span><span class="st">"markdown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <thead>
