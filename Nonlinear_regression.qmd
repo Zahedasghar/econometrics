@@ -3,7 +3,7 @@ title: "Nonlinear Regression Functions"
 author: "Zahid Asghar<br><br> School of Economics, QAU, Islamabad"
 logo: "QAU-Logo.jpg"
 format:
-  revealjs: 
+  html: 
     theme: [default, custom.scss]
     toc: false
     code-fold: true
@@ -304,7 +304,7 @@ Logarithms can be used to transform the dependent variable $Y$ or the independen
 ## 
 
 | Case | Model Specification                           | nterpretation of $beta_1$                                                                                          |
-|------|-----------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
+|--------------|----------------|-------------------------------------------|
 | 1    | $Y_i = \beta_0 + \beta_1 \ln(X_i) + u_i$      | A $1 \%$ increase in $X$ is associated with a change in $Y$ of $0.01 \times \beta_1$                               |
 | 2    | $\ln(Y_i) = \beta_0 + \beta_1 X_i + u_i$      | A change in $X$ by one unit $\Delta X=1$ is associated with a 100×β1% change in $Y$                                |
 | 3    | $\ln(Y_i) = \beta_0 + \beta_1 \ln(X_i) + u_i$ | A $1 \%$ change in $X$ is associated with a β1% change in $Y$, so β1 is the elasticity of $Y$ with respect to $X$. |

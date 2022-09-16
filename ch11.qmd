@@ -1,13 +1,15 @@
 ---
 title: "Regression with a binary dependent variable"
+author: "Zahid Asghar<br><br> School of Economics, QAU, Islamabad"
+logo: "QAU-Logo.jpg"
+toc: true
+sidebar: false
+page-layout: full
 format:
-  revealjs: 
-    theme: [default, ryan.scss]
-    toc: false
-    code-fold: true
-execute: 
-  warning: false
-chalkboard: true
+  html: 
+    theme: [default, custom.scss]
+    code-link: true
+    code-fold: false    
 editor: visual
 ---
 

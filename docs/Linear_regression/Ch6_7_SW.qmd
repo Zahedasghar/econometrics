@@ -2,11 +2,14 @@
 title: "Linear Regression with Multiple Regressors"
 author: "Zahid Asghar<br><br> School of Economics, QAU, Islamabad"
 logo: "QAU-Logo.jpg"
+toc: true
+sidebar: false
+page-layout: full
 format:
-  revealjs: 
+  html: 
     theme: [default, custom.scss]
-    editor: visual
-
+    code-link: true
+    code-fold: false
 editor: visual
 ---
 
@@ -173,7 +176,7 @@ Randomization + control group means that any differences between the treatment a
 
     -   This is one way to "control" for the effect of PctEL when estimating the effect of STR.
 
-## Return to omitted variable bias  {.smaller}
+## Return to omitted variable bias {.smaller}
 
 Three ways to overcome omitted variable bias
 
@@ -183,7 +186,7 @@ Three ways to overcome omitted variable bias
 
 3.  Use a regression in which the omitted variable (PctEL) is no longer omitted: include PctEL as an additional regressor in a multiple regression.
 
-## The Population Regression Function  {.smaller}
+## The Population Regression Function {.smaller}
 
 Consider the two regressors:
 
@@ -203,7 +206,7 @@ $Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + u_i, \ i=1,\dots,n.$
 
 -   $u_i$ = the regression error (omitted factors)
 
-## Interpretation of coefficients in multiple regression  {.smaller}
+## Interpretation of coefficients in multiple regression {.smaller}
 
 $Y_i = \beta_0 + \beta_1 X_{1i} + \beta_2 X_{2i} + u_i, \ i=1,\dots,n.$\
 Consider changing $X_1$ by $X_1$ while holding $X_2$ constant: Population regression line **before** the change: $Y_i = \beta_0 + \beta_1 X_1 + \beta_2 X_2$\
@@ -306,7 +309,7 @@ Measures of fit, ctd. Test score example: (1) $\widehat{TestScore}= 698.9 – 2.
 -   What -- precisely -- does this tell you about the fit of regression (2) compared with regression (1)?
 -   Why are the $R^2$ and $\bar{R^2}$ so close in (2)?
 
-## OLS Assumptions in the MLR Model  {.smallest}
+## OLS Assumptions in the MLR Model {.smallest}
 
 The multiple regression model is given by $Y_i = \beta_0 + \beta_1 X_{1i} + \beta_1 X_{2i} + \dots + \beta_k X_{ki} + u_i \ , \ i=1,\dots,n.$
 
@@ -329,7 +332,7 @@ $(X_{1i}, X_{2i}, \dots, X_{ki}, Y_i) \ , \ i=1,\dots,n$ This is satisfied autom
 
 ***Assumption #3: large outliers are rare (finite fourth moments)*** This is the same assumption as we had before for a single regressor. As in the case of a single regressor, OLS can be sensitive to large outliers, so you need to check your data (scatterplots!) to make sure there are no crazy values (typos or coding errors).
 
-## Assumption #4 : There is no perfect multicollinearity  {.smallest}
+## Assumption #4 : There is no perfect multicollinearity {.smallest}
 
 Perfect multicollinearity is when one of the regressors is an exact linear function of the other regressors. Example: Suppose you accidentally include **STR** twice
 
@@ -342,7 +345,7 @@ modelsummary(lm(testscr~str+str,data=caschool))
 
 It occurs when one of the regressors is an exact linear function of the other regressors. - In the previous regression, $\beta_1$ is the effect on TestScore of a unit change in STR, holding STR constant (???) - We will return to perfect (and imperfect) multicollinearity shortly, with more examples... With these least squares assumptions in hand, we now can derive the sampling distribution of $\hat{\beta_1}, \dots,\hat{\beta_k}$
 
-## The Sampling Distribution of the OLS Estimator  {.smaller}
+## The Sampling Distribution of the OLS Estimator {.smaller}
 
 Under the four Least Squares Assumptions
 
@@ -354,7 +357,7 @@ Under the four Least Squares Assumptions
 
 -   These statements hold for $\hat{\beta_1},\dots,\hat{\beta_k}$ Conceptually, there is nothing new here
 
-## Multicollinearity, Perfect and Imperfect  {.smaller}
+## Multicollinearity, Perfect and Imperfect {.smaller}
 
 Perfect multicollinearity is when one of the regressors is an exact linear function of the other regressors.
 
@@ -384,7 +387,7 @@ Imperfect multicollinearity implies that one or more of the regression coefficie
 
 ## Hypothesis Testing and Confidence Intervals in Multiple Regressions
 
-## Joint Hypothesis Testing Using the F-Statistic  {.smallest}
+## Joint Hypothesis Testing Using the F-Statistic {.smallest}
 
 $\widehat{TestScore} = \underset{(15.21)}{649.58} -\underset{(0.48)}{0.29} \times size - \underset{(0.04)}{0.66} \times english + \underset{(1.41)}{3.87} \times expenditure.$
 
@@ -403,7 +406,7 @@ model <- lm(testscr ~ str + el_pct + meal_pct, data = caschool)
 linearHypothesis(model, c("str=0", "el_pct=0"))
 ```
 
-##  
+## 
 
 To test $\beta_2+\beta_3=1$ we can proceed as follows:
 
@@ -449,7 +452,7 @@ p2
 p3
 ```
 
-## Table 7.1 Regressions of Test Scores on Student-Teacher Ratio  {.scrollable}
+## Table 7.1 Regressions of Test Scores on Student-Teacher Ratio {.scrollable}
 
 ```{r}
 #| warning: false
