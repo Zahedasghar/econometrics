@@ -1,0 +1,36 @@
+---
+title: "QM4DE_ch8"
+format:
+  pdf: 
+    theme: [default, custom.scss]
+    code-link: true
+    code-fold: true
+editor: visual
+---
+
+## Quarto
+
+This is our first assignment in which we know nothing and trying to find out some easy way out and praying that our group partner does all the things for the whole group
+
+## Running Code
+
+To load stata data we need haven library and we are using tidyverse and modelsummary
+
+```{r}
+library(haven)
+cps12 <- read_dta("C:/Users/92300/Dropbox/Applied Econometrics SBP/Stock and Watson Data sets/SW_4E_AEE_Data/cps12.dta")
+library(tidyverse)
+library(modelsummary)
+```
+
+## Regression Models
+
+```{r}
+mod_8a<-lm(ahe~.,data=cps12)
+
+
+cps12<-cps12 %>% mutate(lnahe=log(ahe),lnage=log(age))
+mod_8b<-lm(ahe~age+female+bachelor,data=cps12)
+modelsummary(list(mod_8a,mod_8b))
+
+```

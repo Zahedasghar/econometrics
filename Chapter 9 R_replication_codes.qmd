@@ -1,0 +1,210 @@
+---
+title: "Chapter 9 R_replication_codes Nonlinear Regression"
+
+author: "Zahid Asghar"
+date: "`r Sys.Date()`"
+format:
+  html:
+    toc: true
+    code-fold: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Uploaded data and required R packages
+
+Data sets can be downloaded from [Stock and Watson](https://wps.pearsoned.com/aw_stock_ie_3/178/45691/11696965.cw/index.html). We are working here with California Test School data used in Chapter 4-9.  For further details, one may visit [Nishant Yonzan page](https://sites.google.com/view/nishantyonzan/home?authuser=0)
+
+```{r,  warning=FALSE,message=FALSE}
+library(tidyverse) ## Upload set of packages including dplyr and ggplot2
+
+
+library(haven) ## To read data from STATA/SPSS we use *haven* package
+library(tidyverse)
+caschool<- read_dta("caschool.dta")
+maschool <- read_dta("data/mcas.dta")
+
+```
+
+```{r}
+library(qwraps2) ## A collection of wrapper functions for reproducible reports
+options(dplyr.width = Inf) # to force R to print all values
+# CA school mean and sd
+ca_mean <-
+t(
+summarise(caschool,
+"Test Score" = mean(testscr),
+"Student-Teacher Ratio" = mean(str),
+"% English Learners" = mean(el_pct),
+"% Receiving Lunch Subsidy" = mean(meal_pct),
+"Average District Income ($)" = mean(avginc*1000),
+count=n()
+)
+)
+ca_sd <-
+t(
+summarise(caschool,
+"Test Score" = sd(testscr),
+"Student-Teacher Ratio" = sd(str),
+"% English Learners" = sd(el_pct),
+"% Receiving Lunch Subsidy" = sd(meal_pct),
+"Average District Income ($)" = sd(avginc*1000),
+count=n()
+))
+```
+
+
+```{r}
+# MA school mean and sd
+ma_mean <-
+t(
+summarise(maschool,
+"Test Score" = mean(totsc4),
+"Student-Teacher Ratio" = mean(tchratio),
+"% English Learners" = mean(pctel),
+"% Receiving Lunch Subsidy" = mean(lnch_pct),
+"Average District Income ($)" =
+mean(percap*1000),
+count=n()
+)
+)
+ma_sd <-
+t(
+summarise(maschool,
+"Test Score" = sd(totsc4),
+"Student-Teacher Ratio" = sd(tchratio),
+"% English Learners" = sd(pctel),
+"% Receiving Lunch Subsidy" = sd(lnch_pct),
+"Average District Income ($)" = sd(percap*1000),
+count=n()
+)
+)
+##Table using kable:
+library(knitr)
+library(kableExtra)
+##
+## Attaching package: 'kableExtra'
+## The following object is masked from 'package:dplyr':
+##
+## group_rows
+kable(
+cbind(ca_mean,ca_sd,ma_mean,ma_sd),
+align = "c",
+digits = 1,
+"html",
+booktabs = TRUE
+) %>%
+column_spec(
+2:5, width = "4em") %>%
+kable_styling(
+bootstrap_options = "striped", full_width = FALSE) %>%
+add_header_above(
+c(" ", "Average" = 1, "SD"=1, "Average" = 1, "SD" = 1)) %>%
+add_header_above(
+c(" " , "California" = 2, "Massachusetts" = 2)) %>%
+
+row_spec(5,hline_after = TRUE)
+```
+
+## Multiple Regression
+
+```{r}
+# load packages
+library(lmtest)
+library(sandwich)
+```
+
+Create binary variable for HiEL and also squares and cubes of _str_ variable.
+
+#### For CA
+```{r}
+caschool$hiel<-ifelse(caschool$el_pct>median(caschool$el_pct),1,0)
+caschool$str_squared=caschool$str^2
+caschool$str_cubed<-caschool$str^3
+caschool$inc_squared<-caschool$avginc^2
+caschool$inc_cubed<-caschool$avginc^3
+
+```
+
+#### For MA
+
+```{r}
+maschool$hiel = ifelse(maschool$pctel > median(maschool$pctel), 1, 0)
+maschool$str_squared = maschool$tchratio^2
+maschool$str_cubed = maschool$tchratio^3
+maschool$inc_squared = maschool$percap^2
+maschool$inc_cubed = maschool$percap^3
+```
+
+#### Changing names
+```{r}
+maschool$testscr = maschool$totsc4
+maschool$str = maschool$tchratio
+maschool$el_pct = maschool$pctel
+maschool$meal_pct = maschool$lnch_pct
+maschool$avginc = maschool$percap
+```
+
+## Regression
+
+#### Regression models for CA
+
+```{r}
+CA_mod3<-lm(testscr~str+el_pct+meal_pct+avginc+inc_squared+inc_cubed, data=caschool)
+CA_mod4<-lm(testscr~str+str_squared+str_cubed+el_pct+meal_pct+avginc+inc_squared+inc_cubed, data=caschool)
+CA_mod5 <- lm(
+testscr ~ str + meal_pct + hiel + hiel*str + avginc + inc_squared + inc_cubed,
+data = caschool
+)
+
+
+```
+
+#### Regression for MA
+
+```{r}
+
+MA_mod3 = lm(
+testscr ~ str + el_pct + meal_pct + avginc + inc_squared + inc_cubed,
+data = maschool
+)
+MA_mod4 = lm(
+testscr ~ str + str_squared + str_cubed + el_pct + meal_pct + avginc + inc_squared + inc_cubed,
+data = maschool
+)
+MA_mod5 = lm(
+testscr ~ str + meal_pct + hiel + hiel*str + avginc + inc_squared + inc_cubed,
+data = maschool
+)
+```
+
+```{r}
+library(huxtable)
+huxreg("CA(1)"=CA_mod3, "CA(2)"=CA_mod4, "CA(3)"=CA_mod5,
+"MA(1)"=MA_mod3, "MA(2)"=MA_mod4, "MA(3)"=MA_mod5,
+coefs = c('STR'='str', 'STR^2'='str_squared', 'STR^3'='str_cubed' ,
+'% English learners'='el_pct',
+'% Eligible for free lunch'='meal_pct',
+'HiEL (Binary, % English learners > median)'='hiel',
+'HiEL X STR'='str:hiel','District income'='avginc',
+'District income^2'='inc_squared', 'District income^3'='inc_cubed',
+'Intercept'='(Intercept)'),
+statistics = c('N' = 'nobs', 'R^2' = 'r.squared'),
+stars = c(`*` = 0.1, `**` = 0.05)
+)
+
+```
+
+```{r}
+library(stargazer)
+stargazer(CA_mod3, CA_mod4, CA_mod5,
+MA_mod3, MA_mod4, MA_mod5,
+dep.var.labels=c("California","Massachussets"),
+type = 'text', align = TRUE,
+          omit.stat=c("f", "ser"),
+          column.sep.width = "-15pt")
+
+```
+

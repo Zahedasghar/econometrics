@@ -6,7 +6,7 @@ toc: true
 sidebar: false
 page-layout: full
 format:
-  html: 
+  revealjs: 
     theme: [default, custom.scss]
     code-link: true
     code-fold: true   

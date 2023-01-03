@@ -1,0 +1,492 @@
+---
+format: 
+  revealjs:
+    self-contained: false
+    slide-number: c/t
+    width: 1600
+    height: 900
+    logo: "https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Flat.png"
+    footer: "[zahid asghar](https://zahidasghar.com/)"
+    theme: ["simple", "custom.scss"]
+    echo: true
+    multiplex: true
+    code-fold: true
+    chalkboard: true
+    execute:
+     freeze: auto  
+    title-slide-attributes:
+      data-background-color: "#447099"
+editor: source
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r include=FALSE}
+
+library(tidyverse)
+
+library(httr)
+clrs <- MetBrewer::met.brewer(name = "Java")
+clrs_lt <- colorspace::lighten(clrs, 0.9)
+knitr::opts_chunk$set(fig.retina = 3, collapse = TRUE)
+options(digits = 3, width = 75)
+```
+
+# Internal and external validity of <br> regression studies {background-color="`r clrs[3]`"}
+
+## Goal of this study
+
+-   [Internal versus External Validity]{.yellow}
+
+. . .
+
+-   Testing for Heteroskedasticity
+
+. . .
+
+> [A statistical analysis has internal validity if the statistical inference made about causal effects are valid for the considered population.]{.yellow}
+
+. . .
+
+> An analysis is said to have external validity if inferences and conclusion are valid for the studies' population and can be generalized to other populations and settings.
+
+## Internal and External Validity of Regression
+
+-   Internal validity is satisfied if the statistical inference about the causal effects are valid for the population being studied.
+-   [External validity would need the inferences and conclusions to be generalized from the population and setting studied to other populations and setting]{.yellow}
+-   Example: Think about the california test example.
+-   [Is the slope, $\beta$**str** , unbiased and consistent?]{.yellow}
+-   Is this a valid estimate for NY?, WV?, NM?,. . .
+
+## Threats to internal validity
+
+1.  **Omitted Variable Bias**
+
+2.  **Misspecification of Functional Form of Regression Model**
+
+3.  **Measurement Error**
+
+4.  **Missing Data and Sample Selection**
+
+5.  **Simultaneous Causality In each case, OLS assumption \[**$#1$**\]{yellow} is violated:** $E(u_i| X_{1i}, X_{2i}, \dots,X_{ki})\neq 0.$
+
+## Omitted variable bias
+
+-   **If you have the data for omitted variables:**
+    -   [Be specific about your coefficient of interest.]{.yellow}
+    -   Use a priori reason for adding variables.
+    -   [Use statistical tests for questionable variables (t and F).]{.yellow}
+    -   Provide all the potential specifications in tabular form.
+-   **What if you don't have the data:**
+    -   Panel data (next chapter)
+    -   [IV method (chapter 12)]{.yellow}
+    -   Randomized control experiments
+
+## Misspecification of Functional Form of Regression Model
+
+-   For continuous dependent variable: Use methods discussed in chapter 8 to modify functional forms.
+-   For discrete or binary dependent variable: Chapter 11 (we will get there. . . ).
+
+## 
+
+Lets our model is $Y_i = X_i^2$ but one uses $Y_i=\beta_0+\beta_1X_{1i}+u_i$
+
+::: panel-tabset
+## Code
+
+```{r}
+
+# set seed for reproducibility
+set.seed(5)
+library(tidyverse)
+# simulate data set
+X <- runif(100, -5, 5)
+Y <- X^2 + rnorm(100)
+df<-cbind(X,Y)
+df<-as.data.frame(df)
+```
+
+## Output
+
+```{r}
+#| eval: false
+# estimate the regression function
+ms_mod <- lm(Y ~ X)
+ms_mod
+
+```
+:::
+
+```{r}
+# set seed for reproducibility
+set.seed(5)
+library(tidyverse)
+# simulate data set
+X <- runif(100, -5, 5)
+Y <- X^2 + rnorm(100)
+df<-cbind(X,Y)
+df<-as.data.frame(df)
+# estimate the regression function
+ms_mod <- lm(Y ~ X)
+ms_mod
+
+```
+
+## Plot this linear fit
+
+```{r}
+ggplot(df)+aes(X,Y)+geom_point()+geom_smooth(method = "lm",se=FALSE)
+
+```
+
+## Measurement Error in $X$
+
+General regression model: $Y_i = \beta_0 + \beta_1X_{i} + u_{i}$ What you would like to measure is $X_i$, but what you do actually measure is $\overset{\sim}{X}_i$. Then the error is $X_i - \overset{\sim}{X}_i$
+
+-   Regression model with mesurement error $\overset{\sim}{X}_i$ instead of $X_i$ $\begin{align*} Y_i =& \, \beta_0 + \beta_1 \overset{\sim}{X}_i + \underbrace{\beta_1 (X_i - \overset{\sim}{X}_i) + u_i}_{=v_i} \\ Y_i =& \, \beta_0 + \beta_1 \overset{\sim}{X}_i + v_i \end{align*}$
+
+Rewrite $ν_i = \beta_1 (X_i - \overset{\sim}{X}_i)+u_i$
+
+## 
+
+$$\begin{align*}
+  Y_i =& \, \beta_0 + \beta_1 \overset{\sim}{X}_i + \underbrace{\beta_1 (X_i - \overset{\sim}{X}_i) + u_i}_{=v_i} \\
+  Y_i =& \, \beta_0 + \beta_1 \overset{\sim}{X}_i + v_i
+\end{align*}$$
+
+where here $\overset{\sim}{X}_i$ and $v_i$ are correlated resulting to slope coefficient $\hat{\beta_1}$ to be biased.
+
+## 
+
+The classical measurement error model assumes that the measurement error, $w_i$, has zero mean and that it is uncorrelated with the variable, $\overset{\sim}{X}_i$, and the error term of the population regression model, $u_i$: $\begin{equation} \overset{\sim}{X}_i = X_i + w_i, \ \ \rho_{w_i,u_i}=0, \ \ \rho_{w_i,X_i}=0 \end{equation}$ This holds $\begin{equation} \widehat{\beta}_1 \xrightarrow{p}{\frac{\sigma_{X}^2}{\sigma_{X}^2 + \sigma_{w}^2}} \beta_1 \tag{9.1} \end{equation}$
+
+## 
+
+$\sigma_{X}^2, \sigma_{w}^2 > 0$ so $\hat{\beta_1}$ smaller than 1.
+
+1.  If there is no measurement error, $\sigma_{w}^2=0$ such that $\widehat{\beta}_1 \xrightarrow{p}{\beta_1}$ .
+
+2.  If $\sigma_{w}^2 \gg \sigma_{X}^2$ we have $\widehat{\beta}_1 \xrightarrow{p}{0}$
+
+This is the case if the measurement error is so large that there essentially is no information on $X$ in the data that can be used to estimate $\beta$.
+
+## 
+
+$\begin{align} (X, Y) \sim \mathcal{N}\left[\begin{pmatrix}50\\ 100\end{pmatrix},\begin{pmatrix}10 & 5 \\ 5 & 10 \end{pmatrix}\right] \tag{9.3} \end{align}$
+
+$\begin{align*} Y_i =& \, 100 + 0.5 (X_i - 50) \\ =& \, 75 + 0.5 X_i. \tag{9.4} \end{align*}$
+
+$\overset{\sim}{X_i} = X_i + w_i$ $w_i \overset{i.i.d.}{\sim} \mathcal{N}(0,10)$ $w_i$ is independent of $x_i$.
+
+## 
+
+```{r}
+# set seed
+set.seed(1)
+
+# load the package 'mvtnorm' and simulate bivariate normal data
+library(mvtnorm)
+dat <- data.frame(
+  rmvnorm(1000, c(50, 100), 
+          sigma = cbind(c(10, 5), c(5, 10))))
+
+# set columns names
+colnames(dat) <- c("X", "Y")
+
+```
+
+##  Plots
+
+```{r}
+# estimate the model (without measurement error)
+noerror_mod <- lm(Y ~ X, data = dat)
+
+# estimate the model (with measurement error in X)
+dat$X <- dat$X + rnorm(n = 1000, sd = sqrt(10))
+error_mod <- lm(Y ~ X, data = dat)
+
+# print estimated coefficients to console
+noerror_mod$coefficients
+error_mod$coefficients
+```
+
+
+
+```{r}
+#| echo: false
+# plot sample data
+plot(dat$X, dat$Y, 
+     pch = 20, 
+     col = "steelblue",
+     xlab = "X",
+     ylab = "Y")
+
+# add population regression function
+abline(coef = c(75, 0.5), 
+       col = "darkgreen",
+       lwd  = 1.5)
+
+# add estimated regression functions
+abline(noerror_mod, 
+       col = "purple",
+       lwd  = 1.5)
+
+abline(error_mod, 
+       col = "darkred",
+       lwd  = 1.5)
+# add legend
+legend("topleft",
+       bg = "transparent",
+       cex = 0.8,
+       lty = 1,
+       col = c("darkgreen", "purple", "darkred"), 
+       legend = c("Population", "No Errors", "Errors"))
+
+```
+
+## plot in ggplot2
+
+```{r}
+
+
+# estimate the model (with measurement error in X)
+dat$X1 <- dat$X + rnorm(n = 1000, sd = sqrt(10))
+error_mod <- lm(Y ~ X, data = dat)
+ggplot(dat)+aes(X,Y)+geom_smooth(aes(X, Y), data = dat, 
+              method = "lm", se = FALSE, color = "red") +
+  geom_smooth(aes(X1, Y), data = dat, 
+              method = "lm", se = FALSE, color = "blue") +
+  geom_point()
+
+```
+
+## Missing Data and Sample Selection
+
+1.  **Missing at random: There is no bias, but it reduces our sample size.**
+2.  [**Missing regressor values: Same as above.**]{.yellow}
+3.  **Missing $Y$ due to selection process (sample selection bias): For example of this type of bias, think about why older, say, baseball players are on average better than younger ones.**
+
+# 4. Sample Selection Bias
+
+## 5. Simultaneous Causality
+
+Simultaneous Causality Bias So far we have assumed that the changes in the independent variable $X$ are responsible for changes in the dependent variable $Y$ . When the reverse is also true, we say that there is simultaneous causality between $X$ and $Y$ . This reverse causality leads to correlation between $X$ and the error in the population regression of interest such that the coefficient on $X$ is estimated with bias.
+
+# Summary {background-color="`r clrs[2]`"}
+
+## Threats to Internal Validity of a Regression Study
+
+The five primary threats to internal validity of a multiple regression study are:
+
+-   Omitted variables
+
+-   Misspecification of functional form
+
+-   Errors in variables (measurement errors in the regressors)
+
+-   Sample selection
+
+-   Simultaneous causality
+
+All these threats lead to failure of the first least squares assumption $E(u_i\vert X_{1i},\dots ,X_{ki}) \neq 0$
+
+so that the OLS estimator is biased and inconsistent.
+
+Furthermore, if one does not adjust for heteroskedasticity and/or serial correlation, incorrect standard errors may be a threat to internal validity of the study.
+
+## Uploaded data and required R packages
+
+Data sets can be downloaded from [Stock and Watson](https://wps.pearsoned.com/aw_stock_ie_3/178/45691/11696965.cw/index.html). We are working here with California Test School data used in Chapter 4-9.  For further details, one may visit [Nishant Yonzan page](https://sites.google.com/view/nishantyonzan/home?authuser=0)
+
+```{r,  warning=FALSE,message=FALSE}
+library(haven) ## To read data from STATA/SPSS we use *haven* package
+
+caschool<- read_dta("data/caschool.dta")
+maschool <- read_dta("data/mcas.dta")
+
+```
+
+```{r}
+library(qwraps2) ## A collection of wrapper functions for reproducible reports
+options(dplyr.width = Inf) # to force R to print all values
+# CA school mean and sd
+ca_mean <-
+t(
+summarise(caschool,
+"Test Score" = mean(testscr),
+"Student-Teacher Ratio" = mean(str),
+"% English Learners" = mean(el_pct),
+"% Receiving Lunch Subsidy" = mean(meal_pct),
+"Average District Income ($)" = mean(avginc*1000),
+count=n()
+)
+)
+ca_sd <-
+t(
+summarise(caschool,
+"Test Score" = sd(testscr),
+"Student-Teacher Ratio" = sd(str),
+"% English Learners" = sd(el_pct),
+"% Receiving Lunch Subsidy" = sd(meal_pct),
+"Average District Income ($)" = sd(avginc*1000),
+count=n()
+))
+```
+
+
+```{r}
+# MA school mean and sd
+ma_mean <-
+t(
+summarise(maschool,
+"Test Score" = mean(totsc4),
+"Student-Teacher Ratio" = mean(tchratio),
+"% English Learners" = mean(pctel),
+"% Receiving Lunch Subsidy" = mean(lnch_pct),
+"Average District Income ($)" =
+mean(percap*1000),
+count=n()
+)
+)
+ma_sd <-
+t(
+summarise(maschool,
+"Test Score" = sd(totsc4),
+"Student-Teacher Ratio" = sd(tchratio),
+"% English Learners" = sd(pctel),
+"% Receiving Lunch Subsidy" = sd(lnch_pct),
+"Average District Income ($)" = sd(percap*1000),
+count=n()
+)
+)
+##Table using kable:
+library(knitr)
+library(kableExtra)
+##
+## Attaching package: 'kableExtra'
+## The following object is masked from 'package:dplyr':
+##
+## group_rows
+kable(
+cbind(ca_mean,ca_sd,ma_mean,ma_sd),
+align = "c",
+digits = 1,
+"html",
+booktabs = TRUE
+) %>%
+column_spec(
+2:5, width = "4em") %>%
+kable_styling(
+bootstrap_options = "striped", full_width = FALSE) %>%
+add_header_above(
+c(" ", "Average" = 1, "SD"=1, "Average" = 1, "SD" = 1)) %>%
+add_header_above(
+c(" " , "California" = 2, "Massachusetts" = 2)) %>%
+
+row_spec(5,hline_after = TRUE)
+```
+
+## Multiple Regression
+
+```{r}
+# load packages
+library(lmtest)
+library(sandwich)
+```
+
+Create binary variable for HiEL and also squares and cubes of _str_ variable.
+
+#### For CA
+```{r}
+caschool$hiel<-ifelse(caschool$el_pct>median(caschool$el_pct),1,0)
+caschool$str_squared=caschool$str^2
+caschool$str_cubed<-caschool$str^3
+caschool$inc_squared<-caschool$avginc^2
+caschool$inc_cubed<-caschool$avginc^3
+
+```
+
+#### For MA
+
+```{r}
+maschool$hiel = ifelse(maschool$pctel > median(maschool$pctel), 1, 0)
+maschool$str_squared = maschool$tchratio^2
+maschool$str_cubed = maschool$tchratio^3
+maschool$inc_squared = maschool$percap^2
+maschool$inc_cubed = maschool$percap^3
+```
+
+#### Changing names
+```{r}
+maschool$testscr = maschool$totsc4
+maschool$str = maschool$tchratio
+maschool$el_pct = maschool$pctel
+maschool$meal_pct = maschool$lnch_pct
+maschool$avginc = maschool$percap
+```
+
+## Regression
+
+#### Regression models for CA
+
+```{r}
+CA_mod3<-lm(testscr~str+el_pct+meal_pct+avginc+inc_squared+inc_cubed, data=caschool)
+CA_mod4<-lm(testscr~str+str_squared+str_cubed+el_pct+meal_pct+avginc+inc_squared+inc_cubed, data=caschool)
+CA_mod5 <- lm(
+testscr ~ str + meal_pct + hiel + hiel*str + avginc + inc_squared + inc_cubed,
+data = caschool
+)
+
+
+```
+
+#### Regression for MA
+
+```{r}
+
+MA_mod3 = lm(
+testscr ~ str + el_pct + meal_pct + avginc + inc_squared + inc_cubed,
+data = maschool
+)
+MA_mod4 = lm(
+testscr ~ str + str_squared + str_cubed + el_pct + meal_pct + avginc + inc_squared + inc_cubed,
+data = maschool
+)
+MA_mod5 = lm(
+testscr ~ str + meal_pct + hiel + hiel*str + avginc + inc_squared + inc_cubed,
+data = maschool
+)
+```
+
+## Comparison{.scroll}
+
+```{r}
+
+library(huxtable)
+CA_MA<-huxreg("CA(1)"=CA_mod3, "CA(2)"=CA_mod4, "CA(3)"=CA_mod5,
+"MA(1)"=MA_mod3, "MA(2)"=MA_mod4, "MA(3)"=MA_mod5,
+coefs = c('STR'='str', 'STR^2'='str_squared', 'STR^3'='str_cubed' ,
+'% English learners'='el_pct',
+'% Eligible for free lunch'='meal_pct',
+'HiEL (Binary, % English learners > median)'='hiel',
+'HiEL X STR'='str:hiel','District income'='avginc',
+'District income^2'='inc_squared', 'District income^3'='inc_cubed',
+'Intercept'='(Intercept)'),
+statistics = c('N' = 'nobs', 'R^2' = 'r.squared'),
+stars = c(`*` = 0.1, `**` = 0.05)
+)
+
+```
+
+## {.scrollable}
+:::{.r-fit-text}
+```{r}
+#| code-fold: false 
+CA_MA
+```
+:::
+

@@ -1,0 +1,620 @@
+---
+title: "Panel Regression: Fixed Effect and Demeaned Regressioin"
+author: "Zahid Asghar<br><br> School of Economics, QAU, Islamabad"
+date: today
+format: 
+  revealjs:
+    self-contained: false
+    slide-number: c/t
+    width: 1600
+    height: 900
+    logo: "https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Flat.png"
+    footer: "[Zahid Asghar](https://zahidasghar.com/econometrics/Panel_reg)"
+    theme: ["simple", "custom.scss"]
+    echo: true
+    multiplex: true
+    code-link: true
+    title-slide-attributes:
+      data-background-color: "#447099"
+editor: source
+---
+
+```{r include=FALSE}
+library(tidyverse)
+library(httr)
+clrs <- MetBrewer::met.brewer(name = "Java")
+clrs_lt <- colorspace::lighten(clrs, 0.9)
+knitr::opts_chunk$set(fig.retina = 3, collapse = TRUE)
+options(digits = 3, width = 75)
+```
+
+## Panel Data Regression
+
+A *panel dataset* contains observations on multiple entities (individuals), where each entity is observed at two or more points in time.
+
+Hypothetical examples:
+
+-   Data on 50 districts in 2010 floods and again in 2022, for 100 observations total.
+
+-   Data on 100 SMES, each SME is observed in 3 years, for a total of 150 observations.
+
+-   Data on 1000 individuals, in four different months, for 4000 observations total.
+
+## Notations for Panel Data
+
+A double subscript distinguishes entities (states) and time periods (years)
+
+$i$ = entity (state), $n$ = number of entities, so $i = 1,\dots,n$
+
+$t$ = time period (year), $T$ = number of time periods so $t =1,\dots,T$
+
+Data: Suppose we have 1 regressor. The data are:
+
+$(X_{it}, Y_{i}t), i = 1,\dots,n,\ t = 1,…,T$
+
+Panel data with $K$ regressors $(X_{1it},X_{2it},\dots,X_{kit} Y_{i}t), i = 1,\dots,n,\ t = 1,…,T$ $n$ = number of entities (states) $T$ = number of time periods (years) Also called **longitudinal data**
+
+## Why are panel data useful?
+
+With panel data we can control for factors that: - Vary across entities (states) but do not vary over time - Could cause omitted variable bias if they are omitted - are unobserved or unmeasured -- and therefore cannot be included in the regression using multiple regression
+
+Here's the key idea: \> If an omitted variable does not change over time, then any changes in Y over time cannot be caused by the omitted variable.
+
+## Example of a panel data set
+
+Observational unit: a year in a U.S. state - 48 U.S. states, so $n$ = \# of entities = 48 - 7 years (1982,..., 1988), so $T$ = \# of time periods = 7 - Balanced panel, so total \# observations = $7\times48$ = 336 Variables: - Traffic fatality rate (# traffic deaths in that state in that year, per 10,000 state residents) - Tax on a case of beer - Other (legal driving age, drunk driving laws, etc.)
+
+## An overview of data {.scrollable}
+
+```{r}
+#| echo: false
+#| warning: false
+library(tidyverse)
+library(sandwich)
+library(survival)
+library(AER)
+data("Fatalities")
+## Read fatalities data
+fatalities<-as.data.frame(Fatalities)
+## Inspect data
+glimpse(fatalities)
+
+```
+
+## 
+
+A large number of variables and 336 total observations. We need to select only a few variables required in doing this exercise.
+
+```{r}
+## Summarise the variable state and year
+fatalities %>% select(state,year) %>% 
+  group_by(year) %>% 
+  summarise(count=n())
+
+## Traffic Deaths and Alcohal Taxes
+# define the fatality rate
+df <-fatalities %>% mutate(fatal_rate=fatal/pop*10000)
+
+# subset the data
+
+Fatalities1982 <- df %>% filter(year=="1982")
+
+Fatalities1988 <- df %>% filter(year=="1988")
+
+```
+
+## U.S traffic death data for 1982
+
+```{r}
+ggplot(Fatalities1982)+aes(x= beertax,y=fatal_rate)+geom_point()+geom_smooth(method = "lm", se=FALSE)+labs(x="Beer Tax \n(Dollars per case 1988)",y="Fatality Rate \n Fatalities per 10000", title="US traffice death for 1982")
+```
+
+## U.S traffic death data for 1988
+
+```{r}
+ggplot(Fatalities1988)+aes(x= beertax,y=fatal_rate)+geom_point()+geom_smooth(method = "lm", se=FALSE)+labs(x="Beer Tax \n(Dollars per case 1988)",y="Fatality Rate \n Fatalities per 10000", title="US traffice death for 1988")
+```
+
+## Regression line
+
+```{r}
+# estimate simple regression models using 1982 and 1988 data
+fatal1982_mod <- lm(fatal_rate ~ beertax, data = Fatalities1982)
+fatal1988_mod <- lm(fatal_rate ~ beertax, data = Fatalities1988)
+
+```
+
+$\widehat{FatalityRate}= 2.01 + 0.15beertax$
+
+$\widehat{FatalityRate}= 1.86 + 0.43beertax$
+
+**High alcohal tax, more deaths** :smiley:
+
+## Why might there be higher more traffic deaths in states that have higher alcohol taxes?
+
+Other factors that determine traffic fatality rate: - Quality (age) of automobiles - Quality of roads - "Culture" around drinking and driving - Density of cars on the road
+
+## These omitted variables could cause omitted variable bias
+
+Example #1: traffic density. Suppose:
+
+1.  High traffic density means more traffic deaths
+
+2.  (Western) states with lower traffic density have lower alcohol taxes
+
+Then the two conditions for omitted variable bias are satisfied.
+
+-   Specifically, "high taxes" could reflect "high traffic density" (so the OLS coefficient would be biased positively -- high taxes, more deaths)
+-   Panel data lets us eliminate omitted variable bias when the omitted variables are constant over time within a given state.
+
+## Cultural attitude towards driving and drinking
+
+1.  arguably are a determinant of traffic deaths; and
+2.  potentially are correlated with the beer tax, so beer taxes could be picking up cultural differences (omitted variable bias).
+
+-   Then the two conditions for omitted variable bias are satisfied. Specifically, "high taxes" could reflect "cultural attitudes towards drinking" (so the OLS coefficient would be biased)
+-   Panel data lets us eliminate omitted variable bias when the omitted variables are constant over time within a given state.
+
+## Panel Data with Two Time Periods
+
+Consider the panel data model: $\widehat{FatalityRate_{it}} = \beta_0 + \beta_1 BeerTax_{it} + \beta_2Zi + u_{it}$
+
+$Z_i$ is a factor that does not change over time (density), at least during the years on which we have data. • Suppose $Z_i$ is not observed, so its omission could result in omitted variable bias. • The effect of $Z_i$ can be eliminated using $T = 2$ years.
+
+## 
+
+The key idea:\
+Any change in the fatality rate from 1982 to 1988 cannot be caused by $Z_i$, because $Z_i$ (by assumption) does not change between 1982 and 1988.
+
+The math: consider fatality rates in 1988 and 1982: $FatalityRate_{i1988} = \beta_0 + \beta_1 BeerTax_{it} + \beta_2Zi + u_{i1988}$ $FatalityRate_{i1982} = \beta_0 + \beta_1 BeerTax_{it} + \beta_2Zi + u_{i1982}$
+
+Suppose $E{(u_{it}}{/BeerTax_{it},Z_i})=0$ E(uit\|BeerTaxit, Zi) = 0.
+
+Subtracting 1988 -- 1982 (that is, calculating the change), eliminates the effect of $Z_i\dots$
+
+## 
+
+$FatalityRate_{i1988} = \beta_0 + \beta_1 BeerTax_{it} + \beta_2Zi + u_{i1988}$ $FatalityRate_{i1982} = \beta_0 + \beta_1 BeerTax_{it} + \beta_2Zi + u_{i1982}$
+
+so $FatalityRate_{i1988} – FatalityRate_{i1982}=\\\beta_1(BeerTaxi1988 – BeerTaxi1982) + (u_{i1988} – u_{i1982})$
+
+• The new error term, $(u_{i1988} – u_{i1982})$, is uncorrelated with either $FatalityRate_{i1988}$ or $FatalityRate_{i1982}$ • This "difference" equation can be estimated by OLS, even though $Z_i$ isn't observed. • The omitted variable $Z_i$ doesn't change, so it cannot be a determinant of the change in $Y$
+
+## 
+
+1982 data
+
+$\widehat{FatalityRate}= 2.01 + 0.15beertax \ n=48$
+
+1988 data
+
+$\widehat{FatalityRate}= 1.86 + 0.43beertax \ n=48$
+
+Difference regression
+
+$\widehat{FatalityRate_{i1988} - FatalityRate_{i1982}} =\\ -\underset{(0.065)}{0.072} -\underset{(0.36)}{1.04} \times (BeerTax_{i1988}-BeerTax_{i1982}).$
+
+## 
+
+```{r}
+##Panel Data for two years
+# compute the differences 
+diff_fatal_rate <- Fatalities1988$fatal_rate - Fatalities1982$fatal_rate
+diff_beertax <- Fatalities1988$beertax - Fatalities1982$beertax
+
+# estimate a regression using differenced data
+fatal_diff_mod <- lm(diff_fatal_rate ~ diff_beertax)
+
+coeftest(fatal_diff_mod, vcov = vcovHC, type = "HC1")
+```
+
+## 
+
+```{r}
+df2<-cbind(diff_fatal_rate,diff_beertax)
+
+df2<-as.data.frame(df2)
+## Plot
+p2<-ggplot(df2)+aes(x=diff_fatal_rate,y=diff_beertax)+geom_point()+
+  geom_smooth(method = "lm",se=FALSE)
+
+```
+
+##
+
+```{r}
+
+p2+labs(x = "Change in beer tax (in 1988 dollars)",
+        y = "Change in fatality rate (fatalities per 10000)")+ggtitle("Changes in Traffic Fatality Rates and Beer Taxes in 1982-1988")
+
+
+
+```
+
+## Fixed Effects Regression
+
+What if you have more than 2 time periods $(T > 2)?$
+
+$Y_{it} = \beta_0 + \beta_1 X_{it} + \beta_2Z_{i} + u_{it}, i =1,\dots,n, T = 1,\dots,T$
+
+We can rewrite this in two useful ways: 1. "$n-1$ binary regressor" regression model 2. "Fixed Effects" regression model
+
+We first rewrite this in "fixed effects" form. Suppose we have $n = 3$ states: California, Texas, Massachusetts.
+
+## 
+
+$Y_{it} = \beta_0 + \beta_1 X_{it} + \beta_2Z_{i} + u_{it}, i =1,\dots,n, T = 1,\dots,T$
+
+Population regression for California (that is, $i = CA$): $Y_{CA,t} = \beta_0 + \beta_1X_{CA,t} + \beta_2Z_{CA} + u_{CA,t}\\ = (\beta_0 + \beta_2Z_{CA}) + \beta_1X_{CA,t} + u_{CA,t}$ or $Y_{CA,t} = \alpha + \beta_1X_{CA,t} + u_{CA,t}$
+
+• $\alpha_{CA} = \beta_0 + \beta_1Z_{CA}$ doesn't change over time • $\alpha_{CA}$ is the intercept for CA, and $\beta_1$ is the slope • The intercept is unique to CA, but the slope is the same in all the states: parallel lines.
+
+## 
+
+$Y_{it} = \beta_0 + \beta_1 X_{it} + \beta_2Z_{i} + u_{it}, i =1,\dots,n, T = 1,\dots,T$
+
+Population regression for Texax (that is, $i = TX$): $Y_{TX,t} = \beta_0 + \beta_1X_{TX,t} + \beta_2Z_{TX} + u_{TX,t}\\ = (\beta_0 + \beta_2Z_{TX}) + \beta_1X_{TX,t} + u_{TX,t}$ or $Y_{TX,t} = \alpha + \beta_1X_{TX,t} + u_{TX,t}$
+
+Collecting the like terms
+
+$Y_{CA,t} = \alpha + \beta_1X_{CA,t} + u_{CA,t}$
+
+$Y_{TX,t} = \alpha + \beta_1X_{TX,t} + u_{TX,t}$
+
+$Y_{MA,t} = \alpha + \beta_1X_{MA,t} + u_{MA,t}$
+
+or $Y_{it} = \alpha_{i} + \beta_1 X_{it} + u_{it}, i =CA,TX,MA, T = 1,\dots,T$
+
+## Regression equation for three states
+
+![](fixed_effect.png) In binary regressor form: $Y_{it} = \beta_0 + \gamma CADCAi + \gamma TXDTXi + \beta_1X_{it} + u_{it}$ • $DCA_{i} = 1$ if state is $CA, = 0$ otherwise • $DTX_{t} = 1$ if state is $TX, = 0$ otherwise • leave out $DMA_{i}$ (why?)
+
+## The Fixed Effects Regression Model
+
+The fixed effect model is $\begin{align} Y_{it} = \beta_1 X_{1,it} + \cdots + \beta_k X_{k,it} + \alpha_i + u_{it} \tag{10.3} \end{align}$ with $i=1,\dots,n$ and $t=1,\dots,T$ . The $\alpha_i$ are entity-specific intercepts that capture heterogeneities across entities. An equivalent representation of this model is given by $\begin{align} Y_{it} = \beta_0 + \beta_1 X_{1,it} + \cdots + \beta_k X_{k,it} + \gamma_2 D2_i + \gamma_3 D3_i + \cdots + \gamma_n Dn_i + u_{it} \tag{10.4} \end{align}$\
+where the $D2_i,D3_i,\dots,Dn_i$ are dummy variables.
+
+## Summary: Two ways to write the fixed effects model "n-1 binary regressor" form
+
+$Y_{it} = \beta_0 + \beta_1 X_{1,it} + \gamma_2 D2_i + \gamma_3 D3_i + \cdots + \gamma_n Dn_i + u_{it}$
+
+where $D2i =1$ if $i=2$ $=0$ otherwise , etc.
+
+"Fixed effects" form: $Y_{it} = \beta_1X_{it} + \alpha_i + u_{it}$
+
+• $\alpha_i$ is called a "state fixed effect" or "state effect" -- it is the constant (fixed) effect of being in state $i$.
+
+## Fixed Effects Regression: Estimation
+
+Three estimation methods: 1. "n-1 binary regressors" OLS regression 2. "Entity-demeaned" OLS regression 3. "Changes" specification, without an intercept (only works for T = 2)
+
+• These three methods produce identical estimates of the regression coefficients, and identical standard errors. • We already did the "changes" specification (1988 minus 1982) -- but this only works for T = 2 years • Methods #1 and #2 work for general T • Method #1 is only practical when n isn't too big
+
+## 1. "n-1 binary regressors" OLS regression
+
+$Y_{it} = \beta_0 + \beta_1 X_{1,it} + \gamma_2 D2_i + \gamma_3 D3_i + \cdots + \gamma_n Dn_i + u_{it}$
+
+where $D2i =1$ if $i=2$ $=0$ otherwise , - First create the binary variables D2i,...,Dni - Then estimate (1) by OLS - Inference (hypothesis tests, confidence intervals) is as usual (using heteroskedasticity-robust standard errors) - This is impractical when n is very large (for example if n = 1000 workers)
+
+## 2. "Entity-demeaned" OLS regression
+
+$$\begin{align*}
+\frac{1}{n} \sum_{i=1}^n Y_{it} =& \, \beta_1 \frac{1}{n} \sum_{i=1}^n X_{it} + \frac{1}{n} \sum_{i=1}^n a_i + \frac{1}{n} \sum_{i=1}^n u_{it} \\
+\overline{Y} =& \, \beta_1 \overline{X}_i + \alpha_i + \overline{u}_i. 
+\end{align*}$$ Subtracting from 10.1 yields $$\begin{align}
+\begin{split}
+Y_{it} - \overline{Y}_i =& \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \overline{u}_i) \\
+\overset{\sim}{Y}_{it} =& \, \beta_1 \overset{\sim}{X}_{it} + \overset{\sim}{u}_{it}. 
+\end{split} \tag{10.5}
+\end{align}$$
+
+In this model, the OLS estimate of the parameter of interest $\beta_1$ is equal to the estimate obtained using (10.2) --- without the need to estimate $n-1$ dummies and an intercept.
+
+# Application to traffic deaths
+
+## Panel Data for two years
+
+```{r}
+# compute the differences 
+diff_fatal_rate <- Fatalities1988$fatal_rate - Fatalities1982$fatal_rate
+diff_beertax <- Fatalities1988$beertax - Fatalities1982$beertax
+
+# estimate a regression using differenced data
+fatal_diff_mod <- lm(diff_fatal_rate ~ diff_beertax)
+
+coeftest(fatal_diff_mod, vcov = vcovHC, type = "HC1")
+```
+
+## 
+
+```{r}
+df2<-cbind(diff_fatal_rate,diff_beertax)
+
+df2<-as.data.frame(df2)
+## Plot
+p2<-ggplot(df2)+aes(x=diff_fatal_rate,y=diff_beertax)+geom_point()+
+  geom_smooth(method = "lm",se=FALSE)
+p2+labs(x = "Change in beer tax (in 1988 dollars)",
+        y = "Change in fatality rate (fatalities per 10000)")+ggtitle("Changes in Traffic Fatality Rates and Beer Taxes in 1982-1988")
+```
+
+## compute mean fatality rate over all states for all time periods
+
+```{r}
+df %>% group_by(year) %>% 
+  summarise(mean=mean(fatal_rate))
+
+mean(df$fatal_rate)
+df %>% select(fatal_rate) %>% 
+  summarise(mean=mean(fatal_rate))
+```
+
+## 
+
+$\begin{align} FatalityRate_{it} = \beta_1 BeerTax_{it} + StateFixedEffects\\ + u_{it}, \tag{10.6} \end{align}$
+
+```{r}
+
+fatal_fe_lm_mod <- lm(fatal_rate ~ beertax + state - 1, data = df)
+fatal_fe_lm_mod
+
+```
+
+## Demeaned Regressioin
+
+$\overset{\sim}{FatalityRate} = \beta_1 \overset{\sim}{BeerTax}_{it} + u_{it}.$
+
+```{r}
+# obtain demeaned data
+Fatalities_demeaned <- with(df,
+            data.frame(fatal_rate = fatal_rate - ave(fatal_rate, state),
+            beertax = beertax - ave(beertax, state)))
+
+# estimate the regression
+summary(lm(fatal_rate ~ beertax - 1, data = Fatalities_demeaned))
+
+```
+
+## Use plm
+
+Alternatively use `plm` package
+
+```{r}
+library(plm)
+# estimate the fixed effects regression with plm()
+fatal_fe_mod <- plm(fatal_rate ~ beertax, 
+                    data = df,
+                    index = c("state", "year"), 
+                    model = "within")
+
+# print summary using robust standard errors
+coeftest(fatal_fe_mod, vcov. = vcovHC, type = "HC1")
+```
+
+## 
+
+$\begin{align} \widehat{FatalityRate} = -\underset{(0.29)}{0.66} \times BeerTax + \\ StateFixedEffects. \tag{10.7} \end{align}$
+
+The coefficient on \$BeerTax \$ is negative and significant. The interpretation is that the estimated reduction in traffic fatalities due to an increase in the real beer tax by $1\$$ is $0.66$ per $10,000$ people, which is still pretty high.
+
+## Regression with Time Fixed Effect
+
+$Y_{it} = \beta_0 + \beta_1 X_{it} + \delta_2 B2_t + \cdots\\ + \delta_T BT_t + u_{it},$ where $T-1$ are binary variables ($B_1$ is ommited) *The entity time fixed effect* is $Y_{it} = \beta_0 + \beta_1 X_{it} + \gamma_2 D2_i + \cdots \\ + \gamma_n DT_i + \delta_2 B2_t + \cdots + \delta_T BT_t + u_{it} .$
+
+$FatalityRate_{it} = \beta_1 BeerTax_{it} + StateEffects + \\TimeFixedEffects + u_{it}$
+
+## 
+
+```{r}
+# estimate a combined time and entity fixed effects regression model
+
+# via lm()
+fatal_tefe_lm_mod <- lm(fatal_rate ~ beertax + state + year - 1, data = df)
+fatal_tefe_lm_mod
+
+```
+
+## Via plm
+
+```{r}
+# via plm()
+fatal_tefe_mod <- plm(fatal_rate ~ beertax, 
+                      data = df,
+                      index = c("state", "year"), 
+                      model = "within", 
+                      effect = "twoways")
+
+coeftest(fatal_tefe_mod, vcov = vcovHC, type = "HC1")
+```
+
+**state** and **year** are the **class** factors:
+
+```{r}
+# check the class of 'state' and 'year'
+class(Fatalities$state)
+#> [1] "factor"
+class(Fatalities$year)
+#> [1] "factor"
+
+```
+
+$\begin{align} \widehat{FatalityRate} = -\underset{(0.35)}{0.64} \times BeerTax + StateEffects + TimeFixedEffects. \tag{10.8} \end{align}$
+
+## The Fixed Effects Regression Assumptions
+
+In the fixed effects model $Y_{it} = \beta_1 X_{it} + \alpha_i + u_{it} \ \ , \ \ i=1,\dots,n, \ t=1,\dots,T,$ we assume the following: 1. The error term $u_{it}$ has conditional mean zero, that is, $E(u_{it}|X_{i1}, X_{i2},\dots, X_{iT})$. 2. $(X_{i1}, X_{i2}, \dots, X_{i3}, u_{i1}, \dots, u_{iT})$ are i.i.d draw from their distributions. 3. Large outliers are unlikely, i.e., $(u_{it},x_{it})$ have nonzero finite fourth moments. 4. There is no perfect multicollinearity. When there are multiple regressors, $x_{it}$ is replaced with $X_{1,it}, X_{2,it}, \dots, X_{k,it}$.
+
+## 
+
+discretize the minimum legal drinking age
+
+```{r}
+df$drinkagec <- cut(df$drinkage,
+                            breaks = 18:22, 
+                            include.lowest = TRUE, 
+                            right = FALSE)
+
+# set minimum drinking age [21, 22] to be the baseline level
+df$drinkagec <- relevel(df$drinkagec, "[21,22]")
+
+# mandadory jail or community service?
+df$punish <- with(df, factor(jail == "yes" | service == "yes", 
+                                             labels = c("no", "yes")))
+
+```
+
+## estimate all seven models
+
+```{r}
+Fatalities_1982_1988 <- df[with(df, year == 1982 | year == 1988),]
+models<-list(fatalities_mod1 <- lm(fatal_rate ~ beertax, data = df),
+
+fatalities_mod2 <- plm(fatal_rate ~ beertax + state, data = df),
+
+fatalities_mod3 <- plm(fatal_rate ~ beertax + state + year,
+                       index = c("state","year"),
+                       model = "within",
+                       effect = "twoways", 
+                       data = df),
+
+fatalities_mod4 <- plm(fatal_rate ~ beertax + state + year + drinkagec 
+                       + punish + miles + unemp + log(income), 
+                       index = c("state", "year"),
+                       model = "within",
+                       effect = "twoways",
+                       data = df),
+
+fatalities_mod5 <- plm(fatal_rate ~ beertax + state + year + drinkagec 
+                       + punish + miles,
+                       index = c("state", "year"),
+                       model = "within",
+                       effect = "twoways",
+                       data = df),
+
+fatalities_mod6 <- plm(fatal_rate ~ beertax + year + drinkage 
+                       + punish + miles + unemp + log(income), 
+                       index = c("state", "year"),
+                       model = "within",
+                       effect = "twoways",
+                       data = df),
+## the set of observations on all variables for 1982 and 1988
+fatalities_mod7 <- plm(fatal_rate ~ beertax + state + year + drinkagec 
+                       + punish + miles + unemp + log(income), 
+                       index = c("state", "year"),
+                       model = "within",
+                       effect = "twoways",
+                       data = Fatalities_1982_1988))
+
+
+
+##We again use stargazer() (Hlavac, 2018) to generate a comprehensive tabular presentation of the results.
+
+library(stargazer)
+library(sjPlot)
+library(sjmisc)
+library(sjlabelled)
+library(modelsummary)
+modelsummary(models,fmt=3,vcov = "robust",estimate = "{estimate}{stars}",
+             gof_omit = ".*",output = "gt")
+
+```
+
+# [Wage data Woolridge book](https://tyleransom.github.io/teaching/MetricsLabs/lab15.html)
+
+```{r}
+library(tidyverse)
+library(wooldridge)
+library(broom)
+library(magrittr)
+library(clubSandwich)
+library(modelsummary)
+library(estimatr)
+library(plm)   # You may need to install this package
+
+```
+
+## Load the data
+
+Load the data Our data set will be a panel of wages for 545 men. Load the data from the wooldridge package, format year to be a factor, and rename the variable nr to something more descriptive (id):
+
+```{r}
+df <- as_tibble(wagepan)
+df %<>% mutate(year=as.factor(year))
+df %<>% rename(id = nr)
+```
+
+## Summary Statistics with Panel Data
+
+```{r}
+df.within <- df %>% select(id,year,educ,married,union,rur) %>% 
+             group_by(id) %>% 
+             summarize(
+                 mean.edu = mean(educ),
+                 var.edu  = var(educ),
+                mean.marr = mean(married),
+                 var.marr = var(married),
+               mean.union = mean(union),
+                var.union = var(union),
+               mean.rural = mean(rur),
+                var.rural = var(rur)
+             )
+df.within %>% datasummary_skim() 
+```
+
+## 
+
+Is there any within-person variance in the educ variable? What about married, union, and rural?
+
+What does it mean for the married, union, or rural variables to have a positive within-person variance?
+
+Why is it important to know if a variable has positive within-person variance?
+
+## Pooled OLS, Random Effects, and Fixed Effects Models {.centered}
+
+$\begin{align*} \log(wage_{it}) & = \beta_0 + \beta_1 educ_{i} + \beta_2 black_{i} + \beta_3 hisp_{i} + \beta_4 exper_{it} + \beta_5 exper_{it}^2 + \beta_6 married_{it} + \\ &\phantom{=\,\,}\beta_7 union_{it} + \beta_8 rur_{it} + \sum_t \beta_{9,t}year_{it} + a_i + u_{it} \end{align*}$ The pooled ols by `lm_robust`
+
+```{r}
+est.pols <- lm_robust(lwage ~ educ + black + hisp + exper + I(exper^2) + married + union + rur + year,
+                data = df, clusters=id)
+
+```
+
+Interpret the coefficient on β7 in the pooled OLS model
+
+## Random effects
+
+```{r}
+est.re <- plm(lwage ~ educ + black + hisp + exper + I(exper^2) + married + union + rur + year, 
+              data = df, index = c("id","year"), model = "random")
+
+```
+
+What is the estimate of $θ$ in the RE model? (Hint: check est.re`$ercomp$theta`) What does this tell you about what you expect the random effects estimates to be relative to the fixed effects estimates?
+
+## Fixed effects
+
+FE also come from the `lm_robust()` function:
+
+```{r}
+est.fe <- lm_robust(lwage ~ I(exper^2) + married + union + rur + year, 
+              data = df, fixed_effects = ~id)
+```
+
+Explain why we cannot estimate coefficients on $educ$, $black$, $hisp$, or $exper$ in the fixed effects model. (Note: the reason for not being able to estimate exper is more nuanced)
+
+##Clustered standard errors The most appropriate standard errors account for within-person serial correlation and are robust to heteroskedasticity.
+
+```{r}
+clust.re <- coef_test(est.re, vcov = "CR1", cluster = "individual")
+clust.re.SE <- clust.re$SE
+names(clust.re.SE) <- names(est.re$coefficients)
+```
+
+## Model summary {.scrollable}
+
+```{r}
+modelsummary(list("POLS"=est.pols,"RE"=est.re,"FE"=est.fe),
+             statistic_override=list(sqrt(diag(est.pols$vcov)),clust.re.SE,sqrt(diag(est.fe$vcov))),
+             output="markdown")
+
+```

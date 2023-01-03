@@ -10,6 +10,7 @@ format:
     theme: [default, custom.scss]
     code-link: true
     code-fold: true
+    docx: true
 editor: visual
 ---
 
