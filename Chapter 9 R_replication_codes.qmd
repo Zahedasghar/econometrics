@@ -19,8 +19,6 @@ Data sets can be downloaded from [Stock and Watson](https://wps.pearsoned.com/aw
 
 ```{r,  warning=FALSE,message=FALSE}
 library(tidyverse) ## Upload set of packages including dplyr and ggplot2
-
-
 library(haven) ## To read data from STATA/SPSS we use *haven* package
 library(tidyverse)
 caschool<- read_dta("caschool.dta")
