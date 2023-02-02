@@ -1,0 +1,2021 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Zahid Asghar   School of Economics, QAU, Islamabad">
+<title>Panel Regression: Traffic Deaths &amp; Wages</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="Pan_reg_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Pan_reg_files/libs/quarto-html/quarto.js"></script>
+<script src="Pan_reg_files/libs/quarto-html/popper.min.js"></script>
+<script src="Pan_reg_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Pan_reg_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Pan_reg_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Pan_reg_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Pan_reg_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Pan_reg_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Pan_reg_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script src="Pan_reg_files/libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="Pan_reg_files/libs/jquery-1.12.4/jquery.min.js"></script><link href="Pan_reg_files/libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="Pan_reg_files/libs/leaflet-1.3.1/leaflet.js"></script><link href="Pan_reg_files/libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="Pan_reg_files/libs/proj4-2.6.2/proj4.min.js"></script><script src="Pan_reg_files/libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="Pan_reg_files/libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="Pan_reg_files/libs/leaflet-binding-2.1.1/leaflet.js"></script><script src="Pan_reg_files/libs/kePrint-0.0.1/kePrint.js"></script><link href="Pan_reg_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#panel-data-regression" id="toc-panel-data-regression" class="nav-link active" data-scroll-target="#panel-data-regression">Panel Data Regression</a></li>
+  <li><a href="#notations-for-panel-data" id="toc-notations-for-panel-data" class="nav-link" data-scroll-target="#notations-for-panel-data">Notations for Panel Data</a></li>
+  <li><a href="#why-are-panel-data-useful" id="toc-why-are-panel-data-useful" class="nav-link" data-scroll-target="#why-are-panel-data-useful">Why are panel data useful?</a></li>
+  <li><a href="#example-of-a-panel-data-set" id="toc-example-of-a-panel-data-set" class="nav-link" data-scroll-target="#example-of-a-panel-data-set">Example of a panel data set</a></li>
+  <li><a href="#an-overview-of-data" id="toc-an-overview-of-data" class="nav-link" data-scroll-target="#an-overview-of-data">An overview of data</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  <li><a href="#u.s-traffic-death-data-for-1982" id="toc-u.s-traffic-death-data-for-1982" class="nav-link" data-scroll-target="#u.s-traffic-death-data-for-1982">U.S traffic death data for 1982</a></li>
+  <li><a href="#u.s-traffic-death-data-for-1988" id="toc-u.s-traffic-death-data-for-1988" class="nav-link" data-scroll-target="#u.s-traffic-death-data-for-1988">U.S traffic death data for 1988</a></li>
+  <li><a href="#regression-line" id="toc-regression-line" class="nav-link" data-scroll-target="#regression-line">Regression line</a></li>
+  <li><a href="#why-might-there-be-higher-more-traffic-deaths-in-states-that-have-higher-alcohol-taxes" id="toc-why-might-there-be-higher-more-traffic-deaths-in-states-that-have-higher-alcohol-taxes" class="nav-link" data-scroll-target="#why-might-there-be-higher-more-traffic-deaths-in-states-that-have-higher-alcohol-taxes">Why might there be higher more traffic deaths in states that have higher alcohol taxes?</a></li>
+  <li><a href="#these-omitted-variables-could-cause-omitted-variable-bias" id="toc-these-omitted-variables-could-cause-omitted-variable-bias" class="nav-link" data-scroll-target="#these-omitted-variables-could-cause-omitted-variable-bias">These omitted variables could cause omitted variable bias</a></li>
+  <li><a href="#cultural-attitude-towards-driving-and-drinking" id="toc-cultural-attitude-towards-driving-and-drinking" class="nav-link" data-scroll-target="#cultural-attitude-towards-driving-and-drinking">Cultural attitude towards driving and drinking</a></li>
+  <li><a href="#panel-data-with-two-time-periods" id="toc-panel-data-with-two-time-periods" class="nav-link" data-scroll-target="#panel-data-with-two-time-periods">Panel Data with Two Time Periods</a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"></a></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"></a></li>
+  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3"></a></li>
+  <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4"></a></li>
+  <li><a href="#fixed-effects-regression" id="toc-fixed-effects-regression" class="nav-link" data-scroll-target="#fixed-effects-regression">Fixed Effects Regression</a></li>
+  <li><a href="#section-5" id="toc-section-5" class="nav-link" data-scroll-target="#section-5"></a></li>
+  <li><a href="#section-6" id="toc-section-6" class="nav-link" data-scroll-target="#section-6"></a></li>
+  <li><a href="#regression-equation-for-three-states" id="toc-regression-equation-for-three-states" class="nav-link" data-scroll-target="#regression-equation-for-three-states">Regression equation for three states</a></li>
+  <li><a href="#the-fixed-effects-regression-model" id="toc-the-fixed-effects-regression-model" class="nav-link" data-scroll-target="#the-fixed-effects-regression-model">The Fixed Effects Regression Model</a></li>
+  <li><a href="#summary-two-ways-to-write-the-fixed-effects-model-n-1-binary-regressor-form" id="toc-summary-two-ways-to-write-the-fixed-effects-model-n-1-binary-regressor-form" class="nav-link" data-scroll-target="#summary-two-ways-to-write-the-fixed-effects-model-n-1-binary-regressor-form">Summary: Two ways to write the fixed effects model “n-1 binary regressor” form</a></li>
+  <li><a href="#fixed-effects-regression-estimation" id="toc-fixed-effects-regression-estimation" class="nav-link" data-scroll-target="#fixed-effects-regression-estimation">Fixed Effects Regression: Estimation</a></li>
+  <li><a href="#n-1-binary-regressors-ols-regression" id="toc-n-1-binary-regressors-ols-regression" class="nav-link" data-scroll-target="#n-1-binary-regressors-ols-regression">1. “n-1 binary regressors” OLS regression</a></li>
+  <li><a href="#entity-demeaned-ols-regression" id="toc-entity-demeaned-ols-regression" class="nav-link" data-scroll-target="#entity-demeaned-ols-regression">2. “Entity-demeaned” OLS regression</a></li>
+  <li>
+<a href="#application-to-traffic-deaths" id="toc-application-to-traffic-deaths" class="nav-link" data-scroll-target="#application-to-traffic-deaths">Application to traffic deaths</a>
+  <ul class="collapse">
+<li><a href="#panel-data-for-two-years" id="toc-panel-data-for-two-years" class="nav-link" data-scroll-target="#panel-data-for-two-years">Panel Data for two years</a></li>
+  <li><a href="#section-7" id="toc-section-7" class="nav-link" data-scroll-target="#section-7"></a></li>
+  <li><a href="#compute-mean-fatality-rate-over-all-states-for-all-time-periods" id="toc-compute-mean-fatality-rate-over-all-states-for-all-time-periods" class="nav-link" data-scroll-target="#compute-mean-fatality-rate-over-all-states-for-all-time-periods">compute mean fatality rate over all states for all time periods</a></li>
+  <li><a href="#section-8" id="toc-section-8" class="nav-link" data-scroll-target="#section-8"></a></li>
+  <li><a href="#demeaned-regressioin" id="toc-demeaned-regressioin" class="nav-link" data-scroll-target="#demeaned-regressioin">Demeaned Regressioin</a></li>
+  <li><a href="#use-plm" id="toc-use-plm" class="nav-link" data-scroll-target="#use-plm">Use plm</a></li>
+  <li><a href="#section-9" id="toc-section-9" class="nav-link" data-scroll-target="#section-9"></a></li>
+  <li><a href="#regression-with-time-fixed-effect" id="toc-regression-with-time-fixed-effect" class="nav-link" data-scroll-target="#regression-with-time-fixed-effect">Regression with Time Fixed Effect</a></li>
+  <li><a href="#section-10" id="toc-section-10" class="nav-link" data-scroll-target="#section-10"></a></li>
+  <li><a href="#via-plm" id="toc-via-plm" class="nav-link" data-scroll-target="#via-plm">Via plm</a></li>
+  <li><a href="#the-fixed-effects-regression-assumptions" id="toc-the-fixed-effects-regression-assumptions" class="nav-link" data-scroll-target="#the-fixed-effects-regression-assumptions">The Fixed Effects Regression Assumptions</a></li>
+  <li><a href="#section-11" id="toc-section-11" class="nav-link" data-scroll-target="#section-11"></a></li>
+  <li><a href="#estimate-all-seven-models" id="toc-estimate-all-seven-models" class="nav-link" data-scroll-target="#estimate-all-seven-models">estimate all seven models</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#wage-data-woolridge-book" id="toc-wage-data-woolridge-book" class="nav-link" data-scroll-target="#wage-data-woolridge-book">Wage data Woolridge book</a>
+  <ul class="collapse">
+<li><a href="#load-the-data" id="toc-load-the-data" class="nav-link" data-scroll-target="#load-the-data">Load the data</a></li>
+  <li><a href="#summary-statistics-with-panel-data" id="toc-summary-statistics-with-panel-data" class="nav-link" data-scroll-target="#summary-statistics-with-panel-data">Summary Statistics with Panel Data</a></li>
+  <li><a href="#section-12" id="toc-section-12" class="nav-link" data-scroll-target="#section-12"></a></li>
+  <li><a href="#pooled-ols-random-effects-and-fixed-effects-models" id="toc-pooled-ols-random-effects-and-fixed-effects-models" class="nav-link" data-scroll-target="#pooled-ols-random-effects-and-fixed-effects-models">Pooled OLS, Random Effects, and Fixed Effects Models</a></li>
+  <li><a href="#random-effects" id="toc-random-effects" class="nav-link" data-scroll-target="#random-effects">Random effects</a></li>
+  <li><a href="#fixed-effects" id="toc-fixed-effects" class="nav-link" data-scroll-target="#fixed-effects">Fixed effects</a></li>
+  <li><a href="#model-summary" id="toc-model-summary" class="nav-link" data-scroll-target="#model-summary">Model summary</a></li>
+  </ul>
+</li>
+  </ul></nav>
+</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">Panel Regression: Traffic Deaths &amp; Wages</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Zahid Asghar<br><br> School of Economics, QAU, Islamabad </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header><div class="cell" data-layout-align="center">
+<details><summary>Code</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/leaflet/">leaflet</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/leaflet.html">leaflet</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html">addTiles</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-layers.html">addMarkers</a></span><span class="op">(</span>lng <span class="op">=</span> <span class="fl">73.136946</span>, lat <span class="op">=</span><span class="fl">33.748294</span> ,</span>
+<span>             popup <span class="op">=</span> <span class="st">"School of Economics, QAU, Islamabad"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div id="htmlwidget-f348a5ca03f6292e55e6" style="width:100%;height:180px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f348a5ca03f6292e55e6">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"https://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]},{"method":"addMarkers","args":[33.748294,73.136946,null,null,null,{"interactive":true,"draggable":false,"keyboard":true,"title":"","alt":"","zIndexOffset":0,"opacity":1,"riseOnHover":false,"riseOffset":250},"School of Economics, QAU, Islamabad",null,null,null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]}],"limits":{"lat":[33.748294,33.748294],"lng":[73.136946,73.136946]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<section id="panel-data-regression" class="level2"><h2 class="anchored" data-anchor-id="panel-data-regression">Panel Data Regression</h2>
+<p>A <em>panel dataset</em> contains observations on multiple entities (individuals), where each entity is observed at two or more points in time.</p>
+<p>Hypothetical examples:</p>
+<ul>
+<li><p>Data on 50 districts in 2010 floods and again in 2022, for 100 observations total.</p></li>
+<li><p>Data on 100 SMES, each SME is observed in 3 years, for a total of 150 observations.</p></li>
+<li><p>Data on 1000 individuals, in four different months, for 4000 observations total.</p></li>
+</ul></section><section id="notations-for-panel-data" class="level2"><h2 class="anchored" data-anchor-id="notations-for-panel-data">Notations for Panel Data</h2>
+<p>A double subscript distinguishes entities (states) and time periods (years)</p>
+<p><span class="math inline">\(i\)</span> = entity (state), <span class="math inline">\(n\)</span> = number of entities, so <span class="math inline">\(i = 1,\dots,n\)</span></p>
+<p><span class="math inline">\(t\)</span> = time period (year), <span class="math inline">\(T\)</span> = number of time periods so <span class="math inline">\(t =1,\dots,T\)</span></p>
+<p>Data: Suppose we have 1 regressor. The data are:</p>
+<p><span class="math inline">\(\left(X_{it},Y_{it}\right)\qquad\begin{cases}i=1,...,n\\t=1,...,T\end{cases}\)</span></p>
+<p>Panel data with <span class="math inline">\(K\)</span> regressors <span class="math inline">\((X_{1it},X_{2it},\dots,X_{kit} Y_{i}t), i = 1,\dots,n,\ t = 1,…,T\)</span> <span class="math inline">\(n\)</span> = number of entities (states) <span class="math inline">\(T\)</span> = number of time periods (years) Also called <strong>longitudinal data</strong></p>
+</section><section id="why-are-panel-data-useful" class="level2"><h2 class="anchored" data-anchor-id="why-are-panel-data-useful">Why are panel data useful?</h2>
+<p>With panel data we can control for factors that: - Vary across entities (states) but do not vary over time - Could cause omitted variable bias if they are omitted - are unobserved or unmeasured – and therefore cannot be included in the regression using multiple regression</p>
+<p>Here’s the key idea: &gt; If an omitted variable does not change over time, then any changes in Y over time cannot be caused by the omitted variable.</p>
+</section><section id="example-of-a-panel-data-set" class="level2"><h2 class="anchored" data-anchor-id="example-of-a-panel-data-set">Example of a panel data set</h2>
+<p>Observational unit: a year in a U.S. state - 48 U.S. states, so <span class="math inline">\(n\)</span> = # of entities = 48$ - 7 years (1982,…, 1988), so <span class="math inline">\(T\)</span> = # of time periods = 7 - Balanced panel, so total # observations = <span class="math inline">\(7\times48\)</span> = 336 Variables: - Traffic fatality rate (# traffic deaths in that state in that year, per 10,000 state residents) - Tax on a case of beer - Other (legal driving age, drunk driving laws, etc.)</p>
+</section><section id="an-overview-of-data" class="level2 scrollable"><h2 class="scrollable anchored" data-anchor-id="an-overview-of-data">An overview of data</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 336
+Columns: 34
+$ state        &lt;fct&gt; al, al, al, al, al, al, al, az, az, az, az, az, az, az, a…
+$ year         &lt;fct&gt; 1982, 1983, 1984, 1985, 1986, 1987, 1988, 1982, 1983, 198…
+$ spirits      &lt;dbl&gt; 1.37, 1.36, 1.32, 1.28, 1.23, 1.18, 1.17, 1.97, 1.90, 2.1…
+$ unemp        &lt;dbl&gt; 14.4, 13.7, 11.1, 8.9, 9.8, 7.8, 7.2, 9.9, 9.1, 5.0, 6.5,…
+$ income       &lt;dbl&gt; 10544.15, 10732.80, 11108.79, 11332.63, 11661.51, 11944.0…
+$ emppop       &lt;dbl&gt; 50.69204, 52.14703, 54.16809, 55.27114, 56.51450, 57.5098…
+$ beertax      &lt;dbl&gt; 1.53937948, 1.78899074, 1.71428561, 1.65254235, 1.6099070…
+$ baptist      &lt;dbl&gt; 30.3557, 30.3336, 30.3115, 30.2895, 30.2674, 30.2453, 30.…
+$ mormon       &lt;dbl&gt; 0.32829, 0.34341, 0.35924, 0.37579, 0.39311, 0.41123, 0.4…
+$ drinkage     &lt;dbl&gt; 19.00, 19.00, 19.00, 19.67, 21.00, 21.00, 21.00, 19.00, 1…
+$ dry          &lt;dbl&gt; 25.0063, 22.9942, 24.0426, 23.6339, 23.4647, 23.7924, 23.…
+$ youngdrivers &lt;dbl&gt; 0.211572, 0.210768, 0.211484, 0.211140, 0.213400, 0.21552…
+$ miles        &lt;dbl&gt; 7233.887, 7836.348, 8262.990, 8726.917, 8952.854, 9166.30…
+$ breath       &lt;fct&gt; no, no, no, no, no, no, no, no, no, no, no, no, no, no, n…
+$ jail         &lt;fct&gt; no, no, no, no, no, no, no, yes, yes, yes, yes, yes, yes,…
+$ service      &lt;fct&gt; no, no, no, no, no, no, no, yes, yes, yes, yes, yes, yes,…
+$ fatal        &lt;int&gt; 839, 930, 932, 882, 1081, 1110, 1023, 724, 675, 869, 893,…
+$ nfatal       &lt;int&gt; 146, 154, 165, 146, 172, 181, 139, 131, 112, 149, 150, 17…
+$ sfatal       &lt;int&gt; 99, 98, 94, 98, 119, 114, 89, 76, 60, 81, 75, 85, 87, 67,…
+$ fatal1517    &lt;int&gt; 53, 71, 49, 66, 82, 94, 66, 40, 40, 51, 48, 72, 50, 54, 3…
+$ nfatal1517   &lt;int&gt; 9, 8, 7, 9, 10, 11, 8, 7, 7, 8, 11, 19, 16, 14, 5, 2, 2, …
+$ fatal1820    &lt;int&gt; 99, 108, 103, 100, 120, 127, 105, 81, 83, 118, 100, 104, …
+$ nfatal1820   &lt;int&gt; 34, 26, 25, 23, 23, 31, 24, 16, 19, 34, 26, 30, 25, 14, 2…
+$ fatal2124    &lt;int&gt; 120, 124, 118, 114, 119, 138, 123, 96, 80, 123, 121, 130,…
+$ nfatal2124   &lt;int&gt; 32, 35, 34, 45, 29, 30, 25, 36, 17, 33, 30, 25, 34, 31, 1…
+$ afatal       &lt;dbl&gt; 309.438, 341.834, 304.872, 276.742, 360.716, 368.421, 298…
+$ pop          &lt;dbl&gt; 3942002, 3960008, 3988992, 4021008, 4049994, 4082999, 410…
+$ pop1517      &lt;dbl&gt; 208999.6, 202000.1, 197000.0, 194999.7, 203999.9, 204999.…
+$ pop1820      &lt;dbl&gt; 221553.4, 219125.5, 216724.1, 214349.0, 212000.0, 208998.…
+$ pop2124      &lt;dbl&gt; 290000.1, 290000.2, 288000.2, 284000.3, 263000.3, 258999.…
+$ milestot     &lt;dbl&gt; 28516, 31032, 32961, 35091, 36259, 37426, 39684, 19729, 1…
+$ unempus      &lt;dbl&gt; 9.7, 9.6, 7.5, 7.2, 7.0, 6.2, 5.5, 9.7, 9.6, 7.5, 7.2, 7.…
+$ emppopus     &lt;dbl&gt; 57.8, 57.9, 59.5, 60.1, 60.7, 61.5, 62.3, 57.8, 57.9, 59.…
+$ gsp          &lt;dbl&gt; -0.022124760, 0.046558253, 0.062797837, 0.027489973, 0.03…</code></pre>
+</div>
+</div>
+</section><section id="section" class="level2"><h2 class="anchored" data-anchor-id="section"></h2>
+<p>A large number of variables and 336 total observations. We need to select only a few variables required in doing this exercise.</p>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Summarise the variable state and year</span></span>
+<span><span class="va">fatalities</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">select</span><span class="op">(</span><span class="va">state</span>,<span class="va">year</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">summarise</span><span class="op">(</span>count<span class="op">=</span><span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 2
+  year  count
+  &lt;fct&gt; &lt;int&gt;
+1 1982     48
+2 1983     48
+3 1984     48
+4 1985     48
+5 1986     48
+6 1987     48
+7 1988     48</code></pre>
+</div>
+<details><summary>Code</summary><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Traffic Deaths and Alcohal Taxes</span></span>
+<span><span class="co"># define the fatality rate</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span><span class="va">fatalities</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">mutate</span><span class="op">(</span>fatal_rate<span class="op">=</span><span class="va">fatal</span><span class="op">/</span><span class="va">pop</span><span class="op">*</span><span class="fl">10000</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># subset the data</span></span>
+<span></span>
+<span><span class="va">Fatalities1982</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">year</span><span class="op">==</span><span class="st">"1982"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">Fatalities1988</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">year</span><span class="op">==</span><span class="st">"1988"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section><section id="u.s-traffic-death-data-for-1982" class="level2"><h2 class="anchored" data-anchor-id="u.s-traffic-death-data-for-1982">U.S traffic death data for 1982</h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">Fatalities1982</span><span class="op">)</span><span class="op">+</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span> <span class="va">beertax</span>,y<span class="op">=</span><span class="va">fatal_rate</span><span class="op">)</span><span class="op">+</span><span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span><span class="op">+</span><span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, se<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">+</span><span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Beer Tax \n(Dollars per case 1988)"</span>,y<span class="op">=</span><span class="st">"Fatality Rate \n Fatalities per 10000"</span>, title<span class="op">=</span><span class="st">"US traffice death for 1982"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="Pan_reg_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section><section id="u.s-traffic-death-data-for-1988" class="level2"><h2 class="anchored" data-anchor-id="u.s-traffic-death-data-for-1988">U.S traffic death data for 1988</h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">Fatalities1988</span><span class="op">)</span><span class="op">+</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span> <span class="va">beertax</span>,y<span class="op">=</span><span class="va">fatal_rate</span><span class="op">)</span><span class="op">+</span><span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span><span class="op">+</span><span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, se<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">+</span><span class="fu">labs</span><span class="op">(</span>x<span class="op">=</span><span class="st">"Beer Tax \n(Dollars per case 1988)"</span>,y<span class="op">=</span><span class="st">"Fatality Rate \n Fatalities per 10000"</span>, title<span class="op">=</span><span class="st">"US traffice death for 1988"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="Pan_reg_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section><section id="regression-line" class="level2"><h2 class="anchored" data-anchor-id="regression-line">Regression line</h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># estimate simple regression models using 1982 and 1988 data</span></span>
+<span><span class="va">fatal1982_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">fatal_rate</span> <span class="op">~</span> <span class="va">beertax</span>, data <span class="op">=</span> <span class="va">Fatalities1982</span><span class="op">)</span></span>
+<span><span class="va">fatal1988_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">fatal_rate</span> <span class="op">~</span> <span class="va">beertax</span>, data <span class="op">=</span> <span class="va">Fatalities1988</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><span class="math inline">\(\widehat{FatalityRate}= 2.01 + 0.15beertax\)</span></p>
+<p><span class="math inline">\(\widehat{FatalityRate}= 1.86 + 0.43beertax\)</span></p>
+<p><strong>High alcohal tax, more deaths</strong> :smiley:</p>
+</section><section id="why-might-there-be-higher-more-traffic-deaths-in-states-that-have-higher-alcohol-taxes" class="level2"><h2 class="anchored" data-anchor-id="why-might-there-be-higher-more-traffic-deaths-in-states-that-have-higher-alcohol-taxes">Why might there be higher more traffic deaths in states that have higher alcohol taxes?</h2>
+<p>Other factors that determine traffic fatality rate: - Quality (age) of automobiles - Quality of roads - “Culture” around drinking and driving - Density of cars on the road</p>
+</section><section id="these-omitted-variables-could-cause-omitted-variable-bias" class="level2"><h2 class="anchored" data-anchor-id="these-omitted-variables-could-cause-omitted-variable-bias">These omitted variables could cause omitted variable bias</h2>
+<p>Example #1: traffic density. Suppose:</p>
+<ol type="1">
+<li><p>High traffic density means more traffic deaths</p></li>
+<li><p>(Western) states with lower traffic density have lower alcohol taxes</p></li>
+</ol>
+<p>Then the two conditions for omitted variable bias are satisfied.</p>
+<ul>
+<li>Specifically, “high taxes” could reflect “high traffic density” (so the OLS coefficient would be biased positively – high taxes, more deaths)</li>
+<li>Panel data lets us eliminate omitted variable bias when the omitted variables are constant over time within a given state.</li>
+</ul></section><section id="cultural-attitude-towards-driving-and-drinking" class="level2"><h2 class="anchored" data-anchor-id="cultural-attitude-towards-driving-and-drinking">Cultural attitude towards driving and drinking</h2>
+<ol type="1">
+<li>arguably are a determinant of traffic deaths; and</li>
+<li>potentially are correlated with the beer tax, so beer taxes could be picking up cultural differences (omitted variable bias).</li>
+</ol>
+<ul>
+<li>Then the two conditions for omitted variable bias are satisfied. Specifically, “high taxes” could reflect “cultural attitudes towards drinking” (so the OLS coefficient would be biased)</li>
+<li>Panel data lets us eliminate omitted variable bias when the omitted variables are constant over time within a given state.</li>
+</ul></section><section id="panel-data-with-two-time-periods" class="level2"><h2 class="anchored" data-anchor-id="panel-data-with-two-time-periods">Panel Data with Two Time Periods</h2>
+<p>Consider the panel data model: <span class="math inline">\(\widehat{FatalityRate_{it}} = \beta_0 + \beta_1 BeerTax_{it} + \beta_2Zi + u_{it}\)</span></p>
+<p><span class="math inline">\(Z_i\)</span> is a factor that does not change over time (density), at least during the years on which we have data. • Suppose <span class="math inline">\(Z_i\)</span> is not observed, so its omission could result in omitted variable bias. • The effect of <span class="math inline">\(Z_i\)</span> can be eliminated using <span class="math inline">\(T = 2\)</span> years.</p>
+</section><section id="section-1" class="level2"><h2 class="anchored" data-anchor-id="section-1"></h2>
+<p>The key idea:<br>
+Any change in the fatality rate from 1982 to 1988 cannot be caused by <span class="math inline">\(Z_i\)</span>, because <span class="math inline">\(Z_i\)</span> (by assumption) does not change between 1982 and 1988.</p>
+<p>The math: consider fatality rates in 1988 and 1982: <span class="math inline">\(FatalityRate_{i1988} = \beta_0 + \beta_1 BeerTax_{it} + \beta_2Zi + u_{i1988}\)</span> <span class="math inline">\(FatalityRate_{i1982} = \beta_0 + \beta_1 BeerTax_{it} + \beta_2Zi + u_{i1982}\)</span></p>
+<p>Suppose <span class="math inline">\(E{(u_{it}}{/BeerTax_{it},Z_i})=0\)</span> E(uit|BeerTaxit, Zi) = 0.</p>
+<p>Subtracting 1988 – 1982 (that is, calculating the change), eliminates the effect of <span class="math inline">\(Z_i\dots\)</span></p>
+</section><section id="section-2" class="level2"><h2 class="anchored" data-anchor-id="section-2"></h2>
+<p><span class="math inline">\(FatalityRate_{i1988} = \beta_0 + \beta_1 BeerTax_{it} + \beta_2Zi + u_{i1988}\)</span> <span class="math inline">\(FatalityRate_{i1982} = \beta_0 + \beta_1 BeerTax_{it} + \beta_2Zi + u_{i1982}\)</span></p>
+<p>so <span class="math inline">\(FatalityRate_{i1988} – FatalityRate_{i1982}=\\\beta_1(BeerTaxi1988 – BeerTaxi1982) + (u_{i1988} – u_{i1982})\)</span></p>
+<p>• The new error term, <span class="math inline">\((u_{i1988} – u_{i1982})\)</span>, is uncorrelated with either <span class="math inline">\(FatalityRate_{i1988}\)</span> or <span class="math inline">\(FatalityRate_{i1982}\)</span> • This “difference” equation can be estimated by OLS, even though <span class="math inline">\(Z_i\)</span> isn’t observed. • The omitted variable <span class="math inline">\(Z_i\)</span> doesn’t change, so it cannot be a determinant of the change in <span class="math inline">\(Y\)</span></p>
+</section><section id="section-3" class="level2"><h2 class="anchored" data-anchor-id="section-3"></h2>
+<p>1982 data</p>
+<p><span class="math inline">\(\widehat{FatalityRate}= 2.01 + 0.15beertax \ n=48\)</span></p>
+<p>1988 data</p>
+<p><span class="math inline">\(\widehat{FatalityRate}= 1.86 + 0.43beertax \ n=48\)</span></p>
+<p>Difference regression</p>
+<p><span class="math inline">\(\widehat{FatalityRate_{i1988} - FatalityRate_{i1982}} =\\ -\underset{(0.065)}{0.072} -\underset{(0.36)}{1.04} \times (BeerTax_{i1988}-BeerTax_{i1982}).\)</span></p>
+</section><section id="section-4" class="level2"><h2 class="anchored" data-anchor-id="section-4"></h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">##Panel Data for two years</span></span>
+<span><span class="co"># compute the differences </span></span>
+<span><span class="va">diff_fatal_rate</span> <span class="op">&lt;-</span> <span class="va">Fatalities1988</span><span class="op">$</span><span class="va">fatal_rate</span> <span class="op">-</span> <span class="va">Fatalities1982</span><span class="op">$</span><span class="va">fatal_rate</span></span>
+<span><span class="va">diff_beertax</span> <span class="op">&lt;-</span> <span class="va">Fatalities1988</span><span class="op">$</span><span class="va">beertax</span> <span class="op">-</span> <span class="va">Fatalities1982</span><span class="op">$</span><span class="va">beertax</span></span>
+<span></span>
+<span><span class="co"># estimate a regression using differenced data</span></span>
+<span><span class="va">fatal_diff_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">diff_fatal_rate</span> <span class="op">~</span> <span class="va">diff_beertax</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">coeftest</span><span class="op">(</span><span class="va">fatal_diff_mod</span>, vcov <span class="op">=</span> <span class="va">vcovHC</span>, type <span class="op">=</span> <span class="st">"HC1"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>
+t test of coefficients:
+
+              Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)  -0.072037   0.065355 -1.1022 0.276091   
+diff_beertax -1.040973   0.355006 -2.9323 0.005229 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">diff_fatal_rate</span>,<span class="va">diff_beertax</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">df2</span><span class="op">)</span></span>
+<span><span class="co">## Plot</span></span>
+<span><span class="va">p2</span><span class="op">&lt;-</span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df2</span><span class="op">)</span><span class="op">+</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">diff_fatal_rate</span>,y<span class="op">=</span><span class="va">diff_beertax</span><span class="op">)</span><span class="op">+</span><span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>,se<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">p2</span><span class="op">+</span><span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Change in beer tax (in 1988 dollars)"</span>,</span>
+<span>        y <span class="op">=</span> <span class="st">"Change in fatality rate (fatalities per 10000)"</span><span class="op">)</span><span class="op">+</span><span class="fu">ggtitle</span><span class="op">(</span><span class="st">"Changes in Traffic Fatality Rates and Beer Taxes in 1982-1988"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="Pan_reg_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section><section id="fixed-effects-regression" class="level2"><h2 class="anchored" data-anchor-id="fixed-effects-regression">Fixed Effects Regression</h2>
+<p>What if you have more than 2 time periods <span class="math inline">\((T &gt; 2)?\)</span></p>
+<p><span class="math inline">\(Y_{it} = \beta_0 + \beta_1 X_{it} + \beta_2Z_{i} + u_{it}, i =1,\dots,n, T = 1,\dots,T\)</span></p>
+<p>We can rewrite this in two useful ways: 1. “<span class="math inline">\(n-1\)</span> binary regressor” regression model 2. “Fixed Effects” regression model</p>
+<p>We first rewrite this in “fixed effects” form. Suppose we have <span class="math inline">\(n = 3\)</span> states: California, Texas, Massachusetts.</p>
+</section><section id="section-5" class="level2"><h2 class="anchored" data-anchor-id="section-5"></h2>
+<p><span class="math inline">\(Y_{it} = \beta_0 + \beta_1 X_{it} + \beta_2Z_{i} + u_{it}, i =1,\dots,n, T = 1,\dots,T\)</span></p>
+<p>Population regression for California (that is, <span class="math inline">\(i = CA\)</span>): <span class="math inline">\(Y_{CA,t} = \beta_0 + \beta_1X_{CA,t} + \beta_2Z_{CA} + u_{CA,t}\\ = (\beta_0 + \beta_2Z_{CA}) + \beta_1X_{CA,t} + u_{CA,t}\)</span> or <span class="math inline">\(Y_{CA,t} = \alpha + \beta_1X_{CA,t} + u_{CA,t}\)</span></p>
+<p>• <span class="math inline">\(\alpha_{CA} = \beta_0 + \beta_1Z_{CA}\)</span> doesn’t change over time • <span class="math inline">\(\alpha_{CA}\)</span> is the intercept for CA, and <span class="math inline">\(\beta_1\)</span> is the slope • The intercept is unique to CA, but the slope is the same in all the states: parallel lines.</p>
+</section><section id="section-6" class="level2"><h2 class="anchored" data-anchor-id="section-6"></h2>
+<p><span class="math inline">\(Y_{it} = \beta_0 + \beta_1 X_{it} + \beta_2Z_{i} + u_{it}, i =1,\dots,n, T = 1,\dots,T\)</span></p>
+<p>Population regression for Texax (that is, <span class="math inline">\(i = TX\)</span>): <span class="math inline">\(Y_{TX,t} = \beta_0 + \beta_1X_{TX,t} + \beta_2Z_{TX} + u_{TX,t}\\ = (\beta_0 + \beta_2Z_{TX}) + \beta_1X_{TX,t} + u_{TX,t}\)</span> or <span class="math inline">\(Y_{TX,t} = \alpha + \beta_1X_{TX,t} + u_{TX,t}\)</span></p>
+<p>Collecting the like terms</p>
+<p><span class="math inline">\(Y_{CA,t} = \alpha + \beta_1X_{CA,t} + u_{CA,t}\)</span></p>
+<p><span class="math inline">\(Y_{TX,t} = \alpha + \beta_1X_{TX,t} + u_{TX,t}\)</span></p>
+<p><span class="math inline">\(Y_{MA,t} = \alpha + \beta_1X_{MA,t} + u_{MA,t}\)</span></p>
+<p>or <span class="math inline">\(Y_{it} = \alpha_{i} + \beta_1 X_{it} + u_{it}, i =CA,TX,MA, T = 1,\dots,T\)</span></p>
+</section><section id="regression-equation-for-three-states" class="level2"><h2 class="anchored" data-anchor-id="regression-equation-for-three-states">Regression equation for three states</h2>
+<p><img src="fixed_effect.png" class="img-fluid"> In binary regressor form: <span class="math inline">\(Y_{it} = \beta_0 + \gamma CADCAi + \gamma TXDTXi + \beta_1X_{it} + u_{it}\)</span> • <span class="math inline">\(DCA_{i} = 1\)</span> if state is <span class="math inline">\(CA, = 0\)</span> otherwise • <span class="math inline">\(DTX_{t} = 1\)</span> if state is <span class="math inline">\(TX, = 0\)</span> otherwise • leave out <span class="math inline">\(DMA_{i}\)</span> (why?)</p>
+</section><section id="the-fixed-effects-regression-model" class="level2"><h2 class="anchored" data-anchor-id="the-fixed-effects-regression-model">The Fixed Effects Regression Model</h2>
+<p>The fixed effect model is <span class="math inline">\(\begin{align} Y_{it} = \beta_1 X_{1,it} + \cdots + \beta_k X_{k,it} + \alpha_i + u_{it} \tag{10.3} \end{align}\)</span> with <span class="math inline">\(i=1,\dots,n\)</span> and <span class="math inline">\(t=1,\dots,T\)</span> . The <span class="math inline">\(\alpha_i\)</span> are entity-specific intercepts that capture heterogeneities across entities. An equivalent representation of this model is given by <span class="math inline">\(\begin{align} Y_{it} = \beta_0 + \beta_1 X_{1,it} + \cdots + \beta_k X_{k,it} + \gamma_2 D2_i + \gamma_3 D3_i + \cdots + \gamma_n Dn_i + u_{it} \tag{10.4} \end{align}\)</span><br>
+where the <span class="math inline">\(D2_i,D3_i,\dots,Dn_i\)</span> are dummy variables.</p>
+</section><section id="summary-two-ways-to-write-the-fixed-effects-model-n-1-binary-regressor-form" class="level2"><h2 class="anchored" data-anchor-id="summary-two-ways-to-write-the-fixed-effects-model-n-1-binary-regressor-form">Summary: Two ways to write the fixed effects model “n-1 binary regressor” form</h2>
+<p><span class="math inline">\(Y_{it} = \beta_0 + \beta_1 X_{1,it} + \gamma_2 D2_i + \gamma_3 D3_i + \cdots + \gamma_n Dn_i + u_{it}\)</span></p>
+<p>where <span class="math inline">\(D2i =1\)</span> if <span class="math inline">\(i=2\)</span> <span class="math inline">\(=0\)</span> otherwise , etc.</p>
+<p>“Fixed effects” form: <span class="math inline">\(Y_{it} = \beta_1X_{it} + \alpha_i + u_{it}\)</span></p>
+<p>• <span class="math inline">\(\alpha_i\)</span> is called a “state fixed effect” or “state effect” – it is the constant (fixed) effect of being in state <span class="math inline">\(i\)</span>.</p>
+</section><section id="fixed-effects-regression-estimation" class="level2"><h2 class="anchored" data-anchor-id="fixed-effects-regression-estimation">Fixed Effects Regression: Estimation</h2>
+<p>Three estimation methods: 1. “n-1 binary regressors” OLS regression 2. “Entity-demeaned” OLS regression 3. “Changes” specification, without an intercept (only works for T = 2)</p>
+<p>• These three methods produce identical estimates of the regression coefficients, and identical standard errors. • We already did the “changes” specification (1988 minus 1982) – but this only works for T = 2 years • Methods #1 and #2 work for general T • Method #1 is only practical when n isn’t too big</p>
+</section><section id="n-1-binary-regressors-ols-regression" class="level2"><h2 class="anchored" data-anchor-id="n-1-binary-regressors-ols-regression">1. “n-1 binary regressors” OLS regression</h2>
+<p><span class="math inline">\(Y_{it} = \beta_0 + \beta_1 X_{1,it} + \gamma_2 D2_i + \gamma_3 D3_i + \cdots + \gamma_n Dn_i + u_{it}\)</span></p>
+<p>where <span class="math inline">\(D2i =1\)</span> if <span class="math inline">\(i=2\)</span> <span class="math inline">\(=0\)</span> otherwise , - First create the binary variables D2i,…,Dni - Then estimate (1) by OLS - Inference (hypothesis tests, confidence intervals) is as usual (using heteroskedasticity-robust standard errors) - This is impractical when n is very large (for example if n = 1000 workers)</p>
+</section><section id="entity-demeaned-ols-regression" class="level2"><h2 class="anchored" data-anchor-id="entity-demeaned-ols-regression">2. “Entity-demeaned” OLS regression</h2>
+<p><span class="math display">\[\begin{align*}
+\frac{1}{n} \sum_{i=1}^n Y_{it} =&amp; \, \beta_1 \frac{1}{n} \sum_{i=1}^n X_{it} + \frac{1}{n} \sum_{i=1}^n a_i + \frac{1}{n} \sum_{i=1}^n u_{it} \\
+\overline{Y} =&amp; \, \beta_1 \overline{X}_i + \alpha_i + \overline{u}_i.
+\end{align*}\]</span> Subtracting from 10.1 yields <span class="math display">\[\begin{align}
+\begin{split}
+Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \overline{u}_i) \\
+\overset{\sim}{Y}_{it} =&amp; \, \beta_1 \overset{\sim}{X}_{it} + \overset{\sim}{u}_{it}.
+\end{split} \tag{10.5}
+\end{align}\]</span></p>
+<p>In this model, the OLS estimate of the parameter of interest <span class="math inline">\(\beta_1\)</span> is equal to the estimate obtained using (10.2) — without the need to estimate <span class="math inline">\(n-1\)</span> dummies and an intercept.</p>
+</section><section id="application-to-traffic-deaths" class="level1"><h1>Application to traffic deaths</h1>
+<section id="panel-data-for-two-years" class="level2"><h2 class="anchored" data-anchor-id="panel-data-for-two-years">Panel Data for two years</h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># compute the differences </span></span>
+<span><span class="va">diff_fatal_rate</span> <span class="op">&lt;-</span> <span class="va">Fatalities1988</span><span class="op">$</span><span class="va">fatal_rate</span> <span class="op">-</span> <span class="va">Fatalities1982</span><span class="op">$</span><span class="va">fatal_rate</span></span>
+<span><span class="va">diff_beertax</span> <span class="op">&lt;-</span> <span class="va">Fatalities1988</span><span class="op">$</span><span class="va">beertax</span> <span class="op">-</span> <span class="va">Fatalities1982</span><span class="op">$</span><span class="va">beertax</span></span>
+<span></span>
+<span><span class="co"># estimate a regression using differenced data</span></span>
+<span><span class="va">fatal_diff_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">diff_fatal_rate</span> <span class="op">~</span> <span class="va">diff_beertax</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">coeftest</span><span class="op">(</span><span class="va">fatal_diff_mod</span>, vcov <span class="op">=</span> <span class="va">vcovHC</span>, type <span class="op">=</span> <span class="st">"HC1"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>
+t test of coefficients:
+
+              Estimate Std. Error t value Pr(&gt;|t|)   
+(Intercept)  -0.072037   0.065355 -1.1022 0.276091   
+diff_beertax -1.040973   0.355006 -2.9323 0.005229 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section><section id="section-7" class="level2"><h2 class="anchored" data-anchor-id="section-7"></h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">diff_fatal_rate</span>,<span class="va">diff_beertax</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">df2</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">df2</span><span class="op">)</span></span>
+<span><span class="co">## Plot</span></span>
+<span><span class="va">p2</span><span class="op">&lt;-</span><span class="fu">ggplot</span><span class="op">(</span><span class="va">df2</span><span class="op">)</span><span class="op">+</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">diff_fatal_rate</span>,y<span class="op">=</span><span class="va">diff_beertax</span><span class="op">)</span><span class="op">+</span><span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>,se<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">p2</span><span class="op">+</span><span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Change in beer tax (in 1988 dollars)"</span>,</span>
+<span>        y <span class="op">=</span> <span class="st">"Change in fatality rate (fatalities per 10000)"</span><span class="op">)</span><span class="op">+</span><span class="fu">ggtitle</span><span class="op">(</span><span class="st">"Changes in Traffic Fatality Rates and Beer Taxes in 1982-1988"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<p><img src="Pan_reg_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section><section id="compute-mean-fatality-rate-over-all-states-for-all-time-periods" class="level2"><h2 class="anchored" data-anchor-id="compute-mean-fatality-rate-over-all-states-for-all-time-periods">compute mean fatality rate over all states for all time periods</h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">group_by</span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">summarise</span><span class="op">(</span>mean<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">fatal_rate</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 2
+  year   mean
+  &lt;fct&gt; &lt;dbl&gt;
+1 1982   2.09
+2 1983   2.01
+3 1984   2.02
+4 1985   1.97
+5 1986   2.07
+6 1987   2.06
+7 1988   2.07</code></pre>
+</div>
+<details><summary>Code</summary><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">fatal_rate</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.040444</code></pre>
+</div>
+<details><summary>Code</summary><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">select</span><span class="op">(</span><span class="va">fatal_rate</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">summarise</span><span class="op">(</span>mean<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">fatal_rate</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>      mean
+1 2.040444</code></pre>
+</div>
+</div>
+</section><section id="section-8" class="level2"><h2 class="anchored" data-anchor-id="section-8"></h2>
+<p><span class="math inline">\(\begin{align} FatalityRate_{it} = \beta_1 BeerTax_{it} + StateFixedEffects\\ + u_{it}, \tag{10.6} \end{align}\)</span></p>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fatal_fe_lm_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">fatal_rate</span> <span class="op">~</span> <span class="va">beertax</span> <span class="op">+</span> <span class="va">state</span> <span class="op">-</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span>
+<span><span class="va">fatal_fe_lm_mod</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = fatal_rate ~ beertax + state - 1, data = df)
+
+Coefficients:
+beertax  stateal  stateaz  statear  stateca  stateco  statect  statede  
+-0.6559   3.4776   2.9099   2.8227   1.9682   1.9933   1.6154   2.1700  
+statefl  statega  stateid  stateil  statein  stateia  stateks  stateky  
+ 3.2095   4.0022   2.8086   1.5160   2.0161   1.9337   2.2544   2.2601  
+statela  stateme  statemd  statema  statemi  statemn  statems  statemo  
+ 2.6305   2.3697   1.7712   1.3679   1.9931   1.5804   3.4486   2.1814  
+statemt  statene  statenv  statenh  statenj  statenm  stateny  statenc  
+ 3.1172   1.9555   2.8769   2.2232   1.3719   3.9040   1.2910   3.1872  
+statend  stateoh  stateok  stateor  statepa  stateri  statesc  statesd  
+ 1.8542   1.8032   2.9326   2.3096   1.7102   1.2126   4.0348   2.4739  
+statetn  statetx  stateut  statevt  stateva  statewa  statewv  statewi  
+ 2.6020   2.5602   2.3137   2.5116   2.1874   1.8181   2.5809   1.7184  
+statewy  
+ 3.2491  </code></pre>
+</div>
+</div>
+</section><section id="demeaned-regressioin" class="level2"><h2 class="anchored" data-anchor-id="demeaned-regressioin">Demeaned Regressioin</h2>
+<p><span class="math inline">\(\overset{\sim}{FatalityRate} = \beta_1 \overset{\sim}{BeerTax}_{it} + u_{it}.\)</span></p>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># obtain demeaned data</span></span>
+<span><span class="va">Fatalities_demeaned</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">df</span>,</span>
+<span>            <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>fatal_rate <span class="op">=</span> <span class="va">fatal_rate</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ave.html">ave</a></span><span class="op">(</span><span class="va">fatal_rate</span>, <span class="va">state</span><span class="op">)</span>,</span>
+<span>            beertax <span class="op">=</span> <span class="va">beertax</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ave.html">ave</a></span><span class="op">(</span><span class="va">beertax</span>, <span class="va">state</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># estimate the regression</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">fatal_rate</span> <span class="op">~</span> <span class="va">beertax</span> <span class="op">-</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="va">Fatalities_demeaned</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = fatal_rate ~ beertax - 1, data = Fatalities_demeaned)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.58696 -0.08284 -0.00127  0.07955  0.89780 
+
+Coefficients:
+        Estimate Std. Error t value Pr(&gt;|t|)    
+beertax  -0.6559     0.1739  -3.772 0.000191 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1757 on 335 degrees of freedom
+Multiple R-squared:  0.04074,   Adjusted R-squared:  0.03788 
+F-statistic: 14.23 on 1 and 335 DF,  p-value: 0.0001913</code></pre>
+</div>
+</div>
+</section><section id="use-plm" class="level2"><h2 class="anchored" data-anchor-id="use-plm">Use plm</h2>
+<p>Alternatively use <code>plm</code> package</p>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cran.r-project.org/package=plm">plm</a></span><span class="op">)</span></span>
+<span><span class="co"># estimate the fixed effects regression with plm()</span></span>
+<span><span class="va">fatal_fe_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/plm/man/plm.html">plm</a></span><span class="op">(</span><span class="va">fatal_rate</span> <span class="op">~</span> <span class="va">beertax</span>, </span>
+<span>                    data <span class="op">=</span> <span class="va">df</span>,</span>
+<span>                    index <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"state"</span>, <span class="st">"year"</span><span class="op">)</span>, </span>
+<span>                    model <span class="op">=</span> <span class="st">"within"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># print summary using robust standard errors</span></span>
+<span><span class="fu">coeftest</span><span class="op">(</span><span class="va">fatal_fe_mod</span>, vcov. <span class="op">=</span> <span class="va">vcovHC</span>, type <span class="op">=</span> <span class="st">"HC1"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>
+t test of coefficients:
+
+        Estimate Std. Error t value Pr(&gt;|t|)  
+beertax -0.65587    0.28880  -2.271  0.02388 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+</section><section id="section-9" class="level2"><h2 class="anchored" data-anchor-id="section-9"></h2>
+<p><span class="math inline">\(\begin{align} \widehat{FatalityRate} = -\underset{(0.29)}{0.66} \times BeerTax + \\ StateFixedEffects. \tag{10.7} \end{align}\)</span></p>
+<p>The coefficient on $BeerTax $ is negative and significant. The interpretation is that the estimated reduction in traffic fatalities due to an increase in the real beer tax by <span class="math inline">\(1\$\)</span> is <span class="math inline">\(0.66\)</span> per <span class="math inline">\(10,000\)</span> people, which is still pretty high.</p>
+</section><section id="regression-with-time-fixed-effect" class="level2"><h2 class="anchored" data-anchor-id="regression-with-time-fixed-effect">Regression with Time Fixed Effect</h2>
+<p><span class="math inline">\(Y_{it} = \beta_0 + \beta_1 X_{it} + \delta_2 B2_t + \cdots\\ + \delta_T BT_t + u_{it},\)</span> where <span class="math inline">\(T-1\)</span> are binary variables (<span class="math inline">\(B_1\)</span> is ommited) <em>The entity time fixed effect</em> is <span class="math inline">\(Y_{it} = \beta_0 + \beta_1 X_{it} + \gamma_2 D2_i + \cdots \\ + \gamma_n DT_i + \delta_2 B2_t + \cdots + \delta_T BT_t + u_{it} .\)</span></p>
+<p><span class="math inline">\(FatalityRate_{it} = \beta_1 BeerTax_{it} + StateEffects + \\TimeFixedEffects + u_{it}\)</span></p>
+</section><section id="section-10" class="level2"><h2 class="anchored" data-anchor-id="section-10"></h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># estimate a combined time and entity fixed effects regression model</span></span>
+<span></span>
+<span><span class="co"># via lm()</span></span>
+<span><span class="va">fatal_tefe_lm_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">fatal_rate</span> <span class="op">~</span> <span class="va">beertax</span> <span class="op">+</span> <span class="va">state</span> <span class="op">+</span> <span class="va">year</span> <span class="op">-</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span>
+<span><span class="va">fatal_tefe_lm_mod</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = fatal_rate ~ beertax + state + year - 1, data = df)
+
+Coefficients:
+ beertax   stateal   stateaz   statear   stateca   stateco   statect   statede  
+-0.63998   3.51137   2.96451   2.87284   2.02618   2.04984   1.67125   2.22711  
+ statefl   statega   stateid   stateil   statein   stateia   stateks   stateky  
+ 3.25132   4.02300   2.86242   1.57287   2.07123   1.98709   2.30707   2.31659  
+ statela   stateme   statemd   statema   statemi   statemn   statems   statemo  
+ 2.67772   2.41713   1.82731   1.42335   2.04488   1.63488   3.49146   2.23598  
+ statemt   statene   statenv   statenh   statenj   statenm   stateny   statenc  
+ 3.17160   2.00846   2.93322   2.27245   1.43016   3.95748   1.34849   3.22630  
+ statend   stateoh   stateok   stateor   statepa   stateri   statesc   statesd  
+ 1.90762   1.85664   2.97776   2.36597   1.76563   1.26964   4.06496   2.52317  
+ statetn   statetx   stateut   statevt   stateva   statewa   statewv   statewi  
+ 2.65670   2.61282   2.36165   2.56100   2.23618   1.87424   2.63364   1.77545  
+ statewy  year1983  year1984  year1985  year1986  year1987  year1988  
+ 3.30791  -0.07990  -0.07242  -0.12398  -0.03786  -0.05090  -0.05180  </code></pre>
+</div>
+</div>
+</section><section id="via-plm" class="level2"><h2 class="anchored" data-anchor-id="via-plm">Via plm</h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># via plm()</span></span>
+<span><span class="va">fatal_tefe_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/plm/man/plm.html">plm</a></span><span class="op">(</span><span class="va">fatal_rate</span> <span class="op">~</span> <span class="va">beertax</span>, </span>
+<span>                      data <span class="op">=</span> <span class="va">df</span>,</span>
+<span>                      index <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"state"</span>, <span class="st">"year"</span><span class="op">)</span>, </span>
+<span>                      model <span class="op">=</span> <span class="st">"within"</span>, </span>
+<span>                      effect <span class="op">=</span> <span class="st">"twoways"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">coeftest</span><span class="op">(</span><span class="va">fatal_tefe_mod</span>, vcov <span class="op">=</span> <span class="va">vcovHC</span>, type <span class="op">=</span> <span class="st">"HC1"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>
+t test of coefficients:
+
+        Estimate Std. Error t value Pr(&gt;|t|)  
+beertax -0.63998    0.35015 -1.8277  0.06865 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p><strong>state</strong> and <strong>year</strong> are the <strong>class</strong> factors:</p>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># check the class of 'state' and 'year'</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">Fatalities</span><span class="op">$</span><span class="va">state</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+<details><summary>Code</summary><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt; [1] "factor"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">Fatalities</span><span class="op">$</span><span class="va">year</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] "factor"</code></pre>
+</div>
+<details><summary>Code</summary><div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">#&gt; [1] "factor"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><span class="math inline">\(\begin{align} \widehat{FatalityRate} = -\underset{(0.35)}{0.64} \times BeerTax + StateEffects + TimeFixedEffects. \tag{10.8} \end{align}\)</span></p>
+</section><section id="the-fixed-effects-regression-assumptions" class="level2"><h2 class="anchored" data-anchor-id="the-fixed-effects-regression-assumptions">The Fixed Effects Regression Assumptions</h2>
+<p>In the fixed effects model <span class="math inline">\(Y_{it} = \beta_1 X_{it} + \alpha_i + u_{it} \ \ , \ \ i=1,\dots,n, \ t=1,\dots,T,\)</span> we assume the following: 1. The error term <span class="math inline">\(u_{it}\)</span> has conditional mean zero, that is, <span class="math inline">\(E(u_{it}|X_{i1}, X_{i2},\dots, X_{iT})\)</span>. 2. <span class="math inline">\((X_{i1}, X_{i2}, \dots, X_{i3}, u_{i1}, \dots, u_{iT})\)</span> are i.i.d draw from their distributions. 3. Large outliers are unlikely, i.e., <span class="math inline">\((u_{it},x_{it})\)</span> have nonzero finite fourth moments. 4. There is no perfect multicollinearity. When there are multiple regressors, <span class="math inline">\(x_{it}\)</span> is replaced with <span class="math inline">\(X_{1,it}, X_{2,it}, \dots, X_{k,it}\)</span>.</p>
+</section><section id="section-11" class="level2"><h2 class="anchored" data-anchor-id="section-11"></h2>
+<p>discretize the minimum legal drinking age</p>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span><span class="op">$</span><span class="va">drinkagec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html">cut</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">drinkage</span>,</span>
+<span>                            breaks <span class="op">=</span> <span class="fl">18</span><span class="op">:</span><span class="fl">22</span>, </span>
+<span>                            include.lowest <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>                            right <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># set minimum drinking age [21, 22] to be the baseline level</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">drinkagec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/relevel.html">relevel</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">drinkagec</span>, <span class="st">"[21,22]"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># mandadory jail or community service?</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">punish</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">jail</span> <span class="op">==</span> <span class="st">"yes"</span> <span class="op">|</span> <span class="va">service</span> <span class="op">==</span> <span class="st">"yes"</span>, </span>
+<span>                                             labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"no"</span>, <span class="st">"yes"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section><section id="estimate-all-seven-models" class="level2"><h2 class="anchored" data-anchor-id="estimate-all-seven-models">estimate all seven models</h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">Fatalities_1982_1988</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">year</span> <span class="op">==</span> <span class="fl">1982</span> <span class="op">|</span> <span class="va">year</span> <span class="op">==</span> <span class="fl">1988</span><span class="op">)</span>,<span class="op">]</span></span>
+<span><span class="va">models</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">fatalities_mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">fatal_rate</span> <span class="op">~</span> <span class="va">beertax</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span>,</span>
+<span></span>
+<span><span class="va">fatalities_mod2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/plm/man/plm.html">plm</a></span><span class="op">(</span><span class="va">fatal_rate</span> <span class="op">~</span> <span class="va">beertax</span> <span class="op">+</span> <span class="va">state</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span>,</span>
+<span></span>
+<span><span class="va">fatalities_mod3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/plm/man/plm.html">plm</a></span><span class="op">(</span><span class="va">fatal_rate</span> <span class="op">~</span> <span class="va">beertax</span> <span class="op">+</span> <span class="va">state</span> <span class="op">+</span> <span class="va">year</span>,</span>
+<span>                       index <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"state"</span>,<span class="st">"year"</span><span class="op">)</span>,</span>
+<span>                       model <span class="op">=</span> <span class="st">"within"</span>,</span>
+<span>                       effect <span class="op">=</span> <span class="st">"twoways"</span>, </span>
+<span>                       data <span class="op">=</span> <span class="va">df</span><span class="op">)</span>,</span>
+<span></span>
+<span><span class="va">fatalities_mod4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/plm/man/plm.html">plm</a></span><span class="op">(</span><span class="va">fatal_rate</span> <span class="op">~</span> <span class="va">beertax</span> <span class="op">+</span> <span class="va">state</span> <span class="op">+</span> <span class="va">year</span> <span class="op">+</span> <span class="va">drinkagec</span> </span>
+<span>                       <span class="op">+</span> <span class="va">punish</span> <span class="op">+</span> <span class="va">miles</span> <span class="op">+</span> <span class="va">unemp</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">income</span><span class="op">)</span>, </span>
+<span>                       index <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"state"</span>, <span class="st">"year"</span><span class="op">)</span>,</span>
+<span>                       model <span class="op">=</span> <span class="st">"within"</span>,</span>
+<span>                       effect <span class="op">=</span> <span class="st">"twoways"</span>,</span>
+<span>                       data <span class="op">=</span> <span class="va">df</span><span class="op">)</span>,</span>
+<span></span>
+<span><span class="va">fatalities_mod5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/plm/man/plm.html">plm</a></span><span class="op">(</span><span class="va">fatal_rate</span> <span class="op">~</span> <span class="va">beertax</span> <span class="op">+</span> <span class="va">state</span> <span class="op">+</span> <span class="va">year</span> <span class="op">+</span> <span class="va">drinkagec</span> </span>
+<span>                       <span class="op">+</span> <span class="va">punish</span> <span class="op">+</span> <span class="va">miles</span>,</span>
+<span>                       index <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"state"</span>, <span class="st">"year"</span><span class="op">)</span>,</span>
+<span>                       model <span class="op">=</span> <span class="st">"within"</span>,</span>
+<span>                       effect <span class="op">=</span> <span class="st">"twoways"</span>,</span>
+<span>                       data <span class="op">=</span> <span class="va">df</span><span class="op">)</span>,</span>
+<span></span>
+<span><span class="va">fatalities_mod6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/plm/man/plm.html">plm</a></span><span class="op">(</span><span class="va">fatal_rate</span> <span class="op">~</span> <span class="va">beertax</span> <span class="op">+</span> <span class="va">year</span> <span class="op">+</span> <span class="va">drinkage</span> </span>
+<span>                       <span class="op">+</span> <span class="va">punish</span> <span class="op">+</span> <span class="va">miles</span> <span class="op">+</span> <span class="va">unemp</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">income</span><span class="op">)</span>, </span>
+<span>                       index <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"state"</span>, <span class="st">"year"</span><span class="op">)</span>,</span>
+<span>                       model <span class="op">=</span> <span class="st">"within"</span>,</span>
+<span>                       effect <span class="op">=</span> <span class="st">"twoways"</span>,</span>
+<span>                       data <span class="op">=</span> <span class="va">df</span><span class="op">)</span>,</span>
+<span><span class="co">## the set of observations on all variables for 1982 and 1988</span></span>
+<span><span class="va">fatalities_mod7</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/plm/man/plm.html">plm</a></span><span class="op">(</span><span class="va">fatal_rate</span> <span class="op">~</span> <span class="va">beertax</span> <span class="op">+</span> <span class="va">state</span> <span class="op">+</span> <span class="va">year</span> <span class="op">+</span> <span class="va">drinkagec</span> </span>
+<span>                       <span class="op">+</span> <span class="va">punish</span> <span class="op">+</span> <span class="va">miles</span> <span class="op">+</span> <span class="va">unemp</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">income</span><span class="op">)</span>, </span>
+<span>                       index <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"state"</span>, <span class="st">"year"</span><span class="op">)</span>,</span>
+<span>                       model <span class="op">=</span> <span class="st">"within"</span>,</span>
+<span>                       effect <span class="op">=</span> <span class="st">"twoways"</span>,</span>
+<span>                       data <span class="op">=</span> <span class="va">Fatalities_1982_1988</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class="co">##We again use stargazer() (Hlavac, 2018) to generate a comprehensive tabular presentation of the results.</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">stargazer</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://strengejacke.github.io/sjPlot/">sjPlot</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://strengejacke.github.io/sjmisc/">sjmisc</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://strengejacke.github.io/sjlabelled/">sjlabelled</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://vincentarelbundock.github.io/modelsummary/">modelsummary</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://vincentarelbundock.github.io/modelsummary/reference/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="va">models</span>,fmt<span class="op">=</span><span class="fl">3</span>,vcov <span class="op">=</span> <span class="st">"robust"</span>,estimate <span class="op">=</span> <span class="st">"{estimate}{stars}"</span>,</span>
+<span>             gof_omit <span class="op">=</span> <span class="st">".*"</span>,output <span class="op">=</span> <span class="st">"gt"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+
+<div id="dvhgphndnn" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+:where(#dvhgphndnn) .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+:where(#dvhgphndnn) .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#dvhgphndnn) .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+:where(#dvhgphndnn) .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+:where(#dvhgphndnn) .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+:where(#dvhgphndnn) .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#dvhgphndnn) .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#dvhgphndnn) .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+:where(#dvhgphndnn) .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+:where(#dvhgphndnn) .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+:where(#dvhgphndnn) .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+:where(#dvhgphndnn) .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+:where(#dvhgphndnn) .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+:where(#dvhgphndnn) .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+:where(#dvhgphndnn) .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+:where(#dvhgphndnn) .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+:where(#dvhgphndnn) .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+:where(#dvhgphndnn) .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#dvhgphndnn) .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+:where(#dvhgphndnn) .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+:where(#dvhgphndnn) .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#dvhgphndnn) .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+:where(#dvhgphndnn) .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+:where(#dvhgphndnn) .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#dvhgphndnn) .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#dvhgphndnn) .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+:where(#dvhgphndnn) .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+:where(#dvhgphndnn) .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+:where(#dvhgphndnn) .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#dvhgphndnn) .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#dvhgphndnn) .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+:where(#dvhgphndnn) .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+:where(#dvhgphndnn) .gt_left {
+  text-align: left;
+}
+
+:where(#dvhgphndnn) .gt_center {
+  text-align: center;
+}
+
+:where(#dvhgphndnn) .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+:where(#dvhgphndnn) .gt_font_normal {
+  font-weight: normal;
+}
+
+:where(#dvhgphndnn) .gt_font_bold {
+  font-weight: bold;
+}
+
+:where(#dvhgphndnn) .gt_font_italic {
+  font-style: italic;
+}
+
+:where(#dvhgphndnn) .gt_super {
+  font-size: 65%;
+}
+
+:where(#dvhgphndnn) .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+:where(#dvhgphndnn) .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+:where(#dvhgphndnn) .gt_indent_1 {
+  text-indent: 5px;
+}
+
+:where(#dvhgphndnn) .gt_indent_2 {
+  text-indent: 10px;
+}
+
+:where(#dvhgphndnn) .gt_indent_3 {
+  text-indent: 15px;
+}
+
+:where(#dvhgphndnn) .gt_indent_4 {
+  text-indent: 20px;
+}
+
+:where(#dvhgphndnn) .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table">
+<thead class="gt_col_headings"><tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id=" "> </th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Model 1">Model 1</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Model 2">Model 2</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Model 3">Model 3</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Model 4">Model 4</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Model 5">Model 5</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Model 6">Model 6</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Model 7">Model 7</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="" class="gt_row gt_left">(Intercept)</td>
+<td headers="Model 1" class="gt_row gt_center">1.853***</td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center"></td>
+<td headers="Model 5" class="gt_row gt_center"></td>
+<td headers="Model 6" class="gt_row gt_center"></td>
+<td headers="Model 7" class="gt_row gt_center"></td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left"></td>
+<td headers="Model 1" class="gt_row gt_center">(0.047)</td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center"></td>
+<td headers="Model 5" class="gt_row gt_center"></td>
+<td headers="Model 6" class="gt_row gt_center"></td>
+<td headers="Model 7" class="gt_row gt_center"></td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left">beertax</td>
+<td headers="Model 1" class="gt_row gt_center">0.365***</td>
+<td headers="Model 2" class="gt_row gt_center">-0.656*</td>
+<td headers="Model 3" class="gt_row gt_center">-0.640+</td>
+<td headers="Model 4" class="gt_row gt_center">-0.445</td>
+<td headers="Model 5" class="gt_row gt_center">-0.690+</td>
+<td headers="Model 6" class="gt_row gt_center">-0.456</td>
+<td headers="Model 7" class="gt_row gt_center">-0.926*</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left"></td>
+<td headers="Model 1" class="gt_row gt_center">(0.054)</td>
+<td headers="Model 2" class="gt_row gt_center">(0.298)</td>
+<td headers="Model 3" class="gt_row gt_center">(0.366)</td>
+<td headers="Model 4" class="gt_row gt_center">(0.318)</td>
+<td headers="Model 5" class="gt_row gt_center">(0.370)</td>
+<td headers="Model 6" class="gt_row gt_center">(0.327)</td>
+<td headers="Model 7" class="gt_row gt_center">(0.382)</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left">drinkagec[18,19)</td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">0.028</td>
+<td headers="Model 5" class="gt_row gt_center">-0.010</td>
+<td headers="Model 6" class="gt_row gt_center"></td>
+<td headers="Model 7" class="gt_row gt_center">0.037</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left"></td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">(0.074)</td>
+<td headers="Model 5" class="gt_row gt_center">(0.084)</td>
+<td headers="Model 6" class="gt_row gt_center"></td>
+<td headers="Model 7" class="gt_row gt_center">(0.112)</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left">drinkagec[19,20)</td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">-0.018</td>
+<td headers="Model 5" class="gt_row gt_center">-0.076</td>
+<td headers="Model 6" class="gt_row gt_center"></td>
+<td headers="Model 7" class="gt_row gt_center">-0.065</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left"></td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">(0.050)</td>
+<td headers="Model 5" class="gt_row gt_center">(0.067)</td>
+<td headers="Model 6" class="gt_row gt_center"></td>
+<td headers="Model 7" class="gt_row gt_center">(0.099)</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left">drinkagec[20,21)</td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">0.032</td>
+<td headers="Model 5" class="gt_row gt_center">-0.100+</td>
+<td headers="Model 6" class="gt_row gt_center"></td>
+<td headers="Model 7" class="gt_row gt_center">-0.113</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left"></td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">(0.053)</td>
+<td headers="Model 5" class="gt_row gt_center">(0.057)</td>
+<td headers="Model 6" class="gt_row gt_center"></td>
+<td headers="Model 7" class="gt_row gt_center">(0.131)</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left">punishyes</td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">0.038</td>
+<td headers="Model 5" class="gt_row gt_center">0.085</td>
+<td headers="Model 6" class="gt_row gt_center">0.039</td>
+<td headers="Model 7" class="gt_row gt_center">0.089</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left"></td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">(0.111)</td>
+<td headers="Model 5" class="gt_row gt_center">(0.119)</td>
+<td headers="Model 6" class="gt_row gt_center">(0.110)</td>
+<td headers="Model 7" class="gt_row gt_center">(0.179)</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left">miles</td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">0.000</td>
+<td headers="Model 5" class="gt_row gt_center">0.000</td>
+<td headers="Model 6" class="gt_row gt_center">0.000</td>
+<td headers="Model 7" class="gt_row gt_center">0.000*</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left"></td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">(0.000)</td>
+<td headers="Model 5" class="gt_row gt_center">(0.000)</td>
+<td headers="Model 6" class="gt_row gt_center">(0.000)</td>
+<td headers="Model 7" class="gt_row gt_center">(0.000)</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left">unemp</td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">-0.063***</td>
+<td headers="Model 5" class="gt_row gt_center"></td>
+<td headers="Model 6" class="gt_row gt_center">-0.063***</td>
+<td headers="Model 7" class="gt_row gt_center">-0.091***</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left"></td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">(0.013)</td>
+<td headers="Model 5" class="gt_row gt_center"></td>
+<td headers="Model 6" class="gt_row gt_center">(0.013)</td>
+<td headers="Model 7" class="gt_row gt_center">(0.022)</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left">log(income)</td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">1.816**</td>
+<td headers="Model 5" class="gt_row gt_center"></td>
+<td headers="Model 6" class="gt_row gt_center">1.786**</td>
+<td headers="Model 7" class="gt_row gt_center">0.996</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left"></td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">(0.646)</td>
+<td headers="Model 5" class="gt_row gt_center"></td>
+<td headers="Model 6" class="gt_row gt_center">(0.650)</td>
+<td headers="Model 7" class="gt_row gt_center">(0.715)</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left">drinkage</td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center"></td>
+<td headers="Model 5" class="gt_row gt_center"></td>
+<td headers="Model 6" class="gt_row gt_center">-0.002</td>
+<td headers="Model 7" class="gt_row gt_center"></td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left"></td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center"></td>
+<td headers="Model 5" class="gt_row gt_center"></td>
+<td headers="Model 6" class="gt_row gt_center">(0.022)</td>
+<td headers="Model 7" class="gt_row gt_center"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section></section><section id="wage-data-woolridge-book" class="level1"><h1><a href="https://tyleransom.github.io/teaching/MetricsLabs/lab15.html">Wage data Woolridge book</a></h1>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://justinmshea.github.io/wooldridge/">wooldridge</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://broom.tidymodels.org/">broom</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://jepusto.github.io/clubSandwich/">clubSandwich</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://vincentarelbundock.github.io/modelsummary/">modelsummary</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://declaredesign.org/r/estimatr/">estimatr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cran.r-project.org/package=plm">plm</a></span><span class="op">)</span>   <span class="co"># You may need to install this package</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="load-the-data" class="level2"><h2 class="anchored" data-anchor-id="load-the-data">Load the data</h2>
+<p>Load the data Our data set will be a panel of wages for 545 men. Load the data from the wooldridge package, format year to be a factor, and rename the variable nr to something more descriptive (id):</p>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span><span class="op">(</span><span class="va">wagepan</span><span class="op">)</span></span>
+<span><span class="va">df</span><span class="op">&lt;-</span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>year<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">df</span><span class="op">&lt;-</span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>id <span class="op">=</span> <span class="va">nr</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section><section id="summary-statistics-with-panel-data" class="level2"><h2 class="anchored" data-anchor-id="summary-statistics-with-panel-data">Summary Statistics with Panel Data</h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df.within</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">id</span>,<span class="va">year</span>,<span class="va">educ</span>,<span class="va">married</span>,<span class="va">union</span>,<span class="va">rur</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>             <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>             <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span></span>
+<span>                 mean.edu <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">educ</span><span class="op">)</span>,</span>
+<span>                 var.edu  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">educ</span><span class="op">)</span>,</span>
+<span>                mean.marr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">married</span><span class="op">)</span>,</span>
+<span>                 var.marr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">married</span><span class="op">)</span>,</span>
+<span>               mean.union <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">union</span><span class="op">)</span>,</span>
+<span>                var.union <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">union</span><span class="op">)</span>,</span>
+<span>               mean.rural <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">rur</span><span class="op">)</span>,</span>
+<span>                var.rural <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">rur</span><span class="op">)</span></span>
+<span>             <span class="op">)</span></span>
+<span><span class="va">df.within</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://vincentarelbundock.github.io/modelsummary/reference/datasummary_skim.html">datasummary_skim</a></span><span class="op">(</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead><tr>
+<th style="text-align:left;">   </th>
+   <th style="text-align:right;"> Unique (#) </th>
+   <th style="text-align:right;"> Missing (%) </th>
+   <th style="text-align:right;"> Mean </th>
+   <th style="text-align:right;"> SD </th>
+   <th style="text-align:right;"> Min </th>
+   <th style="text-align:right;"> Median </th>
+   <th style="text-align:right;"> Max </th>
+   <th style="text-align:right;">    </th>
+  </tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;"> id </td>
+   <td style="text-align:right;"> 545 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 5262.1 </td>
+   <td style="text-align:right;"> 3499.0 </td>
+   <td style="text-align:right;"> 13.0 </td>
+   <td style="text-align:right;"> 4569.0 </td>
+   <td style="text-align:right;"> 12548.0 </td>
+   <td style="text-align:right;">  <svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" class="svglite" width="48.00pt" height="12.00pt" viewbox="0 0 48.00 12.00"><defs><style type="text/css">
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)"></g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.73" y="4.41" width="3.55" height="7.26" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="5.28" y="5.24" width="3.55" height="6.42" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="8.82" y="4.88" width="3.55" height="6.78" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="12.37" y="3.22" width="3.55" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="15.91" y="5.48" width="3.55" height="6.18" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="19.46" y="6.31" width="3.55" height="5.35" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="23.01" y="8.93" width="3.55" height="2.74" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="26.55" y="8.69" width="3.55" height="2.97" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="30.10" y="5.36" width="3.55" height="6.30" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="33.64" y="6.07" width="3.55" height="5.59" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="37.19" y="9.05" width="3.55" height="2.62" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="40.73" y="10.12" width="3.55" height="1.55" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="44.28" y="9.05" width="3.55" height="2.62" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
+</td>
+  </tr>
+<tr>
+<td style="text-align:left;"> mean.edu </td>
+   <td style="text-align:right;"> 13 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 11.8 </td>
+   <td style="text-align:right;"> 1.7 </td>
+   <td style="text-align:right;"> 3.0 </td>
+   <td style="text-align:right;"> 12.0 </td>
+   <td style="text-align:right;"> 16.0 </td>
+   <td style="text-align:right;">  <svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" class="svglite" width="48.00pt" height="12.00pt" viewbox="0 0 48.00 12.00"><defs><style type="text/css">
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)"></g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="11.63" width="3.42" height="0.037" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="5.20" y="11.59" width="3.42" height="0.073" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="8.62" y="11.48" width="3.42" height="0.18" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="12.03" y="11.59" width="3.42" height="0.073" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="15.45" y="11.00" width="3.42" height="0.66" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="18.87" y="11.04" width="3.42" height="0.62" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="22.29" y="9.94" width="3.42" height="1.72" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="25.71" y="8.30" width="3.42" height="3.36" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="29.13" y="3.22" width="3.42" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.55" y="9.69" width="3.42" height="1.97" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="35.97" y="10.16" width="3.42" height="1.50" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="39.38" y="10.53" width="3.42" height="1.13" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="42.80" y="11.52" width="3.42" height="0.15" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
+</td>
+  </tr>
+<tr>
+<td style="text-align:left;"> var.edu </td>
+   <td style="text-align:right;"> 1 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;">  <svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" class="svglite" width="48.00pt" height="12.00pt" viewbox="0 0 48.00 12.00"><defs><style type="text/css">
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)"></g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="22.22" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
+</td>
+  </tr>
+<tr>
+<td style="text-align:left;"> mean.marr </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.4 </td>
+   <td style="text-align:right;"> 0.4 </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;"> 0.4 </td>
+   <td style="text-align:right;"> 1.0 </td>
+   <td style="text-align:right;">  <svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" class="svglite" width="48.00pt" height="12.00pt" viewbox="0 0 48.00 12.00"><defs><style type="text/css">
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)"></g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="4.44" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="6.22" y="9.58" width="4.44" height="2.09" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="10.67" y="9.94" width="4.44" height="1.72" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="15.11" y="9.32" width="4.44" height="2.35" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="19.56" y="9.84" width="4.44" height="1.82" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="24.00" y="11.66" width="4.44" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="28.44" y="8.85" width="4.44" height="2.81" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.89" y="9.47" width="4.44" height="2.19" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="37.33" y="8.48" width="4.44" height="3.18" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="41.78" y="7.86" width="4.44" height="3.81" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
+</td>
+  </tr>
+<tr>
+<td style="text-align:left;"> var.marr </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.1 </td>
+   <td style="text-align:right;"> 0.1 </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;"> 0.1 </td>
+   <td style="text-align:right;"> 0.3 </td>
+   <td style="text-align:right;">  <svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" class="svglite" width="48.00pt" height="12.00pt" viewbox="0 0 48.00 12.00"><defs><style type="text/css">
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)"></g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="3.11" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="4.89" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="8.00" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="11.11" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="14.22" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="17.33" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="20.44" y="8.03" width="3.11" height="3.63" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="23.56" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="26.67" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="29.78" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.89" y="8.97" width="3.11" height="2.70" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="36.00" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="39.11" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="42.22" y="8.10" width="3.11" height="3.56" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="45.33" y="10.40" width="3.11" height="1.26" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
+</td>
+  </tr>
+<tr>
+<td style="text-align:left;"> mean.union </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.2 </td>
+   <td style="text-align:right;"> 0.3 </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;"> 0.1 </td>
+   <td style="text-align:right;"> 1.0 </td>
+   <td style="text-align:right;">  <svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" class="svglite" width="48.00pt" height="12.00pt" viewbox="0 0 48.00 12.00"><defs><style type="text/css">
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)"></g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="4.44" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="6.22" y="9.11" width="4.44" height="2.55" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="10.67" y="10.32" width="4.44" height="1.34" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="15.11" y="10.93" width="4.44" height="0.73" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="19.56" y="10.80" width="4.44" height="0.86" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="24.00" y="11.66" width="4.44" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="28.44" y="11.06" width="4.44" height="0.61" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.89" y="10.74" width="4.44" height="0.92" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="37.33" y="10.83" width="4.44" height="0.83" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="41.78" y="10.58" width="4.44" height="1.08" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
+</td>
+  </tr>
+<tr>
+<td style="text-align:left;"> var.union </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.1 </td>
+   <td style="text-align:right;"> 0.1 </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;"> 0.3 </td>
+   <td style="text-align:right;">  <svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" class="svglite" width="48.00pt" height="12.00pt" viewbox="0 0 48.00 12.00"><defs><style type="text/css">
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)"></g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="3.11" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="4.89" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="8.00" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="11.11" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="14.22" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="17.33" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="20.44" y="8.67" width="3.11" height="2.99" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="23.56" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="26.67" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="29.78" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.89" y="9.66" width="3.11" height="2.01" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="36.00" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="39.11" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="42.22" y="10.48" width="3.11" height="1.19" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="45.33" y="10.90" width="3.11" height="0.76" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
+</td>
+  </tr>
+<tr>
+<td style="text-align:left;"> mean.rural </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.2 </td>
+   <td style="text-align:right;"> 0.4 </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;"> 1.0 </td>
+   <td style="text-align:right;">  <svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" class="svglite" width="48.00pt" height="12.00pt" viewbox="0 0 48.00 12.00"><defs><style type="text/css">
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)"></g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="4.44" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="6.22" y="11.29" width="4.44" height="0.38" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="10.67" y="11.40" width="4.44" height="0.27" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="15.11" y="11.20" width="4.44" height="0.46" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="19.56" y="11.49" width="4.44" height="0.18" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="24.00" y="11.66" width="4.44" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="28.44" y="11.24" width="4.44" height="0.42" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.89" y="11.42" width="4.44" height="0.24" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="37.33" y="11.49" width="4.44" height="0.18" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="41.78" y="10.18" width="4.44" height="1.48" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
+</td>
+  </tr>
+<tr>
+<td style="text-align:left;"> var.rural </td>
+   <td style="text-align:right;"> 5 </td>
+   <td style="text-align:right;"> 0 </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;"> 0.1 </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;"> 0.0 </td>
+   <td style="text-align:right;"> 0.3 </td>
+   <td style="text-align:right;">  <svg xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" class="svglite" width="48.00pt" height="12.00pt" viewbox="0 0 48.00 12.00"><defs><style type="text/css">
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)"></g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="3.11" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="4.89" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="8.00" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="11.11" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="14.22" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="17.33" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="20.44" y="11.19" width="3.11" height="0.47" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="23.56" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="26.67" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="29.78" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.89" y="11.23" width="3.11" height="0.43" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="36.00" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="39.11" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="42.22" y="10.91" width="3.11" height="0.75" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="45.33" y="11.51" width="3.11" height="0.15" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
+</td>
+  </tr>
+</tbody>
+</table>
+</div>
+</div>
+</section><section id="section-12" class="level2"><h2 class="anchored" data-anchor-id="section-12"></h2>
+<p>Is there any within-person variance in the educ variable? What about married, union, and rural?</p>
+<p>What does it mean for the married, union, or rural variables to have a positive within-person variance?</p>
+<p>Why is it important to know if a variable has positive within-person variance?</p>
+</section><section id="pooled-ols-random-effects-and-fixed-effects-models" class="level2 centered"><h2 class="centered anchored" data-anchor-id="pooled-ols-random-effects-and-fixed-effects-models">Pooled OLS, Random Effects, and Fixed Effects Models</h2>
+<p><span class="math inline">\(\begin{align*} \log(wage_{it}) &amp; = \beta_0 + \beta_1 educ_{i} + \beta_2 black_{i} + \beta_3 hisp_{i} + \beta_4 exper_{it} + \beta_5 exper_{it}^2 + \beta_6 married_{it} + \\ &amp;\phantom{=\,\,}\beta_7 union_{it} + \beta_8 rur_{it} + \sum_t \beta_{9,t}year_{it} + a_i + u_{it} \end{align*}\)</span> The pooled ols by <code>lm_robust</code></p>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">est.pols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://declaredesign.org/r/estimatr/reference/lm_robust.html">lm_robust</a></span><span class="op">(</span><span class="va">lwage</span> <span class="op">~</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">black</span> <span class="op">+</span> <span class="va">hisp</span> <span class="op">+</span> <span class="va">exper</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">exper</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va">married</span> <span class="op">+</span> <span class="va">union</span> <span class="op">+</span> <span class="va">rur</span> <span class="op">+</span> <span class="va">year</span>,</span>
+<span>                data <span class="op">=</span> <span class="va">df</span>, clusters<span class="op">=</span><span class="va">id</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Interpret the coefficient on β7 in the pooled OLS model</p>
+</section><section id="random-effects" class="level2"><h2 class="anchored" data-anchor-id="random-effects">Random effects</h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">est.re</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/plm/man/plm.html">plm</a></span><span class="op">(</span><span class="va">lwage</span> <span class="op">~</span> <span class="va">educ</span> <span class="op">+</span> <span class="va">black</span> <span class="op">+</span> <span class="va">hisp</span> <span class="op">+</span> <span class="va">exper</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">exper</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va">married</span> <span class="op">+</span> <span class="va">union</span> <span class="op">+</span> <span class="va">rur</span> <span class="op">+</span> <span class="va">year</span>, </span>
+<span>              data <span class="op">=</span> <span class="va">df</span>, index <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"id"</span>,<span class="st">"year"</span><span class="op">)</span>, model <span class="op">=</span> <span class="st">"random"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>What is the estimate of <span class="math inline">\(θ\)</span> in the RE model? (Hint: check est.re<code>$ercomp$theta</code>) What does this tell you about what you expect the random effects estimates to be relative to the fixed effects estimates?</p>
+</section><section id="fixed-effects" class="level2"><h2 class="anchored" data-anchor-id="fixed-effects">Fixed effects</h2>
+<p>FE also come from the <code><a href="https://declaredesign.org/r/estimatr/reference/lm_robust.html">lm_robust()</a></code> function:</p>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">est.fe</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://declaredesign.org/r/estimatr/reference/lm_robust.html">lm_robust</a></span><span class="op">(</span><span class="va">lwage</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">exper</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="va">married</span> <span class="op">+</span> <span class="va">union</span> <span class="op">+</span> <span class="va">rur</span> <span class="op">+</span> <span class="va">year</span>, </span>
+<span>              data <span class="op">=</span> <span class="va">df</span>, fixed_effects <span class="op">=</span> <span class="op">~</span><span class="va">id</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Explain why we cannot estimate coefficients on <span class="math inline">\(educ\)</span>, <span class="math inline">\(black\)</span>, <span class="math inline">\(hisp\)</span>, or <span class="math inline">\(exper\)</span> in the fixed effects model. (Note: the reason for not being able to estimate exper is more nuanced)</p>
+<p>##Clustered standard errors The most appropriate standard errors account for within-person serial correlation and are robust to heteroskedasticity.</p>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">clust.re</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://jepusto.github.io/clubSandwich/reference/coef_test.html">coef_test</a></span><span class="op">(</span><span class="va">est.re</span>, vcov <span class="op">=</span> <span class="st">"CR1"</span>, cluster <span class="op">=</span> <span class="st">"individual"</span><span class="op">)</span></span>
+<span><span class="va">clust.re.SE</span> <span class="op">&lt;-</span> <span class="va">clust.re</span><span class="op">$</span><span class="va">SE</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">clust.re.SE</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">est.re</span><span class="op">$</span><span class="va">coefficients</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section><section id="model-summary" class="level2 scrollable"><h2 class="scrollable anchored" data-anchor-id="model-summary">Model summary</h2>
+<div class="cell">
+<details><summary>Code</summary><div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://vincentarelbundock.github.io/modelsummary/reference/modelsummary.html">modelsummary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"POLS"</span><span class="op">=</span><span class="va">est.pols</span>,<span class="st">"RE"</span><span class="op">=</span><span class="va">est.re</span>,<span class="st">"FE"</span><span class="op">=</span><span class="va">est.fe</span><span class="op">)</span>,</span>
+<span>             statistic_override<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">est.pols</span><span class="op">$</span><span class="va">vcov</span><span class="op">)</span><span class="op">)</span>,<span class="va">clust.re.SE</span>,<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">est.fe</span><span class="op">$</span><span class="va">vcov</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>             output<span class="op">=</span><span class="st">"markdown"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead><tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: center;">POLS</th>
+<th style="text-align: center;">RE</th>
+<th style="text-align: center;">FE</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: center;">0.165</td>
+<td style="text-align: center;">0.036</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.163)</td>
+<td style="text-align: center;">(0.161)</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">educ</td>
+<td style="text-align: center;">0.087</td>
+<td style="text-align: center;">0.091</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.011)</td>
+<td style="text-align: center;">(0.011)</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">black</td>
+<td style="text-align: center;">-0.149</td>
+<td style="text-align: center;">-0.141</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.051)</td>
+<td style="text-align: center;">(0.051)</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">hisp</td>
+<td style="text-align: center;">-0.016</td>
+<td style="text-align: center;">0.016</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.040)</td>
+<td style="text-align: center;">(0.040)</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">exper</td>
+<td style="text-align: center;">0.069</td>
+<td style="text-align: center;">0.106</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.019)</td>
+<td style="text-align: center;">(0.016)</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">I(exper^2)</td>
+<td style="text-align: center;">-0.002</td>
+<td style="text-align: center;">-0.005</td>
+<td style="text-align: center;">-0.005</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.001)</td>
+<td style="text-align: center;">(0.001)</td>
+<td style="text-align: center;">(0.001)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">married</td>
+<td style="text-align: center;">0.126</td>
+<td style="text-align: center;">0.065</td>
+<td style="text-align: center;">0.047</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.026)</td>
+<td style="text-align: center;">(0.019)</td>
+<td style="text-align: center;">(0.018)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">union</td>
+<td style="text-align: center;">0.182</td>
+<td style="text-align: center;">0.107</td>
+<td style="text-align: center;">0.079</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.028)</td>
+<td style="text-align: center;">(0.021)</td>
+<td style="text-align: center;">(0.019)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">rur</td>
+<td style="text-align: center;">-0.138</td>
+<td style="text-align: center;">-0.023</td>
+<td style="text-align: center;">0.049</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.035)</td>
+<td style="text-align: center;">(0.031)</td>
+<td style="text-align: center;">(0.031)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">year1981</td>
+<td style="text-align: center;">0.053</td>
+<td style="text-align: center;">0.040</td>
+<td style="text-align: center;">0.152</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.028)</td>
+<td style="text-align: center;">(0.028)</td>
+<td style="text-align: center;">(0.027)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">year1982</td>
+<td style="text-align: center;">0.055</td>
+<td style="text-align: center;">0.030</td>
+<td style="text-align: center;">0.254</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.037)</td>
+<td style="text-align: center;">(0.035)</td>
+<td style="text-align: center;">(0.028)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">year1983</td>
+<td style="text-align: center;">0.049</td>
+<td style="text-align: center;">0.019</td>
+<td style="text-align: center;">0.357</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.046)</td>
+<td style="text-align: center;">(0.044)</td>
+<td style="text-align: center;">(0.032)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">year1984</td>
+<td style="text-align: center;">0.074</td>
+<td style="text-align: center;">0.041</td>
+<td style="text-align: center;">0.494</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.057)</td>
+<td style="text-align: center;">(0.055)</td>
+<td style="text-align: center;">(0.040)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">year1985</td>
+<td style="text-align: center;">0.090</td>
+<td style="text-align: center;">0.056</td>
+<td style="text-align: center;">0.622</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.066)</td>
+<td style="text-align: center;">(0.064)</td>
+<td style="text-align: center;">(0.048)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">year1986</td>
+<td style="text-align: center;">0.120</td>
+<td style="text-align: center;">0.089</td>
+<td style="text-align: center;">0.771</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.076)</td>
+<td style="text-align: center;">(0.075)</td>
+<td style="text-align: center;">(0.059)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">year1987</td>
+<td style="text-align: center;">0.151</td>
+<td style="text-align: center;">0.132</td>
+<td style="text-align: center;">0.931</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: center;">(0.085)</td>
+<td style="text-align: center;">(0.085)</td>
+<td style="text-align: center;">(0.070)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Num.Obs.</td>
+<td style="text-align: center;">4360</td>
+<td style="text-align: center;">4360</td>
+<td style="text-align: center;">4360</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">R2</td>
+<td style="text-align: center;">0.199</td>
+<td style="text-align: center;">0.181</td>
+<td style="text-align: center;">0.621</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">R2 Adj.</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">0.178</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AIC</td>
+<td style="text-align: center;">5944.3</td>
+<td style="text-align: center;">3304.4</td>
+<td style="text-align: center;">2670.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BIC</td>
+<td style="text-align: center;">6052.8</td>
+<td style="text-align: center;">3412.9</td>
+<td style="text-align: center;">2746.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RMSE</td>
+<td style="text-align: center;">0.48</td>
+<td style="text-align: center;">0.35</td>
+<td style="text-align: center;">0.33</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section></section></main><!-- /main column --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

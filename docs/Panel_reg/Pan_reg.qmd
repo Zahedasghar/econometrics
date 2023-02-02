@@ -1,20 +1,21 @@
 ---
 title: "Panel Regression: Traffic Deaths & Wages"
 author: "Zahid Asghar<br><br> School of Economics, QAU, Islamabad"
-logo: "QAU-Logo.jpg"
+#logo: "QAU-Logo.jpg"
 toc: true
 format:
-  revealjs: 
-    theme: [simple, "docs/custom.scss"]
+  html: 
+    theme: [simple, "custom.scss"]
     code-link: true
-    
     multiplex: true
     code-fold: true
     chalkboard: true
-    execute:
-     freeze: auto  
-    title-slide-attributes:
-      data-background-color: "#447099"
+    #title-slide-attributes:
+     # data-background-color: "#447099"
+execute: 
+  warning: false
+  freeze: auto
+
 editor: source
 ---
 
@@ -51,7 +52,7 @@ $t$ = time period (year), $T$ = number of time periods so $t =1,\dots,T$
 
 Data: Suppose we have 1 regressor. The data are:
 
-$(X_{it}, Y_{i}t), i = 1,\dots,n,\ t = 1,…,T$
+$\left(X_{it},Y_{it}\right)\qquad\begin{cases}i=1,...,n\\t=1,...,T\end{cases}$
 
 Panel data with $K$ regressors $(X_{1it},X_{2it},\dots,X_{kit} Y_{i}t), i = 1,\dots,n,\ t = 1,…,T$ $n$ = number of entities (states) $T$ = number of time periods (years) Also called **longitudinal data**
 
@@ -531,8 +532,8 @@ Load the data Our data set will be a panel of wages for 545 men. Load the data f
 
 ```{r}
 df <- as_tibble(wagepan)
-df %<>% mutate(year=as.factor(year))
-df %<>% rename(id = nr)
+df<-df %>%  mutate(year=as.factor(year))
+df<-df %>%  rename(id = nr)
 ```
 
 ## Summary Statistics with Panel Data
