@@ -7,6 +7,7 @@ format:
     height: 900
     width: 1600
     chalkboard: true
+    code-fold: true
     title-slide-attributes: 
       data-background-image: images/peacock.jpg
       data-background-size: 15%
@@ -17,6 +18,7 @@ execute:
   echo: false
   warning: false
   freeze: auto
+editor: source
 --- 
 
 ##  {data-menu-title="Title Slide" background-image="images/metrics_title_slide.png"}
@@ -565,7 +567,7 @@ modelsummary(models,fmt=3,vcov = "robust",estimate = "{estimate}{stars}",
 
 ```
 
-# [Wage data Woolridge book](https://tyleransom.github.io/teaching/MetricsLabs/lab15.html){.centered background-color="#314f4f"}
+## [Wage data Woolridge book](https://tyleransom.github.io/teaching/MetricsLabs/lab15.html){.centered background-color="#314f4f"}
 
 ```{r}
 library(tidyverse)

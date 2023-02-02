@@ -6,24 +6,28 @@
 <script src="Pan_reg_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="Pan_reg_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="Pan_reg_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="Pan_reg_files/libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.0.38">
-
-  <meta name="author" content="Zahid Asghar   School of Economics, QAU, Islamabad">
-  <meta name="dcterms.date" content="2022-10-19">
-  <title>Panel Regression: Traffic Deaths &amp; Wages</title>
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="Pan_reg_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="Pan_reg_files/libs/revealjs/dist/reveal.css">
-  <style>
+<link href="Pan_reg_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+<meta name="author" content="Zahid Asghar   School of Economics, QAU, Islamabad">
+<title>Panel Regression: Traffic Deaths &amp; Wages</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+<link rel="stylesheet" href="Pan_reg_files/libs/revealjs/dist/reset.css">
+<link rel="stylesheet" href="Pan_reg_files/libs/revealjs/dist/reveal.css">
+<style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -50,51 +54,51 @@
         -khtml-user-select: none; -moz-user-select: none;
         -ms-user-select: none; user-select: none;
         padding: 0 4px; width: 4em;
+        color: #aaaaaa;
       }
-    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
     div.sourceCode
-      { color: #f8f8f2;  }
+      { color: #003b4f; background-color: #f1f3f5; }
     @media screen {
     pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
     }
-    code span { color: #f8f8f2; } /* Normal */
-    code span.al { color: #f07178; background-color: #2a0f15; font-weight: bold; } /* Alert */
-    code span.an { color: #d4d0ab; } /* Annotation */
-    code span.at { color: #00e0e0; } /* Attribute */
-    code span.bn { color: #d4d0ab; } /* BaseN */
-    code span.bu { color: #abe338; } /* BuiltIn */
-    code span.cf { color: #ffa07a; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #abe338; } /* Char */
-    code span.cn { color: #ffd700; } /* Constant */
-    code span.co { color: #f8f8f2; font-style: italic; } /* Comment */
-    code span.cv { color: #ffd700; } /* CommentVar */
-    code span.do { color: #f8f8f2; } /* Documentation */
-    code span.dt { color: #ffa07a; } /* DataType */
-    code span.dv { color: #d4d0ab; } /* DecVal */
-    code span.er { color: #f07178; text-decoration: underline; } /* Error */
-    code span.ex { color: #00e0e0; font-weight: bold; } /* Extension */
-    code span.fl { color: #d4d0ab; } /* Float */
-    code span.fu { color: #ffa07a; } /* Function */
-    code span.im { color: #abe338; } /* Import */
-    code span.in { color: #d4d0ab; } /* Information */
-    code span.kw { color: #ffa07a; font-weight: bold; } /* Keyword */
-    code span.op { color: #ffa07a; } /* Operator */
-    code span.ot { color: #00e0e0; } /* Other */
-    code span.pp { color: #dcc6e0; } /* Preprocessor */
-    code span.re { color: #00e0e0; background-color: #f8f8f2; } /* RegionMarker */
-    code span.sc { color: #abe338; } /* SpecialChar */
-    code span.ss { color: #abe338; } /* SpecialString */
-    code span.st { color: #abe338; } /* String */
-    code span.va { color: #00e0e0; } /* Variable */
-    code span.vs { color: #abe338; } /* VerbatimString */
-    code span.wa { color: #dcc6e0; } /* Warning */
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="Pan_reg_files/libs/revealjs/dist/theme/quarto.css" id="theme">
-  <link href="Pan_reg_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="Pan_reg_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="Pan_reg_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="Pan_reg_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
-  <style type="text/css">
+<link rel="stylesheet" href="Pan_reg_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+<link href="Pan_reg_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+<link href="Pan_reg_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+<link href="Pan_reg_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+<link href="Pan_reg_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+<style type="text/css">
 
   .callout {
     margin-top: 1em;
@@ -291,7 +295,7 @@
   }
 
   </style>
-  <style type="text/css">
+<style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
       overflow: auto;
@@ -378,50 +382,42 @@
       margin-right: 0; 
     }
   </style>
-  
-  <script src="Pan_reg_files/libs/kePrint-0.0.1/kePrint.js"></script>
-  <link href="Pan_reg_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="Pan_reg_files/libs/kePrint-0.0.1/kePrint.js"></script><link href="Pan_reg_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 </head>
-<body class="quarto-dark">
+<body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-color="#447099" class="center">
-  <h1 class="title">Panel Regression: Traffic Deaths &amp; Wages</h1>
-  <p class="author">Zahid Asghar<br><br> School of Economics, QAU, Islamabad</p>
-  <p class="date">10/19/22</p>
-</section>
+<section id="title-slide" data-background-color="#447099" class="quarto-title-block center"><h1 class="title">Panel Regression: Traffic Deaths &amp; Wages</h1>
 
-<section id="panel-data-regression" class="slide level2">
-<h2>Panel Data Regression</h2>
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Zahid Asghar<br><br> School of Economics, QAU, Islamabad 
+</div>
+</div>
+</div>
+
+  <p class="date">2/2/23</p>
+</section><section id="panel-data-regression" class="slide level2"><h2>Panel Data Regression</h2>
 <p>A <em>panel dataset</em> contains observations on multiple entities (individuals), where each entity is observed at two or more points in time.</p>
 <p>Hypothetical examples:</p>
 <ul>
 <li><p>Data on 50 districts in 2010 floods and again in 2022, for 100 observations total.</p></li>
 <li><p>Data on 100 SMES, each SME is observed in 3 years, for a total of 150 observations.</p></li>
 <li><p>Data on 1000 individuals, in four different months, for 4000 observations total.</p></li>
-</ul>
-</section>
-<section id="notations-for-panel-data" class="slide level2">
-<h2>Notations for Panel Data</h2>
+</ul></section><section id="notations-for-panel-data" class="slide level2"><h2>Notations for Panel Data</h2>
 <p>A double subscript distinguishes entities (states) and time periods (years)</p>
 <p><span class="math inline">\(i\)</span> = entity (state), <span class="math inline">\(n\)</span> = number of entities, so <span class="math inline">\(i = 1,\dots,n\)</span></p>
 <p><span class="math inline">\(t\)</span> = time period (year), <span class="math inline">\(T\)</span> = number of time periods so <span class="math inline">\(t =1,\dots,T\)</span></p>
-<p>Data: Suppose we have 1 regressor. The data are:</p>
-<p><span class="math inline">\((X_{it}, Y_{i}t), i = 1,\dots,n,\ t = 1,…,T\)</span></p>
+<p>Data: Suppose we have 1 regressor. The data are: <span class="math inline">\(\left(X_{it},Y_{it}\right)\qquad\begin{cases} i=1,...,n\\ t=1,...,T\end{cases}\)</span></p>
 <p>Panel data with <span class="math inline">\(K\)</span> regressors <span class="math inline">\((X_{1it},X_{2it},\dots,X_{kit} Y_{i}t), i = 1,\dots,n,\ t = 1,…,T\)</span> <span class="math inline">\(n\)</span> = number of entities (states) <span class="math inline">\(T\)</span> = number of time periods (years) Also called <strong>longitudinal data</strong></p>
-</section>
-<section id="why-are-panel-data-useful" class="slide level2">
-<h2>Why are panel data useful?</h2>
+</section><section id="why-are-panel-data-useful" class="slide level2"><h2>Why are panel data useful?</h2>
 <p>With panel data we can control for factors that: - Vary across entities (states) but do not vary over time - Could cause omitted variable bias if they are omitted - are unobserved or unmeasured – and therefore cannot be included in the regression using multiple regression</p>
 <p>Here’s the key idea: &gt; If an omitted variable does not change over time, then any changes in Y over time cannot be caused by the omitted variable.</p>
-</section>
-<section id="example-of-a-panel-data-set" class="slide level2">
-<h2>Example of a panel data set</h2>
+</section><section id="example-of-a-panel-data-set" class="slide level2"><h2>Example of a panel data set</h2>
 <p>Observational unit: a year in a U.S. state - 48 U.S. states, so <span class="math inline">\(n\)</span> = # of entities = 48 - 7 years (1982,…, 1988), so <span class="math inline">\(T\)</span> = # of time periods = 7 - Balanced panel, so total # observations = <span class="math inline">\(7\times48\)</span> = 336 Variables: - Traffic fatality rate (# traffic deaths in that state in that year, per 10,000 state residents) - Tax on a case of beer - Other (legal driving age, drunk driving laws, etc.)</p>
-</section>
-<section id="an-overview-of-data" class="slide level2 scrollable">
-<h2>An overview of data</h2>
+</section><section id="an-overview-of-data" class="slide level2 scrollable"><h2>An overview of data</h2>
 <div class="cell">
 <pre><code>## Rows: 336
 ## Columns: 34
@@ -460,9 +456,7 @@
 ## $ emppopus     &lt;dbl&gt; 57.8, 57.9, 59.5, 60.1, 60.7, 61.5, 62.3, 57.8, 57.9…
 ## $ gsp          &lt;dbl&gt; -0.02212, 0.04656, 0.06280, 0.02749, 0.03214, 0.0489…</code></pre>
 </div>
-</section>
-<section id="section" class="slide level2">
-<h2></h2>
+</section><section id="section" class="slide level2"><h2></h2>
 <p>A large number of variables and 336 total observations. We need to select only a few variables required in doing this exercise.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="do">## Summarise the variable state and year</span></span>
@@ -490,23 +484,17 @@
 <span id="cb2-23"><a href="#cb2-23"></a></span>
 <span id="cb2-24"><a href="#cb2-24"></a>Fatalities1988 <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(year<span class="sc">==</span><span class="st">"1988"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="u.s-traffic-death-data-for-1982" class="slide level2">
-<h2>U.S traffic death data for 1982</h2>
+</section><section id="u.s-traffic-death-data-for-1982" class="slide level2"><h2>U.S traffic death data for 1982</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">ggplot</span>(Fatalities1982)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span> beertax,<span class="at">y=</span>fatal_rate)<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>)<span class="sc">+</span><span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Beer Tax </span><span class="sc">\n</span><span class="st">(Dollars per case 1988)"</span>,<span class="at">y=</span><span class="st">"Fatality Rate </span><span class="sc">\n</span><span class="st"> Fatalities per 10000"</span>, <span class="at">title=</span><span class="st">"US traffice death for 1982"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="Pan_reg_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
-<section id="u.s-traffic-death-data-for-1988" class="slide level2">
-<h2>U.S traffic death data for 1988</h2>
+<img data-src="Pan_reg_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section><section id="u.s-traffic-death-data-for-1988" class="slide level2"><h2>U.S traffic death data for 1988</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">ggplot</span>(Fatalities1988)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span> beertax,<span class="at">y=</span>fatal_rate)<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span><span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se=</span><span class="cn">FALSE</span>)<span class="sc">+</span><span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Beer Tax </span><span class="sc">\n</span><span class="st">(Dollars per case 1988)"</span>,<span class="at">y=</span><span class="st">"Fatality Rate </span><span class="sc">\n</span><span class="st"> Fatalities per 10000"</span>, <span class="at">title=</span><span class="st">"US traffice death for 1988"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="Pan_reg_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
-<section id="regression-line" class="slide level2">
-<h2>Regression line</h2>
+<img data-src="Pan_reg_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section><section id="regression-line" class="slide level2"><h2>Regression line</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># estimate simple regression models using 1982 and 1988 data</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a>fatal1982_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(fatal_rate <span class="sc">~</span> beertax, <span class="at">data =</span> Fatalities1982)</span>
@@ -515,13 +503,9 @@
 <p><span class="math inline">\(\widehat{FatalityRate}= 2.01 + 0.15beertax\)</span></p>
 <p><span class="math inline">\(\widehat{FatalityRate}= 1.86 + 0.43beertax\)</span></p>
 <p><strong>High alcohal tax, more deaths</strong> :smiley:</p>
-</section>
-<section id="why-might-there-be-higher-more-traffic-deaths-in-states-that-have-higher-alcohol-taxes" class="slide level2">
-<h2>Why might there be higher more traffic deaths in states that have higher alcohol taxes?</h2>
+</section><section id="why-might-there-be-higher-more-traffic-deaths-in-states-that-have-higher-alcohol-taxes" class="slide level2"><h2>Why might there be higher more traffic deaths in states that have higher alcohol taxes?</h2>
 <p>Other factors that determine traffic fatality rate: - Quality (age) of automobiles - Quality of roads - “Culture” around drinking and driving - Density of cars on the road</p>
-</section>
-<section id="these-omitted-variables-could-cause-omitted-variable-bias" class="slide level2">
-<h2>These omitted variables could cause omitted variable bias</h2>
+</section><section id="these-omitted-variables-could-cause-omitted-variable-bias" class="slide level2"><h2>These omitted variables could cause omitted variable bias</h2>
 <p>Example #1: traffic density. Suppose:</p>
 <ol type="1">
 <li><p>High traffic density means more traffic deaths</p></li>
@@ -531,10 +515,7 @@
 <ul>
 <li>Specifically, “high taxes” could reflect “high traffic density” (so the OLS coefficient would be biased positively – high taxes, more deaths)</li>
 <li>Panel data lets us eliminate omitted variable bias when the omitted variables are constant over time within a given state.</li>
-</ul>
-</section>
-<section id="cultural-attitude-towards-driving-and-drinking" class="slide level2">
-<h2>Cultural attitude towards driving and drinking</h2>
+</ul></section><section id="cultural-attitude-towards-driving-and-drinking" class="slide level2"><h2>Cultural attitude towards driving and drinking</h2>
 <ol type="1">
 <li>arguably are a determinant of traffic deaths; and</li>
 <li>potentially are correlated with the beer tax, so beer taxes could be picking up cultural differences (omitted variable bias).</li>
@@ -542,38 +523,27 @@
 <ul>
 <li>Then the two conditions for omitted variable bias are satisfied. Specifically, “high taxes” could reflect “cultural attitudes towards drinking” (so the OLS coefficient would be biased)</li>
 <li>Panel data lets us eliminate omitted variable bias when the omitted variables are constant over time within a given state.</li>
-</ul>
-</section>
-<section id="panel-data-with-two-time-periods" class="slide level2">
-<h2>Panel Data with Two Time Periods</h2>
+</ul></section><section id="panel-data-with-two-time-periods" class="slide level2"><h2>Panel Data with Two Time Periods</h2>
 <p>Consider the panel data model: <span class="math inline">\(\widehat{FatalityRate_{it}} = \beta_0 + \beta_1 BeerTax_{it} + \beta_2Zi + u_{it}\)</span></p>
 <p><span class="math inline">\(Z_i\)</span> is a factor that does not change over time (density), at least during the years on which we have data. • Suppose <span class="math inline">\(Z_i\)</span> is not observed, so its omission could result in omitted variable bias. • The effect of <span class="math inline">\(Z_i\)</span> can be eliminated using <span class="math inline">\(T = 2\)</span> years.</p>
-</section>
-<section id="section-1" class="slide level2">
-<h2></h2>
+</section><section id="section-1" class="slide level2"><h2></h2>
 <p>The key idea:<br>
 Any change in the fatality rate from 1982 to 1988 cannot be caused by <span class="math inline">\(Z_i\)</span>, because <span class="math inline">\(Z_i\)</span> (by assumption) does not change between 1982 and 1988.</p>
 <p>The math: consider fatality rates in 1988 and 1982: <span class="math inline">\(FatalityRate_{i1988} = \beta_0 + \beta_1 BeerTax_{it} + \beta_2Zi + u_{i1988}\)</span> <span class="math inline">\(FatalityRate_{i1982} = \beta_0 + \beta_1 BeerTax_{it} + \beta_2Zi + u_{i1982}\)</span></p>
 <p>Suppose <span class="math inline">\(E{(u_{it}}{/BeerTax_{it},Z_i})=0\)</span> E(uit|BeerTaxit, Zi) = 0.</p>
 <p>Subtracting 1988 – 1982 (that is, calculating the change), eliminates the effect of <span class="math inline">\(Z_i\dots\)</span></p>
-</section>
-<section id="section-2" class="slide level2">
-<h2></h2>
+</section><section id="section-2" class="slide level2"><h2></h2>
 <p><span class="math inline">\(FatalityRate_{i1988} = \beta_0 + \beta_1 BeerTax_{it} + \beta_2Zi + u_{i1988}\)</span> <span class="math inline">\(FatalityRate_{i1982} = \beta_0 + \beta_1 BeerTax_{it} + \beta_2Zi + u_{i1982}\)</span></p>
 <p>so <span class="math inline">\(FatalityRate_{i1988} – FatalityRate_{i1982}=\\\beta_1(BeerTaxi1988 – BeerTaxi1982) + (u_{i1988} – u_{i1982})\)</span></p>
 <p>• The new error term, <span class="math inline">\((u_{i1988} – u_{i1982})\)</span>, is uncorrelated with either <span class="math inline">\(FatalityRate_{i1988}\)</span> or <span class="math inline">\(FatalityRate_{i1982}\)</span> • This “difference” equation can be estimated by OLS, even though <span class="math inline">\(Z_i\)</span> isn’t observed. • The omitted variable <span class="math inline">\(Z_i\)</span> doesn’t change, so it cannot be a determinant of the change in <span class="math inline">\(Y\)</span></p>
-</section>
-<section id="section-3" class="slide level2">
-<h2></h2>
+</section><section id="section-3" class="slide level2"><h2></h2>
 <p>1982 data</p>
 <p><span class="math inline">\(\widehat{FatalityRate}= 2.01 + 0.15beertax \ n=48\)</span></p>
 <p>1988 data</p>
 <p><span class="math inline">\(\widehat{FatalityRate}= 1.86 + 0.43beertax \ n=48\)</span></p>
 <p>Difference regression</p>
 <p><span class="math inline">\(\widehat{FatalityRate_{i1988} - FatalityRate_{i1982}} =\\ -\underset{(0.065)}{0.072} -\underset{(0.36)}{1.04} \times (BeerTax_{i1988}-BeerTax_{i1982}).\)</span></p>
-</section>
-<section id="section-4" class="slide level2">
-<h2></h2>
+</section><section id="section-4" class="slide level2"><h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="do">##Panel Data for two years</span></span>
 <span id="cb6-2"><a href="#cb6-2"></a><span class="co"># compute the differences </span></span>
@@ -593,9 +563,7 @@ Any change in the fatality rate from 1982 to 1988 cannot be caused by <span clas
 <span id="cb6-16"><a href="#cb6-16"></a><span class="do">## ---</span></span>
 <span id="cb6-17"><a href="#cb6-17"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="section-5" class="slide level2">
-<h2></h2>
+</section><section id="section-5" class="slide level2"><h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>df2<span class="ot">&lt;-</span><span class="fu">cbind</span>(diff_fatal_rate,diff_beertax)</span>
 <span id="cb7-2"><a href="#cb7-2"></a></span>
@@ -604,31 +572,23 @@ Any change in the fatality rate from 1982 to 1988 cannot be caused by <span clas
 <span id="cb7-5"><a href="#cb7-5"></a>p2<span class="ot">&lt;-</span><span class="fu">ggplot</span>(df2)<span class="sc">+</span><span class="fu">aes</span>(<span class="at">x=</span>diff_fatal_rate,<span class="at">y=</span>diff_beertax)<span class="sc">+</span><span class="fu">geom_point</span>()<span class="sc">+</span></span>
 <span id="cb7-6"><a href="#cb7-6"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,<span class="at">se=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="section-6" class="slide level2">
-<h2></h2>
+</section><section id="section-6" class="slide level2"><h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a></span>
 <span id="cb8-2"><a href="#cb8-2"></a>p2<span class="sc">+</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Change in beer tax (in 1988 dollars)"</span>,</span>
 <span id="cb8-3"><a href="#cb8-3"></a>        <span class="at">y =</span> <span class="st">"Change in fatality rate (fatalities per 10000)"</span>)<span class="sc">+</span><span class="fu">ggtitle</span>(<span class="st">"Changes in Traffic Fatality Rates and Beer Taxes in 1982-1988"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="Pan_reg_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section>
-<section id="fixed-effects-regression" class="slide level2">
-<h2>Fixed Effects Regression</h2>
+<img data-src="Pan_reg_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section><section id="fixed-effects-regression" class="slide level2"><h2>Fixed Effects Regression</h2>
 <p>What if you have more than 2 time periods <span class="math inline">\((T &gt; 2)?\)</span></p>
 <p><span class="math inline">\(Y_{it} = \beta_0 + \beta_1 X_{it} + \beta_2Z_{i} + u_{it}, i =1,\dots,n, T = 1,\dots,T\)</span></p>
 <p>We can rewrite this in two useful ways: 1. “<span class="math inline">\(n-1\)</span> binary regressor” regression model 2. “Fixed Effects” regression model</p>
 <p>We first rewrite this in “fixed effects” form. Suppose we have <span class="math inline">\(n = 3\)</span> states: California, Texas, Massachusetts.</p>
-</section>
-<section id="section-7" class="slide level2">
-<h2></h2>
+</section><section id="section-7" class="slide level2"><h2></h2>
 <p><span class="math inline">\(Y_{it} = \beta_0 + \beta_1 X_{it} + \beta_2Z_{i} + u_{it}, i =1,\dots,n, T = 1,\dots,T\)</span></p>
 <p>Population regression for California (that is, <span class="math inline">\(i = CA\)</span>): <span class="math inline">\(Y_{CA,t} = \beta_0 + \beta_1X_{CA,t} + \beta_2Z_{CA} + u_{CA,t}\\ = (\beta_0 + \beta_2Z_{CA}) + \beta_1X_{CA,t} + u_{CA,t}\)</span> or <span class="math inline">\(Y_{CA,t} = \alpha + \beta_1X_{CA,t} + u_{CA,t}\)</span></p>
 <p>• <span class="math inline">\(\alpha_{CA} = \beta_0 + \beta_1Z_{CA}\)</span> doesn’t change over time • <span class="math inline">\(\alpha_{CA}\)</span> is the intercept for CA, and <span class="math inline">\(\beta_1\)</span> is the slope • The intercept is unique to CA, but the slope is the same in all the states: parallel lines.</p>
-</section>
-<section id="section-8" class="slide level2">
-<h2></h2>
+</section><section id="section-8" class="slide level2"><h2></h2>
 <p><span class="math inline">\(Y_{it} = \beta_0 + \beta_1 X_{it} + \beta_2Z_{i} + u_{it}, i =1,\dots,n, T = 1,\dots,T\)</span></p>
 <p>Population regression for Texax (that is, <span class="math inline">\(i = TX\)</span>): <span class="math inline">\(Y_{TX,t} = \beta_0 + \beta_1X_{TX,t} + \beta_2Z_{TX} + u_{TX,t}\\ = (\beta_0 + \beta_2Z_{TX}) + \beta_1X_{TX,t} + u_{TX,t}\)</span> or <span class="math inline">\(Y_{TX,t} = \alpha + \beta_1X_{TX,t} + u_{TX,t}\)</span></p>
 <p>Collecting the like terms</p>
@@ -636,35 +596,23 @@ Any change in the fatality rate from 1982 to 1988 cannot be caused by <span clas
 <p><span class="math inline">\(Y_{TX,t} = \alpha + \beta_1X_{TX,t} + u_{TX,t}\)</span></p>
 <p><span class="math inline">\(Y_{MA,t} = \alpha + \beta_1X_{MA,t} + u_{MA,t}\)</span></p>
 <p>or <span class="math inline">\(Y_{it} = \alpha_{i} + \beta_1 X_{it} + u_{it}, i =CA,TX,MA, T = 1,\dots,T\)</span></p>
-</section>
-<section id="regression-equation-for-three-states" class="slide level2">
-<h2>Regression equation for three states</h2>
+</section><section id="regression-equation-for-three-states" class="slide level2"><h2>Regression equation for three states</h2>
 <p><img data-src="fixed_effect.png"> In binary regressor form: <span class="math inline">\(Y_{it} = \beta_0 + \gamma CADCAi + \gamma TXDTXi + \beta_1X_{it} + u_{it}\)</span> • <span class="math inline">\(DCA_{i} = 1\)</span> if state is <span class="math inline">\(CA, = 0\)</span> otherwise • <span class="math inline">\(DTX_{t} = 1\)</span> if state is <span class="math inline">\(TX, = 0\)</span> otherwise • leave out <span class="math inline">\(DMA_{i}\)</span> (why?)</p>
-</section>
-<section id="the-fixed-effects-regression-model" class="slide level2">
-<h2>The Fixed Effects Regression Model</h2>
+</section><section id="the-fixed-effects-regression-model" class="slide level2"><h2>The Fixed Effects Regression Model</h2>
 <p>The fixed effect model is <span class="math inline">\(\begin{align} Y_{it} = \beta_1 X_{1,it} + \cdots + \beta_k X_{k,it} + \alpha_i + u_{it} \tag{10.3} \end{align}\)</span> with <span class="math inline">\(i=1,\dots,n\)</span> and <span class="math inline">\(t=1,\dots,T\)</span> . The <span class="math inline">\(\alpha_i\)</span> are entity-specific intercepts that capture heterogeneities across entities. An equivalent representation of this model is given by <span class="math inline">\(\begin{align} Y_{it} = \beta_0 + \beta_1 X_{1,it} + \cdots + \beta_k X_{k,it} + \gamma_2 D2_i + \gamma_3 D3_i + \cdots + \gamma_n Dn_i + u_{it} \tag{10.4} \end{align}\)</span><br>
 where the <span class="math inline">\(D2_i,D3_i,\dots,Dn_i\)</span> are dummy variables.</p>
-</section>
-<section id="summary-two-ways-to-write-the-fixed-effects-model-n-1-binary-regressor-form" class="slide level2">
-<h2>Summary: Two ways to write the fixed effects model “n-1 binary regressor” form</h2>
+</section><section id="summary-two-ways-to-write-the-fixed-effects-model-n-1-binary-regressor-form" class="slide level2"><h2>Summary: Two ways to write the fixed effects model “n-1 binary regressor” form</h2>
 <p><span class="math inline">\(Y_{it} = \beta_0 + \beta_1 X_{1,it} + \gamma_2 D2_i + \gamma_3 D3_i + \cdots + \gamma_n Dn_i + u_{it}\)</span></p>
 <p>where <span class="math inline">\(D2i =1\)</span> if <span class="math inline">\(i=2\)</span> <span class="math inline">\(=0\)</span> otherwise , etc.</p>
 <p>“Fixed effects” form: <span class="math inline">\(Y_{it} = \beta_1X_{it} + \alpha_i + u_{it}\)</span></p>
 <p>• <span class="math inline">\(\alpha_i\)</span> is called a “state fixed effect” or “state effect” – it is the constant (fixed) effect of being in state <span class="math inline">\(i\)</span>.</p>
-</section>
-<section id="fixed-effects-regression-estimation" class="slide level2">
-<h2>Fixed Effects Regression: Estimation</h2>
+</section><section id="fixed-effects-regression-estimation" class="slide level2"><h2>Fixed Effects Regression: Estimation</h2>
 <p>Three estimation methods: 1. “n-1 binary regressors” OLS regression 2. “Entity-demeaned” OLS regression 3. “Changes” specification, without an intercept (only works for T = 2)</p>
 <p>• These three methods produce identical estimates of the regression coefficients, and identical standard errors. • We already did the “changes” specification (1988 minus 1982) – but this only works for T = 2 years • Methods #1 and #2 work for general T • Method #1 is only practical when n isn’t too big</p>
-</section>
-<section id="n-1-binary-regressors-ols-regression" class="slide level2">
-<h2>1. “n-1 binary regressors” OLS regression</h2>
+</section><section id="n-1-binary-regressors-ols-regression" class="slide level2"><h2>1. “n-1 binary regressors” OLS regression</h2>
 <p><span class="math inline">\(Y_{it} = \beta_0 + \beta_1 X_{1,it} + \gamma_2 D2_i + \gamma_3 D3_i + \cdots + \gamma_n Dn_i + u_{it}\)</span></p>
 <p>where <span class="math inline">\(D2i =1\)</span> if <span class="math inline">\(i=2\)</span> <span class="math inline">\(=0\)</span> otherwise , - First create the binary variables D2i,…,Dni - Then estimate (1) by OLS - Inference (hypothesis tests, confidence intervals) is as usual (using heteroskedasticity-robust standard errors) - This is impractical when n is very large (for example if n = 1000 workers)</p>
-</section>
-<section id="entity-demeaned-ols-regression" class="slide level2">
-<h2>2. “Entity-demeaned” OLS regression</h2>
+</section><section id="entity-demeaned-ols-regression" class="slide level2"><h2>2. “Entity-demeaned” OLS regression</h2>
 <p><span class="math display">\[\begin{align*}
 \frac{1}{n} \sum_{i=1}^n Y_{it} =&amp; \, \beta_1 \frac{1}{n} \sum_{i=1}^n X_{it} + \frac{1}{n} \sum_{i=1}^n a_i + \frac{1}{n} \sum_{i=1}^n u_{it} \\
 \overline{Y} =&amp; \, \beta_1 \overline{X}_i + \alpha_i + \overline{u}_i.
@@ -675,14 +623,9 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
 \end{split} \tag{10.5}
 \end{align}\]</span></p>
 <p>In this model, the OLS estimate of the parameter of interest <span class="math inline">\(\beta_1\)</span> is equal to the estimate obtained using (10.2) — without the need to estimate <span class="math inline">\(n-1\)</span> dummies and an intercept.</p>
-</section>
-<section>
-<section id="application-to-traffic-deaths" class="title-slide slide level1 center">
-<h1>Application to traffic deaths</h1>
+</section><section><section id="application-to-traffic-deaths" class="title-slide slide level1 center"><h1>Application to traffic deaths</h1>
 
-</section>
-<section id="panel-data-for-two-years" class="slide level2">
-<h2>Panel Data for two years</h2>
+</section><section id="panel-data-for-two-years" class="slide level2"><h2>Panel Data for two years</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># compute the differences </span></span>
 <span id="cb9-2"><a href="#cb9-2"></a>diff_fatal_rate <span class="ot">&lt;-</span> Fatalities1988<span class="sc">$</span>fatal_rate <span class="sc">-</span> Fatalities1982<span class="sc">$</span>fatal_rate</span>
@@ -701,9 +644,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
 <span id="cb9-15"><a href="#cb9-15"></a><span class="do">## ---</span></span>
 <span id="cb9-16"><a href="#cb9-16"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="section-9" class="slide level2">
-<h2></h2>
+</section><section id="section-9" class="slide level2"><h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>df2<span class="ot">&lt;-</span><span class="fu">cbind</span>(diff_fatal_rate,diff_beertax)</span>
 <span id="cb10-2"><a href="#cb10-2"></a></span>
@@ -715,9 +656,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
 <span id="cb10-8"><a href="#cb10-8"></a>        <span class="at">y =</span> <span class="st">"Change in fatality rate (fatalities per 10000)"</span>)<span class="sc">+</span><span class="fu">ggtitle</span>(<span class="st">"Changes in Traffic Fatality Rates and Beer Taxes in 1982-1988"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="Pan_reg_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section>
-<section id="compute-mean-fatality-rate-over-all-states-for-all-time-periods" class="slide level2">
-<h2>compute mean fatality rate over all states for all time periods</h2>
+<img data-src="Pan_reg_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section><section id="compute-mean-fatality-rate-over-all-states-for-all-time-periods" class="slide level2"><h2>compute mean fatality rate over all states for all time periods</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>df <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span> </span>
 <span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">summarise</span>(<span class="at">mean=</span><span class="fu">mean</span>(fatal_rate))</span>
@@ -739,9 +678,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
 <span id="cb11-18"><a href="#cb11-18"></a><span class="do">##   mean</span></span>
 <span id="cb11-19"><a href="#cb11-19"></a><span class="do">## 1 2.04</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="section-10" class="slide level2">
-<h2></h2>
+</section><section id="section-10" class="slide level2"><h2></h2>
 <p><span class="math inline">\(\begin{align} FatalityRate_{it} = \beta_1 BeerTax_{it} + StateFixedEffects\\ + u_{it}, \tag{10.6} \end{align}\)</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a></span>
@@ -767,9 +704,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
 <span id="cb12-21"><a href="#cb12-21"></a><span class="do">## statewy  </span></span>
 <span id="cb12-22"><a href="#cb12-22"></a><span class="do">##   3.249</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="demeaned-regressioin" class="slide level2">
-<h2>Demeaned Regressioin</h2>
+</section><section id="demeaned-regressioin" class="slide level2"><h2>Demeaned Regressioin</h2>
 <p><span class="math inline">\(\overset{\sim}{FatalityRate} = \beta_1 \overset{\sim}{BeerTax}_{it} + u_{it}.\)</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># obtain demeaned data</span></span>
@@ -797,9 +732,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
 <span id="cb13-23"><a href="#cb13-23"></a><span class="do">## Multiple R-squared:  0.0407, Adjusted R-squared:  0.0379 </span></span>
 <span id="cb13-24"><a href="#cb13-24"></a><span class="do">## F-statistic: 14.2 on 1 and 335 DF,  p-value: 0.000191</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="use-plm" class="slide level2">
-<h2>Use plm</h2>
+</section><section id="use-plm" class="slide level2"><h2>Use plm</h2>
 <p>Alternatively use <code>plm</code> package</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">library</span>(plm)</span>
@@ -819,19 +752,13 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
 <span id="cb14-15"><a href="#cb14-15"></a><span class="do">## ---</span></span>
 <span id="cb14-16"><a href="#cb14-16"></a><span class="do">## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="section-11" class="slide level2">
-<h2></h2>
+</section><section id="section-11" class="slide level2"><h2></h2>
 <p><span class="math inline">\(\begin{align} \widehat{FatalityRate} = -\underset{(0.29)}{0.66} \times BeerTax + \\ StateFixedEffects. \tag{10.7} \end{align}\)</span></p>
 <p>The coefficient on $BeerTax $ is negative and significant. The interpretation is that the estimated reduction in traffic fatalities due to an increase in the real beer tax by <span class="math inline">\(1\$\)</span> is <span class="math inline">\(0.66\)</span> per <span class="math inline">\(10,000\)</span> people, which is still pretty high.</p>
-</section>
-<section id="regression-with-time-fixed-effect" class="slide level2">
-<h2>Regression with Time Fixed Effect</h2>
+</section><section id="regression-with-time-fixed-effect" class="slide level2"><h2>Regression with Time Fixed Effect</h2>
 <p><span class="math inline">\(Y_{it} = \beta_0 + \beta_1 X_{it} + \delta_2 B2_t + \cdots\\ + \delta_T BT_t + u_{it},\)</span> where <span class="math inline">\(T-1\)</span> are binary variables (<span class="math inline">\(B_1\)</span> is ommited) <em>The entity time fixed effect</em> is <span class="math inline">\(Y_{it} = \beta_0 + \beta_1 X_{it} + \gamma_2 D2_i + \cdots \\ + \gamma_n DT_i + \delta_2 B2_t + \cdots + \delta_T BT_t + u_{it} .\)</span></p>
 <p><span class="math inline">\(FatalityRate_{it} = \beta_1 BeerTax_{it} + StateEffects + \\TimeFixedEffects + u_{it}\)</span></p>
-</section>
-<section id="section-12" class="slide level2">
-<h2></h2>
+</section><section id="section-12" class="slide level2"><h2></h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># estimate a combined time and entity fixed effects regression model</span></span>
 <span id="cb15-2"><a href="#cb15-2"></a></span>
@@ -860,9 +787,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
 <span id="cb15-25"><a href="#cb15-25"></a><span class="do">## year1983  year1984  year1985  year1986  year1987  year1988  </span></span>
 <span id="cb15-26"><a href="#cb15-26"></a><span class="do">##  -0.0799   -0.0724   -0.1240   -0.0379   -0.0509   -0.0518</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="via-plm" class="slide level2">
-<h2>Via plm</h2>
+</section><section id="via-plm" class="slide level2"><h2>Via plm</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># via plm()</span></span>
 <span id="cb16-2"><a href="#cb16-2"></a>fatal_tefe_mod <span class="ot">&lt;-</span> <span class="fu">plm</span>(fatal_rate <span class="sc">~</span> beertax, </span>
@@ -891,13 +816,9 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
 <span id="cb17-7"><a href="#cb17-7"></a><span class="co">#&gt; [1] "factor"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><span class="math inline">\(\begin{align} \widehat{FatalityRate} = -\underset{(0.35)}{0.64} \times BeerTax + StateEffects + TimeFixedEffects. \tag{10.8} \end{align}\)</span></p>
-</section>
-<section id="the-fixed-effects-regression-assumptions" class="slide level2">
-<h2>The Fixed Effects Regression Assumptions</h2>
+</section><section id="the-fixed-effects-regression-assumptions" class="slide level2"><h2>The Fixed Effects Regression Assumptions</h2>
 <p>In the fixed effects model <span class="math inline">\(Y_{it} = \beta_1 X_{it} + \alpha_i + u_{it} \ \ , \ \ i=1,\dots,n, \ t=1,\dots,T,\)</span> we assume the following: 1. The error term <span class="math inline">\(u_{it}\)</span> has conditional mean zero, that is, <span class="math inline">\(E(u_{it}|X_{i1}, X_{i2},\dots, X_{iT})\)</span>. 2. <span class="math inline">\((X_{i1}, X_{i2}, \dots, X_{i3}, u_{i1}, \dots, u_{iT})\)</span> are i.i.d draw from their distributions. 3. Large outliers are unlikely, i.e., <span class="math inline">\((u_{it},x_{it})\)</span> have nonzero finite fourth moments. 4. There is no perfect multicollinearity. When there are multiple regressors, <span class="math inline">\(x_{it}\)</span> is replaced with <span class="math inline">\(X_{1,it}, X_{2,it}, \dots, X_{k,it}\)</span>.</p>
-</section>
-<section id="section-13" class="slide level2">
-<h2></h2>
+</section><section id="section-13" class="slide level2"><h2></h2>
 <p>discretize the minimum legal drinking age</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>df<span class="sc">$</span>drinkagec <span class="ot">&lt;-</span> <span class="fu">cut</span>(df<span class="sc">$</span>drinkage,</span>
@@ -912,9 +833,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
 <span id="cb18-10"><a href="#cb18-10"></a>df<span class="sc">$</span>punish <span class="ot">&lt;-</span> <span class="fu">with</span>(df, <span class="fu">factor</span>(jail <span class="sc">==</span> <span class="st">"yes"</span> <span class="sc">|</span> service <span class="sc">==</span> <span class="st">"yes"</span>, </span>
 <span id="cb18-11"><a href="#cb18-11"></a>                                             <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"no"</span>, <span class="st">"yes"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="estimate-all-seven-models" class="slide level2">
-<h2>estimate all seven models</h2>
+</section><section id="estimate-all-seven-models" class="slide level2"><h2>estimate all seven models</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>Fatalities_1982_1988 <span class="ot">&lt;-</span> df[<span class="fu">with</span>(df, year <span class="sc">==</span> <span class="dv">1982</span> <span class="sc">|</span> year <span class="sc">==</span> <span class="dv">1988</span>),]</span>
 <span id="cb19-2"><a href="#cb19-2"></a>models<span class="ot">&lt;-</span><span class="fu">list</span>(fatalities_mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(fatal_rate <span class="sc">~</span> beertax, <span class="at">data =</span> df),</span>
@@ -968,12 +887,12 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
 <span id="cb19-50"><a href="#cb19-50"></a>             <span class="at">gof_omit =</span> <span class="st">".*"</span>,<span class="at">output =</span> <span class="st">"gt"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div id="clypwhnvab" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="nqgkavzkpp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#clypwhnvab .gt_table {
+:where(#nqgkavzkpp) .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -998,7 +917,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   border-left-color: #D3D3D3;
 }
 
-#clypwhnvab .gt_heading {
+:where(#nqgkavzkpp) .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1010,7 +929,12 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   border-right-color: #D3D3D3;
 }
 
-#clypwhnvab .gt_title {
+:where(#nqgkavzkpp) .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+:where(#nqgkavzkpp) .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1022,7 +946,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   border-bottom-width: 0;
 }
 
-#clypwhnvab .gt_subtitle {
+:where(#nqgkavzkpp) .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1034,13 +958,13 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   border-top-width: 0;
 }
 
-#clypwhnvab .gt_bottom_border {
+:where(#nqgkavzkpp) .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#clypwhnvab .gt_col_headings {
+:where(#nqgkavzkpp) .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1055,7 +979,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   border-right-color: #D3D3D3;
 }
 
-#clypwhnvab .gt_col_heading {
+:where(#nqgkavzkpp) .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1075,7 +999,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   overflow-x: hidden;
 }
 
-#clypwhnvab .gt_column_spanner_outer {
+:where(#nqgkavzkpp) .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1087,15 +1011,15 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   padding-right: 4px;
 }
 
-#clypwhnvab .gt_column_spanner_outer:first-child {
+:where(#nqgkavzkpp) .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#clypwhnvab .gt_column_spanner_outer:last-child {
+:where(#nqgkavzkpp) .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#clypwhnvab .gt_column_spanner {
+:where(#nqgkavzkpp) .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1107,7 +1031,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   width: 100%;
 }
 
-#clypwhnvab .gt_group_heading {
+:where(#nqgkavzkpp) .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1130,9 +1054,10 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   border-right-width: 1px;
   border-right-color: #D3D3D3;
   vertical-align: middle;
+  text-align: left;
 }
 
-#clypwhnvab .gt_empty_group_heading {
+:where(#nqgkavzkpp) .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1147,15 +1072,15 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   vertical-align: middle;
 }
 
-#clypwhnvab .gt_from_md > :first-child {
+:where(#nqgkavzkpp) .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#clypwhnvab .gt_from_md > :last-child {
+:where(#nqgkavzkpp) .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#clypwhnvab .gt_row {
+:where(#nqgkavzkpp) .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1174,7 +1099,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   overflow-x: hidden;
 }
 
-#clypwhnvab .gt_stub {
+:where(#nqgkavzkpp) .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1187,7 +1112,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   padding-right: 5px;
 }
 
-#clypwhnvab .gt_stub_row_group {
+:where(#nqgkavzkpp) .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1201,11 +1126,11 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   vertical-align: top;
 }
 
-#clypwhnvab .gt_row_group_first td {
+:where(#nqgkavzkpp) .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#clypwhnvab .gt_summary_row {
+:where(#nqgkavzkpp) .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1215,16 +1140,16 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   padding-right: 5px;
 }
 
-#clypwhnvab .gt_first_summary_row {
+:where(#nqgkavzkpp) .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#clypwhnvab .gt_first_summary_row.thick {
+:where(#nqgkavzkpp) .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#clypwhnvab .gt_last_summary_row {
+:where(#nqgkavzkpp) .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1234,7 +1159,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   border-bottom-color: #D3D3D3;
 }
 
-#clypwhnvab .gt_grand_summary_row {
+:where(#nqgkavzkpp) .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1244,7 +1169,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   padding-right: 5px;
 }
 
-#clypwhnvab .gt_first_grand_summary_row {
+:where(#nqgkavzkpp) .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1254,11 +1179,11 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   border-top-color: #D3D3D3;
 }
 
-#clypwhnvab .gt_striped {
+:where(#nqgkavzkpp) .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#clypwhnvab .gt_table_body {
+:where(#nqgkavzkpp) .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1267,7 +1192,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   border-bottom-color: #D3D3D3;
 }
 
-#clypwhnvab .gt_footnotes {
+:where(#nqgkavzkpp) .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1281,7 +1206,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   border-right-color: #D3D3D3;
 }
 
-#clypwhnvab .gt_footnote {
+:where(#nqgkavzkpp) .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-left: 4px;
@@ -1290,7 +1215,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   padding-right: 5px;
 }
 
-#clypwhnvab .gt_sourcenotes {
+:where(#nqgkavzkpp) .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1304,7 +1229,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   border-right-color: #D3D3D3;
 }
 
-#clypwhnvab .gt_sourcenote {
+:where(#nqgkavzkpp) .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1312,260 +1237,285 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
   padding-right: 5px;
 }
 
-#clypwhnvab .gt_left {
+:where(#nqgkavzkpp) .gt_left {
   text-align: left;
 }
 
-#clypwhnvab .gt_center {
+:where(#nqgkavzkpp) .gt_center {
   text-align: center;
 }
 
-#clypwhnvab .gt_right {
+:where(#nqgkavzkpp) .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#clypwhnvab .gt_font_normal {
+:where(#nqgkavzkpp) .gt_font_normal {
   font-weight: normal;
 }
 
-#clypwhnvab .gt_font_bold {
+:where(#nqgkavzkpp) .gt_font_bold {
   font-weight: bold;
 }
 
-#clypwhnvab .gt_font_italic {
+:where(#nqgkavzkpp) .gt_font_italic {
   font-style: italic;
 }
 
-#clypwhnvab .gt_super {
+:where(#nqgkavzkpp) .gt_super {
   font-size: 65%;
 }
 
-#clypwhnvab .gt_two_val_uncert {
-  display: inline-block;
-  line-height: 1em;
-  text-align: right;
-  font-size: 60%;
-  vertical-align: -0.25em;
-  margin-left: 0.1em;
-}
-
-#clypwhnvab .gt_footnote_marks {
+:where(#nqgkavzkpp) .gt_footnote_marks {
   font-style: italic;
   font-weight: normal;
   font-size: 75%;
   vertical-align: 0.4em;
 }
 
-#clypwhnvab .gt_asterisk {
+:where(#nqgkavzkpp) .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#clypwhnvab .gt_slash_mark {
-  font-size: 0.7em;
-  line-height: 0.7em;
-  vertical-align: 0.15em;
+:where(#nqgkavzkpp) .gt_indent_1 {
+  text-indent: 5px;
 }
 
-#clypwhnvab .gt_fraction_numerator {
-  font-size: 0.6em;
-  line-height: 0.6em;
-  vertical-align: 0.45em;
+:where(#nqgkavzkpp) .gt_indent_2 {
+  text-indent: 10px;
 }
 
-#clypwhnvab .gt_fraction_denominator {
-  font-size: 0.6em;
-  line-height: 0.6em;
-  vertical-align: -0.05em;
+:where(#nqgkavzkpp) .gt_indent_3 {
+  text-indent: 15px;
+}
+
+:where(#nqgkavzkpp) .gt_indent_4 {
+  text-indent: 20px;
+}
+
+:where(#nqgkavzkpp) .gt_indent_5 {
+  text-indent: 25px;
 }
 </style>
 <table class="gt_table">
-  
-  <thead class="gt_col_headings">
-    <tr>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"> </th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Model 1</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Model 2</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Model 3</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Model 4</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Model 5</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Model 6</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">Model 7</th>
-    </tr>
-  </thead>
-  <tbody class="gt_table_body">
-    <tr><td class="gt_row gt_left">(Intercept)</td>
-<td class="gt_row gt_center">1.853***</td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td></tr>
-    <tr><td class="gt_row gt_left"></td>
-<td class="gt_row gt_center">(0.047)</td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td></tr>
-    <tr><td class="gt_row gt_left">beertax</td>
-<td class="gt_row gt_center">0.365***</td>
-<td class="gt_row gt_center">-0.656*</td>
-<td class="gt_row gt_center">-0.640+</td>
-<td class="gt_row gt_center">-0.445</td>
-<td class="gt_row gt_center">-0.690+</td>
-<td class="gt_row gt_center">-0.456</td>
-<td class="gt_row gt_center">-0.926*</td></tr>
-    <tr><td class="gt_row gt_left"></td>
-<td class="gt_row gt_center">(0.054)</td>
-<td class="gt_row gt_center">(0.298)</td>
-<td class="gt_row gt_center">(0.366)</td>
-<td class="gt_row gt_center">(0.318)</td>
-<td class="gt_row gt_center">(0.370)</td>
-<td class="gt_row gt_center">(0.327)</td>
-<td class="gt_row gt_center">(0.382)</td></tr>
-    <tr><td class="gt_row gt_left">drinkagec[18,19)</td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">0.028</td>
-<td class="gt_row gt_center">-0.010</td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">0.037</td></tr>
-    <tr><td class="gt_row gt_left"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">(0.074)</td>
-<td class="gt_row gt_center">(0.084)</td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">(0.112)</td></tr>
-    <tr><td class="gt_row gt_left">drinkagec[19,20)</td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">-0.018</td>
-<td class="gt_row gt_center">-0.076</td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">-0.065</td></tr>
-    <tr><td class="gt_row gt_left"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">(0.050)</td>
-<td class="gt_row gt_center">(0.067)</td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">(0.099)</td></tr>
-    <tr><td class="gt_row gt_left">drinkagec[20,21)</td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">0.032</td>
-<td class="gt_row gt_center">-0.100+</td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">-0.113</td></tr>
-    <tr><td class="gt_row gt_left"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">(0.053)</td>
-<td class="gt_row gt_center">(0.057)</td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">(0.131)</td></tr>
-    <tr><td class="gt_row gt_left">punishyes</td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">0.038</td>
-<td class="gt_row gt_center">0.085</td>
-<td class="gt_row gt_center">0.039</td>
-<td class="gt_row gt_center">0.089</td></tr>
-    <tr><td class="gt_row gt_left"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">(0.111)</td>
-<td class="gt_row gt_center">(0.119)</td>
-<td class="gt_row gt_center">(0.110)</td>
-<td class="gt_row gt_center">(0.179)</td></tr>
-    <tr><td class="gt_row gt_left">miles</td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">0.000</td>
-<td class="gt_row gt_center">0.000</td>
-<td class="gt_row gt_center">0.000</td>
-<td class="gt_row gt_center">0.000*</td></tr>
-    <tr><td class="gt_row gt_left"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">(0.000)</td>
-<td class="gt_row gt_center">(0.000)</td>
-<td class="gt_row gt_center">(0.000)</td>
-<td class="gt_row gt_center">(0.000)</td></tr>
-    <tr><td class="gt_row gt_left">unemp</td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">-0.063***</td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">-0.063***</td>
-<td class="gt_row gt_center">-0.091***</td></tr>
-    <tr><td class="gt_row gt_left"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">(0.013)</td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">(0.013)</td>
-<td class="gt_row gt_center">(0.022)</td></tr>
-    <tr><td class="gt_row gt_left">log(income)</td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">1.816**</td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">1.786**</td>
-<td class="gt_row gt_center">0.996</td></tr>
-    <tr><td class="gt_row gt_left"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">(0.646)</td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">(0.650)</td>
-<td class="gt_row gt_center">(0.715)</td></tr>
-    <tr><td class="gt_row gt_left">drinkage</td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">-0.002</td>
-<td class="gt_row gt_center"></td></tr>
-    <tr><td class="gt_row gt_left"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center"></td>
-<td class="gt_row gt_center">(0.022)</td>
-<td class="gt_row gt_center"></td></tr>
-  </tbody>
-  
-  
+<thead class="gt_col_headings"><tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id=" "> </th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Model 1">Model 1</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Model 2">Model 2</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Model 3">Model 3</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Model 4">Model 4</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Model 5">Model 5</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Model 6">Model 6</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Model 7">Model 7</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td headers="" class="gt_row gt_left">(Intercept)</td>
+<td headers="Model 1" class="gt_row gt_center">1.853***</td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center"></td>
+<td headers="Model 5" class="gt_row gt_center"></td>
+<td headers="Model 6" class="gt_row gt_center"></td>
+<td headers="Model 7" class="gt_row gt_center"></td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left"></td>
+<td headers="Model 1" class="gt_row gt_center">(0.047)</td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center"></td>
+<td headers="Model 5" class="gt_row gt_center"></td>
+<td headers="Model 6" class="gt_row gt_center"></td>
+<td headers="Model 7" class="gt_row gt_center"></td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left">beertax</td>
+<td headers="Model 1" class="gt_row gt_center">0.365***</td>
+<td headers="Model 2" class="gt_row gt_center">-0.656*</td>
+<td headers="Model 3" class="gt_row gt_center">-0.640+</td>
+<td headers="Model 4" class="gt_row gt_center">-0.445</td>
+<td headers="Model 5" class="gt_row gt_center">-0.690+</td>
+<td headers="Model 6" class="gt_row gt_center">-0.456</td>
+<td headers="Model 7" class="gt_row gt_center">-0.926*</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left"></td>
+<td headers="Model 1" class="gt_row gt_center">(0.054)</td>
+<td headers="Model 2" class="gt_row gt_center">(0.298)</td>
+<td headers="Model 3" class="gt_row gt_center">(0.366)</td>
+<td headers="Model 4" class="gt_row gt_center">(0.318)</td>
+<td headers="Model 5" class="gt_row gt_center">(0.370)</td>
+<td headers="Model 6" class="gt_row gt_center">(0.327)</td>
+<td headers="Model 7" class="gt_row gt_center">(0.382)</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left">drinkagec[18,19)</td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">0.028</td>
+<td headers="Model 5" class="gt_row gt_center">-0.010</td>
+<td headers="Model 6" class="gt_row gt_center"></td>
+<td headers="Model 7" class="gt_row gt_center">0.037</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left"></td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">(0.074)</td>
+<td headers="Model 5" class="gt_row gt_center">(0.084)</td>
+<td headers="Model 6" class="gt_row gt_center"></td>
+<td headers="Model 7" class="gt_row gt_center">(0.112)</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left">drinkagec[19,20)</td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">-0.018</td>
+<td headers="Model 5" class="gt_row gt_center">-0.076</td>
+<td headers="Model 6" class="gt_row gt_center"></td>
+<td headers="Model 7" class="gt_row gt_center">-0.065</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left"></td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">(0.050)</td>
+<td headers="Model 5" class="gt_row gt_center">(0.067)</td>
+<td headers="Model 6" class="gt_row gt_center"></td>
+<td headers="Model 7" class="gt_row gt_center">(0.099)</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left">drinkagec[20,21)</td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">0.032</td>
+<td headers="Model 5" class="gt_row gt_center">-0.100+</td>
+<td headers="Model 6" class="gt_row gt_center"></td>
+<td headers="Model 7" class="gt_row gt_center">-0.113</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left"></td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">(0.053)</td>
+<td headers="Model 5" class="gt_row gt_center">(0.057)</td>
+<td headers="Model 6" class="gt_row gt_center"></td>
+<td headers="Model 7" class="gt_row gt_center">(0.131)</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left">punishyes</td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">0.038</td>
+<td headers="Model 5" class="gt_row gt_center">0.085</td>
+<td headers="Model 6" class="gt_row gt_center">0.039</td>
+<td headers="Model 7" class="gt_row gt_center">0.089</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left"></td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">(0.111)</td>
+<td headers="Model 5" class="gt_row gt_center">(0.119)</td>
+<td headers="Model 6" class="gt_row gt_center">(0.110)</td>
+<td headers="Model 7" class="gt_row gt_center">(0.179)</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left">miles</td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">0.000</td>
+<td headers="Model 5" class="gt_row gt_center">0.000</td>
+<td headers="Model 6" class="gt_row gt_center">0.000</td>
+<td headers="Model 7" class="gt_row gt_center">0.000*</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left"></td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">(0.000)</td>
+<td headers="Model 5" class="gt_row gt_center">(0.000)</td>
+<td headers="Model 6" class="gt_row gt_center">(0.000)</td>
+<td headers="Model 7" class="gt_row gt_center">(0.000)</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left">unemp</td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">-0.063***</td>
+<td headers="Model 5" class="gt_row gt_center"></td>
+<td headers="Model 6" class="gt_row gt_center">-0.063***</td>
+<td headers="Model 7" class="gt_row gt_center">-0.091***</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left"></td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">(0.013)</td>
+<td headers="Model 5" class="gt_row gt_center"></td>
+<td headers="Model 6" class="gt_row gt_center">(0.013)</td>
+<td headers="Model 7" class="gt_row gt_center">(0.022)</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left">log(income)</td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">1.816**</td>
+<td headers="Model 5" class="gt_row gt_center"></td>
+<td headers="Model 6" class="gt_row gt_center">1.786**</td>
+<td headers="Model 7" class="gt_row gt_center">0.996</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left"></td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center">(0.646)</td>
+<td headers="Model 5" class="gt_row gt_center"></td>
+<td headers="Model 6" class="gt_row gt_center">(0.650)</td>
+<td headers="Model 7" class="gt_row gt_center">(0.715)</td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left">drinkage</td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center"></td>
+<td headers="Model 5" class="gt_row gt_center"></td>
+<td headers="Model 6" class="gt_row gt_center">-0.002</td>
+<td headers="Model 7" class="gt_row gt_center"></td>
+</tr>
+<tr>
+<td headers="" class="gt_row gt_left"></td>
+<td headers="Model 1" class="gt_row gt_center"></td>
+<td headers="Model 2" class="gt_row gt_center"></td>
+<td headers="Model 3" class="gt_row gt_center"></td>
+<td headers="Model 4" class="gt_row gt_center"></td>
+<td headers="Model 5" class="gt_row gt_center"></td>
+<td headers="Model 6" class="gt_row gt_center">(0.022)</td>
+<td headers="Model 7" class="gt_row gt_center"></td>
+</tr>
+</tbody>
 </table>
 </div>
 </div>
 </div>
-</section></section>
-<section>
-<section id="wage-data-woolridge-book" class="title-slide slide level1 center">
-<h1><a href="https://tyleransom.github.io/teaching/MetricsLabs/lab15.html">Wage data Woolridge book</a></h1>
+</section></section><section><section id="wage-data-woolridge-book" class="title-slide slide level1 center"><h1><a href="https://tyleransom.github.io/teaching/MetricsLabs/lab15.html">Wage data Woolridge book</a></h1>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb20-2"><a href="#cb20-2"></a><span class="fu">library</span>(wooldridge)</span>
@@ -1576,18 +1526,14 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
 <span id="cb20-7"><a href="#cb20-7"></a><span class="fu">library</span>(estimatr)</span>
 <span id="cb20-8"><a href="#cb20-8"></a><span class="fu">library</span>(plm)   <span class="co"># You may need to install this package</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="load-the-data" class="slide level2">
-<h2>Load the data</h2>
+</section><section id="load-the-data" class="slide level2"><h2>Load the data</h2>
 <p>Load the data Our data set will be a panel of wages for 545 men. Load the data from the wooldridge package, format year to be a factor, and rename the variable nr to something more descriptive (id):</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(wagepan)</span>
 <span id="cb21-2"><a href="#cb21-2"></a>df <span class="sc">%&lt;&gt;%</span> <span class="fu">mutate</span>(<span class="at">year=</span><span class="fu">as.factor</span>(year))</span>
 <span id="cb21-3"><a href="#cb21-3"></a>df <span class="sc">%&lt;&gt;%</span> <span class="fu">rename</span>(<span class="at">id =</span> nr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="summary-statistics-with-panel-data" class="slide level2">
-<h2>Summary Statistics with Panel Data</h2>
+</section><section id="summary-statistics-with-panel-data" class="slide level2"><h2>Summary Statistics with Panel Data</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>df.within <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> <span class="fu">select</span>(id,year,educ,married,union,rur) <span class="sc">%&gt;%</span> </span>
 <span id="cb22-2"><a href="#cb22-2"></a>             <span class="fu">group_by</span>(id) <span class="sc">%&gt;%</span> </span>
@@ -1605,9 +1551,8 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
 <div class="cell-output-display">
 
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;">   </th>
+<thead><tr>
+<th style="text-align:left;">   </th>
    <th style="text-align:right;"> Unique (#) </th>
    <th style="text-align:right;"> Missing (%) </th>
    <th style="text-align:right;"> Mean </th>
@@ -1616,11 +1561,10 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
    <th style="text-align:right;"> Median </th>
    <th style="text-align:right;"> Max </th>
    <th style="text-align:right;">    </th>
-  </tr>
- </thead>
+  </tr></thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> id </td>
+<tr>
+<td style="text-align:left;"> id </td>
    <td style="text-align:right;"> 545 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 5262.1 </td>
@@ -1639,12 +1583,11 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
     .svglite text {
       white-space: pre;
     }
-  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)">
-</g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.73" y="4.41" width="3.55" height="7.26" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="5.28" y="5.24" width="3.55" height="6.42" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="8.82" y="4.88" width="3.55" height="6.78" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="12.37" y="3.22" width="3.55" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="15.91" y="5.48" width="3.55" height="6.18" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="19.46" y="6.31" width="3.55" height="5.35" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="23.01" y="8.93" width="3.55" height="2.74" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="26.55" y="8.69" width="3.55" height="2.97" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="30.10" y="5.36" width="3.55" height="6.30" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="33.64" y="6.07" width="3.55" height="5.59" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="37.19" y="9.05" width="3.55" height="2.62" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="40.73" y="10.12" width="3.55" height="1.55" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="44.28" y="9.05" width="3.55" height="2.62" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
+  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)"></g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.73" y="4.41" width="3.55" height="7.26" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="5.28" y="5.24" width="3.55" height="6.42" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="8.82" y="4.88" width="3.55" height="6.78" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="12.37" y="3.22" width="3.55" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="15.91" y="5.48" width="3.55" height="6.18" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="19.46" y="6.31" width="3.55" height="5.35" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="23.01" y="8.93" width="3.55" height="2.74" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="26.55" y="8.69" width="3.55" height="2.97" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="30.10" y="5.36" width="3.55" height="6.30" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="33.64" y="6.07" width="3.55" height="5.59" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="37.19" y="9.05" width="3.55" height="2.62" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="40.73" y="10.12" width="3.55" height="1.55" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="44.28" y="9.05" width="3.55" height="2.62" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
 </td>
   </tr>
-  <tr>
-   <td style="text-align:left;"> mean.edu </td>
+<tr>
+<td style="text-align:left;"> mean.edu </td>
    <td style="text-align:right;"> 13 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 11.8 </td>
@@ -1663,12 +1606,11 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
     .svglite text {
       white-space: pre;
     }
-  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)">
-</g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="11.63" width="3.42" height="0.037" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="5.20" y="11.59" width="3.42" height="0.073" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="8.62" y="11.48" width="3.42" height="0.18" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="12.03" y="11.59" width="3.42" height="0.073" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="15.45" y="11.00" width="3.42" height="0.66" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="18.87" y="11.04" width="3.42" height="0.62" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="22.29" y="9.94" width="3.42" height="1.72" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="25.71" y="8.30" width="3.42" height="3.36" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="29.13" y="3.22" width="3.42" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.55" y="9.69" width="3.42" height="1.97" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="35.97" y="10.16" width="3.42" height="1.50" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="39.38" y="10.53" width="3.42" height="1.13" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="42.80" y="11.52" width="3.42" height="0.15" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
+  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)"></g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="11.63" width="3.42" height="0.037" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="5.20" y="11.59" width="3.42" height="0.073" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="8.62" y="11.48" width="3.42" height="0.18" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="12.03" y="11.59" width="3.42" height="0.073" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="15.45" y="11.00" width="3.42" height="0.66" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="18.87" y="11.04" width="3.42" height="0.62" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="22.29" y="9.94" width="3.42" height="1.72" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="25.71" y="8.30" width="3.42" height="3.36" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="29.13" y="3.22" width="3.42" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.55" y="9.69" width="3.42" height="1.97" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="35.97" y="10.16" width="3.42" height="1.50" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="39.38" y="10.53" width="3.42" height="1.13" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="42.80" y="11.52" width="3.42" height="0.15" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
 </td>
   </tr>
-  <tr>
-   <td style="text-align:left;"> var.edu </td>
+<tr>
+<td style="text-align:left;"> var.edu </td>
    <td style="text-align:right;"> 1 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0.0 </td>
@@ -1687,12 +1629,11 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
     .svglite text {
       white-space: pre;
     }
-  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)">
-</g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="22.22" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
+  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)"></g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="22.22" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
 </td>
   </tr>
-  <tr>
-   <td style="text-align:left;"> mean.marr </td>
+<tr>
+<td style="text-align:left;"> mean.marr </td>
    <td style="text-align:right;"> 9 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0.4 </td>
@@ -1711,12 +1652,11 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
     .svglite text {
       white-space: pre;
     }
-  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)">
-</g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="4.44" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="6.22" y="9.58" width="4.44" height="2.09" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="10.67" y="9.94" width="4.44" height="1.72" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="15.11" y="9.32" width="4.44" height="2.35" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="19.56" y="9.84" width="4.44" height="1.82" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="24.00" y="11.66" width="4.44" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="28.44" y="8.85" width="4.44" height="2.81" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.89" y="9.47" width="4.44" height="2.19" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="37.33" y="8.48" width="4.44" height="3.18" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="41.78" y="7.86" width="4.44" height="3.81" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
+  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)"></g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="4.44" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="6.22" y="9.58" width="4.44" height="2.09" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="10.67" y="9.94" width="4.44" height="1.72" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="15.11" y="9.32" width="4.44" height="2.35" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="19.56" y="9.84" width="4.44" height="1.82" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="24.00" y="11.66" width="4.44" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="28.44" y="8.85" width="4.44" height="2.81" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.89" y="9.47" width="4.44" height="2.19" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="37.33" y="8.48" width="4.44" height="3.18" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="41.78" y="7.86" width="4.44" height="3.81" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
 </td>
   </tr>
-  <tr>
-   <td style="text-align:left;"> var.marr </td>
+<tr>
+<td style="text-align:left;"> var.marr </td>
    <td style="text-align:right;"> 5 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0.1 </td>
@@ -1735,12 +1675,11 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
     .svglite text {
       white-space: pre;
     }
-  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)">
-</g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="3.11" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="4.89" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="8.00" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="11.11" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="14.22" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="17.33" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="20.44" y="8.03" width="3.11" height="3.63" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="23.56" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="26.67" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="29.78" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.89" y="8.97" width="3.11" height="2.70" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="36.00" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="39.11" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="42.22" y="8.10" width="3.11" height="3.56" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="45.33" y="10.40" width="3.11" height="1.26" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
+  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)"></g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="3.11" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="4.89" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="8.00" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="11.11" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="14.22" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="17.33" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="20.44" y="8.03" width="3.11" height="3.63" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="23.56" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="26.67" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="29.78" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.89" y="8.97" width="3.11" height="2.70" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="36.00" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="39.11" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="42.22" y="8.10" width="3.11" height="3.56" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="45.33" y="10.40" width="3.11" height="1.26" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
 </td>
   </tr>
-  <tr>
-   <td style="text-align:left;"> mean.union </td>
+<tr>
+<td style="text-align:left;"> mean.union </td>
    <td style="text-align:right;"> 9 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0.2 </td>
@@ -1759,12 +1698,11 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
     .svglite text {
       white-space: pre;
     }
-  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)">
-</g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="4.44" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="6.22" y="9.11" width="4.44" height="2.55" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="10.67" y="10.32" width="4.44" height="1.34" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="15.11" y="10.93" width="4.44" height="0.73" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="19.56" y="10.80" width="4.44" height="0.86" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="24.00" y="11.66" width="4.44" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="28.44" y="11.06" width="4.44" height="0.61" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.89" y="10.74" width="4.44" height="0.92" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="37.33" y="10.83" width="4.44" height="0.83" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="41.78" y="10.58" width="4.44" height="1.08" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
+  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)"></g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="4.44" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="6.22" y="9.11" width="4.44" height="2.55" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="10.67" y="10.32" width="4.44" height="1.34" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="15.11" y="10.93" width="4.44" height="0.73" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="19.56" y="10.80" width="4.44" height="0.86" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="24.00" y="11.66" width="4.44" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="28.44" y="11.06" width="4.44" height="0.61" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.89" y="10.74" width="4.44" height="0.92" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="37.33" y="10.83" width="4.44" height="0.83" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="41.78" y="10.58" width="4.44" height="1.08" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
 </td>
   </tr>
-  <tr>
-   <td style="text-align:left;"> var.union </td>
+<tr>
+<td style="text-align:left;"> var.union </td>
    <td style="text-align:right;"> 5 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0.1 </td>
@@ -1783,12 +1721,11 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
     .svglite text {
       white-space: pre;
     }
-  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)">
-</g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="3.11" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="4.89" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="8.00" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="11.11" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="14.22" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="17.33" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="20.44" y="8.67" width="3.11" height="2.99" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="23.56" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="26.67" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="29.78" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.89" y="9.66" width="3.11" height="2.01" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="36.00" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="39.11" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="42.22" y="10.48" width="3.11" height="1.19" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="45.33" y="10.90" width="3.11" height="0.76" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
+  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)"></g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="3.11" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="4.89" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="8.00" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="11.11" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="14.22" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="17.33" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="20.44" y="8.67" width="3.11" height="2.99" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="23.56" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="26.67" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="29.78" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.89" y="9.66" width="3.11" height="2.01" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="36.00" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="39.11" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="42.22" y="10.48" width="3.11" height="1.19" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="45.33" y="10.90" width="3.11" height="0.76" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
 </td>
   </tr>
-  <tr>
-   <td style="text-align:left;"> mean.rural </td>
+<tr>
+<td style="text-align:left;"> mean.rural </td>
    <td style="text-align:right;"> 9 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0.2 </td>
@@ -1807,12 +1744,11 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
     .svglite text {
       white-space: pre;
     }
-  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)">
-</g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="4.44" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="6.22" y="11.29" width="4.44" height="0.38" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="10.67" y="11.40" width="4.44" height="0.27" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="15.11" y="11.20" width="4.44" height="0.46" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="19.56" y="11.49" width="4.44" height="0.18" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="24.00" y="11.66" width="4.44" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="28.44" y="11.24" width="4.44" height="0.42" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.89" y="11.42" width="4.44" height="0.24" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="37.33" y="11.49" width="4.44" height="0.18" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="41.78" y="10.18" width="4.44" height="1.48" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
+  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)"></g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="4.44" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="6.22" y="11.29" width="4.44" height="0.38" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="10.67" y="11.40" width="4.44" height="0.27" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="15.11" y="11.20" width="4.44" height="0.46" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="19.56" y="11.49" width="4.44" height="0.18" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="24.00" y="11.66" width="4.44" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="28.44" y="11.24" width="4.44" height="0.42" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.89" y="11.42" width="4.44" height="0.24" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="37.33" y="11.49" width="4.44" height="0.18" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="41.78" y="10.18" width="4.44" height="1.48" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
 </td>
   </tr>
-  <tr>
-   <td style="text-align:left;"> var.rural </td>
+<tr>
+<td style="text-align:left;"> var.rural </td>
    <td style="text-align:right;"> 5 </td>
    <td style="text-align:right;"> 0 </td>
    <td style="text-align:right;"> 0.0 </td>
@@ -1831,41 +1767,31 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
     .svglite text {
       white-space: pre;
     }
-  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)">
-</g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="3.11" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="4.89" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="8.00" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="11.11" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="14.22" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="17.33" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="20.44" y="11.19" width="3.11" height="0.47" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="23.56" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="26.67" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="29.78" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.89" y="11.23" width="3.11" height="0.43" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="36.00" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="39.11" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="42.22" y="10.91" width="3.11" height="0.75" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="45.33" y="11.51" width="3.11" height="0.15" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
+  </style></defs><rect width="100%" height="100%" style="stroke: none; fill: none;"></rect><defs><clippath id="cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw"><rect x="0.00" y="0.00" width="48.00" height="12.00"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwwLjAwfDEyLjAw)"></g><defs><clippath id="cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw"><rect x="0.00" y="2.88" width="48.00" height="9.12"></rect></clippath></defs><g clip-path="url(#cpMC4wMHw0OC4wMHwyLjg4fDEyLjAw)"><rect x="1.78" y="3.22" width="3.11" height="8.44" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="4.89" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="8.00" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="11.11" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="14.22" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="17.33" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="20.44" y="11.19" width="3.11" height="0.47" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="23.56" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="26.67" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="29.78" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="32.89" y="11.23" width="3.11" height="0.43" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="36.00" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="39.11" y="11.66" width="3.11" height="0.00" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="42.22" y="10.91" width="3.11" height="0.75" style="stroke-width: 0.38; fill: #000000;"></rect><rect x="45.33" y="11.51" width="3.11" height="0.15" style="stroke-width: 0.38; fill: #000000;"></rect></g></svg>
 </td>
   </tr>
 </tbody>
 </table>
-
 </div>
 </div>
-</section>
-<section id="section-14" class="slide level2">
-<h2></h2>
+</section><section id="section-14" class="slide level2"><h2></h2>
 <p>Is there any within-person variance in the educ variable? What about married, union, and rural?</p>
 <p>What does it mean for the married, union, or rural variables to have a positive within-person variance?</p>
 <p>Why is it important to know if a variable has positive within-person variance?</p>
-</section>
-<section id="pooled-ols-random-effects-and-fixed-effects-models" class="slide level2 centered">
-<h2>Pooled OLS, Random Effects, and Fixed Effects Models</h2>
+</section><section id="pooled-ols-random-effects-and-fixed-effects-models" class="slide level2 centered"><h2>Pooled OLS, Random Effects, and Fixed Effects Models</h2>
 <p><span class="math inline">\(\begin{align*} \log(wage_{it}) &amp; = \beta_0 + \beta_1 educ_{i} + \beta_2 black_{i} + \beta_3 hisp_{i} + \beta_4 exper_{it} + \beta_5 exper_{it}^2 + \beta_6 married_{it} + \\ &amp;\phantom{=\,\,}\beta_7 union_{it} + \beta_8 rur_{it} + \sum_t \beta_{9,t}year_{it} + a_i + u_{it} \end{align*}\)</span> The pooled ols by <code>lm_robust</code></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>est.pols <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>(lwage <span class="sc">~</span> educ <span class="sc">+</span> black <span class="sc">+</span> hisp <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> married <span class="sc">+</span> union <span class="sc">+</span> rur <span class="sc">+</span> year,</span>
 <span id="cb23-2"><a href="#cb23-2"></a>                <span class="at">data =</span> df, <span class="at">clusters=</span>id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Interpret the coefficient on β7 in the pooled OLS model</p>
-</section>
-<section id="random-effects" class="slide level2">
-<h2>Random effects</h2>
+</section><section id="random-effects" class="slide level2"><h2>Random effects</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>est.re <span class="ot">&lt;-</span> <span class="fu">plm</span>(lwage <span class="sc">~</span> educ <span class="sc">+</span> black <span class="sc">+</span> hisp <span class="sc">+</span> exper <span class="sc">+</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> married <span class="sc">+</span> union <span class="sc">+</span> rur <span class="sc">+</span> year, </span>
 <span id="cb24-2"><a href="#cb24-2"></a>              <span class="at">data =</span> df, <span class="at">index =</span> <span class="fu">c</span>(<span class="st">"id"</span>,<span class="st">"year"</span>), <span class="at">model =</span> <span class="st">"random"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>What is the estimate of <span class="math inline">\(θ\)</span> in the RE model? (Hint: check est.re<code>$ercomp$theta</code>) What does this tell you about what you expect the random effects estimates to be relative to the fixed effects estimates?</p>
-</section>
-<section id="fixed-effects" class="slide level2">
-<h2>Fixed effects</h2>
+</section><section id="fixed-effects" class="slide level2"><h2>Fixed effects</h2>
 <p>FE also come from the <code>lm_robust()</code> function:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>est.fe <span class="ot">&lt;-</span> <span class="fu">lm_robust</span>(lwage <span class="sc">~</span> <span class="fu">I</span>(exper<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> married <span class="sc">+</span> union <span class="sc">+</span> rur <span class="sc">+</span> year, </span>
@@ -1878,23 +1804,19 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
 <span id="cb26-2"><a href="#cb26-2"></a>clust.re.SE <span class="ot">&lt;-</span> clust.re<span class="sc">$</span>SE</span>
 <span id="cb26-3"><a href="#cb26-3"></a><span class="fu">names</span>(clust.re.SE) <span class="ot">&lt;-</span> <span class="fu">names</span>(est.re<span class="sc">$</span>coefficients)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="model-summary" class="slide level2 scrollable">
-<h2>Model summary</h2>
+</section><section id="model-summary" class="slide level2 scrollable"><h2>Model summary</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">"POLS"</span><span class="ot">=</span>est.pols,<span class="st">"RE"</span><span class="ot">=</span>est.re,<span class="st">"FE"</span><span class="ot">=</span>est.fe),</span>
 <span id="cb27-2"><a href="#cb27-2"></a>             <span class="at">statistic_override=</span><span class="fu">list</span>(<span class="fu">sqrt</span>(<span class="fu">diag</span>(est.pols<span class="sc">$</span>vcov)),clust.re.SE,<span class="fu">sqrt</span>(<span class="fu">diag</span>(est.fe<span class="sc">$</span>vcov))),</span>
 <span id="cb27-3"><a href="#cb27-3"></a>             <span class="at">output=</span><span class="st">"markdown"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table>
-<thead>
-<tr class="header">
+<thead><tr class="header">
 <th style="text-align: left;"></th>
 <th style="text-align: center;">POLS</th>
 <th style="text-align: center;">RE</th>
 <th style="text-align: center;">FE</th>
-</tr>
-</thead>
+</tr></thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">(Intercept)</td>
@@ -2133,28 +2055,10 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
 <p><a href="https://zahidasghar.com/econometrics/Panel_reg">Zahid Asghar</a></p>
 </div>
 </section></section>
-    </div>
+</div>
   </div>
 
-  <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="Pan_reg_files/libs/revealjs/dist/reveal.js"></script>
-  <!-- reveal.js plugins -->
-  <script src="Pan_reg_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="Pan_reg_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="Pan_reg_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="Pan_reg_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="Pan_reg_files/libs/revealjs/plugin/multiplex/socket.io.js"></script>
-  <script src="Pan_reg_files/libs/revealjs/plugin/multiplex/multiplex.js"></script>
-  <script src="Pan_reg_files/libs/revealjs/plugin/quarto-support/support.js"></script>
-  
-
-  <script src="Pan_reg_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="Pan_reg_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="Pan_reg_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="Pan_reg_files/libs/revealjs/plugin/math/math.js"></script>
-  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
-
-  <script>
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="Pan_reg_files/libs/revealjs/dist/reveal.js"></script><!-- reveal.js plugins --><script src="Pan_reg_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script><script src="Pan_reg_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script><script src="Pan_reg_files/libs/revealjs/plugin/reveal-menu/menu.js"></script><script src="Pan_reg_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script><script src="Pan_reg_files/libs/revealjs/plugin/multiplex/socket.io.js"></script><script src="Pan_reg_files/libs/revealjs/plugin/multiplex/multiplex.js"></script><script src="Pan_reg_files/libs/revealjs/plugin/quarto-support/support.js"></script><script src="Pan_reg_files/libs/revealjs/plugin/notes/notes.js"></script><script src="Pan_reg_files/libs/revealjs/plugin/search/search.js"></script><script src="Pan_reg_files/libs/revealjs/plugin/zoom/zoom.js"></script><script src="Pan_reg_files/libs/revealjs/plugin/math/math.js"></script><script>window.define = window.backupDefine; window.backupDefine = undefined;</script><script>
 
       // Full list of configuration options available at:
       // https://revealjs.com/config/
@@ -2346,19 +2250,20 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
           RevealZoom
         ]
       });
-    </script>
-    
-    <script>
+    </script><script>
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
       // slide changes (different for each slide format).
       (function () {
-        function fireSlideChanged(previousSlide, currentSlide) {
-
-          // dispatch for htmlwidgets
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
           const event = window.document.createEvent("Event");
           event.initEvent("slideenter", true, true);
           window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
 
           // dispatch for shiny
           if (window.jQuery) {
@@ -2371,13 +2276,6 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
           }
         }
 
-        // hookup for reveal
-        if (window.Reveal) {
-          window.Reveal.addEventListener("slidechanged", function(event) {
-            fireSlideChanged(event.previousSlide, event.currentSlide);
-          });
-        }
-
         // hookup for slidy
         if (window.w3c_slidy) {
           window.w3c_slidy.add_observer(function (slide_num) {
@@ -2387,9 +2285,7 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
         }
 
       })();
-    </script>
-
-    <script id="quarto-html-after-body" type="application/javascript">
+    </script><script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
         const mode = bsSheetEl.getAttribute("data-mode");
@@ -2427,7 +2323,24 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
         button.classList.add('code-copy-button-checked');
         var currentTitle = button.getAttribute("title");
         button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
         setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
           button.setAttribute("title", currentTitle);
           button.classList.remove('code-copy-button-checked');
         }, 1000);
@@ -2457,34 +2370,53 @@ Y_{it} - \overline{Y}_i =&amp; \, \beta_1(X_{it}-\overline{X}_i) + (u_{it} - \ov
       for (var i=0; i<noterefs.length; i++) {
         const ref = noterefs[i];
         tippyHover(ref, function() {
-          let href = ref.getAttribute('href');
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
           try { href = new URL(href).hash; } catch {}
           const id = href.replace(/^#\/?/, "");
           const note = window.document.getElementById(id);
           return note.innerHTML;
         });
       }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
       var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
       for (var i=0; i<bibliorefs.length; i++) {
         const ref = bibliorefs[i];
-        const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-        tippyHover(ref, function() {
-          var popup = window.document.createElement('div');
-          cites.forEach(function(cite) {
-            var citeDiv = window.document.createElement('div');
-            citeDiv.classList.add('hanging-indent');
-            citeDiv.classList.add('csl-entry');
-            var biblioDiv = window.document.getElementById('ref-' + cite);
-            if (biblioDiv) {
-              citeDiv.innerHTML = biblioDiv.innerHTML;
-            }
-            popup.appendChild(citeDiv);
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
           });
-          return popup.innerHTML;
-        });
+        }
       }
     });
     </script>
-    
+
 
 </body></html>

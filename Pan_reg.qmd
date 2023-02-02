@@ -16,6 +16,9 @@ format:
     code-link: true
     title-slide-attributes:
       data-background-color: "#447099"
+execute: 
+  warning: false
+  freeze: auto
 editor: source
 ---
 
@@ -49,8 +52,8 @@ $i$ = entity (state), $n$ = number of entities, so $i = 1,\dots,n$
 $t$ = time period (year), $T$ = number of time periods so $t =1,\dots,T$
 
 Data: Suppose we have 1 regressor. The data are:
+$\left(X_{it},Y_{it}\right)\qquad\begin{cases} i=1,...,n\\ t=1,...,T\end{cases}$
 
-$(X_{it}, Y_{i}t), i = 1,\dots,n,\ t = 1,…,T$
 
 Panel data with $K$ regressors $(X_{1it},X_{2it},\dots,X_{kit} Y_{i}t), i = 1,\dots,n,\ t = 1,…,T$ $n$ = number of entities (states) $T$ = number of time periods (years) Also called **longitudinal data**
 
