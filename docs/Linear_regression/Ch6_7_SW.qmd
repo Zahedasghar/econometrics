@@ -10,6 +10,8 @@ format:
     theme: [default, custom.scss]
     code-link: true
     code-fold: true
+execute: 
+  freeze: auto
 editor: visual
 ---
 
@@ -21,9 +23,11 @@ editor: visual
 
 3.  Multiple regression and OLS
 
-4.  Measures of fit\
+4.  Measures of fit
 
 5.  Sampling distribution of the OLS estimator
+
+6.  Statistical Inference
 
 ## Omitted Variable Bias {.smaller}
 
@@ -63,11 +67,11 @@ $$\hat\beta_1 \xrightarrow[]{p} \beta_1 + \rho_{Xu} \frac{\sigma_u}{\sigma_X}. \
 ## Table 6.1
 
 ```{r}
-#| warning:
+#| warning: false
 library(haven)
 library(kableExtra)
 library(tidyverse)
-caschool <- read_dta("caschool.dta")
+caschool <- read_dta("docs/data/caschool.dta")
 library(modelsummary)
 library(rstatix)
 caschool<-caschool %>% mutate(elq1=ifelse(el_pct<=1.9,1,0))
